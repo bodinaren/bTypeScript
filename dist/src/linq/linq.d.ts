@@ -1,0 +1,36 @@
+import Iterator from "./iterator";
+import LinqOrdered from "./linqOrdered";
+import * as Util from "../util";
+export default class Linq {
+    protected _source: Iterator;
+    constructor(source: any[] | Iterator);
+    _makeValuePredicate(predicate: any): (predicate) => any;
+    _makeBoolPredicate(predicate: any): (predicate) => boolean;
+    map(callback: (item: any, idx: number) => any): Linq;
+    filter(predicate: (predicate) => boolean): Linq;
+    where(predicate: (predicate) => boolean): Linq;
+    reverse(): Linq;
+    take(count: number): Linq;
+    takeWhile(predicate?: Util.IPredicate<any>): Linq;
+    skip(count: number): Linq;
+    skipWhile(predicate?: Util.IPredicate<any>): Linq;
+    orderBy(keySelector: Util.ISelector<any, any> | string, comparer?: Util.IComparer<any>): LinqOrdered;
+    orderByDesc(keySelector: Util.ISelector<any, any> | string, comparer?: Util.IComparer<any>): LinqOrdered;
+    sum(selector?: Util.ISelector<any, number>): number;
+    average(selector?: Util.ISelector<any, number>): number;
+    any(predicate: (predicate) => boolean, invert?: boolean): boolean;
+    all(predicate: (predicate) => boolean, invert?: boolean): boolean;
+    single(predicate: (predicate) => boolean): any;
+    first(predicate?: (predicate) => boolean): any;
+    last(predicate?: (predicate) => boolean): any;
+    static intersect(a: any[] | Linq, b: any[] | Linq, ...more: Array<any[] | Linq>): any[];
+    intersect(other: any[] | Linq, ...more: Array<any[] | Linq>): Linq;
+    static except(a: any[] | Linq, b: any[] | Linq, ...more: Array<any[] | Linq>): any[];
+    except(other: any[] | Linq, ...more: Array<any[] | Linq>): Linq;
+    static distinct(...datasets: Array<any[] | Linq>): any[];
+    distinct(): Linq;
+    groupBy(keySelector: Util.ISelector<any, any> | string): Linq;
+    toArray(): any[];
+    private contains(a);
+    private forEach(callback);
+}

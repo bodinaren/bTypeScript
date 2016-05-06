@@ -1,0 +1,19 @@
+{
+  "name": "bTypeScript",
+  "version": "1.0.0",
+  "description": "TypeScript collections, Linq and various helpers.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bodinaren/bTypeScript.git"
+  },
+  "author": "Marcus Bodin <bodinaren@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bodinaren/bTypeScript/issues"
+  },
+  "homepage": "https://github.com/bodinaren/bTypeScript",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^1.8.10"
+  }
+}

@@ -17,10 +17,14 @@ export class StringsHelper {
     }
     
     format(...args: string[]) {
-        for (let i = 0; i < arguments.length; i++) {
+        return StringsHelper.format.apply(null, [this.str].concat(args));
+    }
+
+    static format(str: string, ...args: string[]): string {
+        for (let i = 0; i < args.length; i++) {
             let regex = new RegExp(`\\{${i}\\}`, "g");
-            this.str = this.str.replace(regex, arguments[i]);
+            str = str.replace(regex, args[i]);
         }
-        return this.str;
+        return str;
     }
 }

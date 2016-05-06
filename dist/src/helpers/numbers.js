@@ -16,21 +16,30 @@
             this.number = number;
         }
         NumbersHelper.prototype.between = function (lower, upper) {
+            return NumbersHelper.between(this.number, lower, upper);
+        };
+        NumbersHelper.between = function (number, lower, upper) {
             if (util.isUndefined(lower))
                 lower = Number.MIN_VALUE;
             if (util.isUndefined(upper))
                 upper = Number.MAX_VALUE;
-            return (lower <= this.number && this.number <= upper);
+            return (lower <= number && number <= upper);
         };
         NumbersHelper.prototype.in = function (numbers) {
+            return NumbersHelper.in(this.number, numbers);
+        };
+        NumbersHelper.in = function (number, numbers) {
             for (var i = 0; i < numbers.length; i++) {
-                if (numbers[i] == this.number)
+                if (numbers[i] == number)
                     return true;
             }
             return false;
         };
         NumbersHelper.prototype.toFixed = function (precision) {
-            return +(Math.round(+(this.number.toString() + 'e' + precision)).toString() + 'e' + -precision);
+            return NumbersHelper.toFixed(this.number, precision);
+        };
+        NumbersHelper.toFixed = function (number, precision) {
+            return +(Math.round(+(number.toString() + 'e' + precision)).toString() + 'e' + -precision);
         };
         return NumbersHelper;
     }());

@@ -25,11 +25,14 @@
             return date;
         };
         DatesHelper.prototype.between = function (lower, upper) {
+            return DatesHelper.between(this.date, lower, upper);
+        };
+        DatesHelper.between = function (date, lower, upper) {
             if (util.isUndefined(lower))
                 lower = new Date();
             if (util.isUndefined(upper))
                 upper = new Date(9999999999999);
-            return (lower <= this.date && this.date <= upper);
+            return (lower <= date && date <= upper);
         };
         DatesHelper.prototype.addYears = function (years) { return this.addMonths(years * 12); };
         DatesHelper.prototype.addMonths = function (months) {

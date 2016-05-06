@@ -19,10 +19,24 @@ export class DatesHelper {
         return date;
     }
 
+    /**
+     * Returns weither the date is in between two numbers.
+     * @param lower The lower inclusive bound.
+     * @param upper The upper inclusive bound.
+     */
     between(lower?: Date, upper?: Date): boolean {
+        return DatesHelper.between(this.date, lower, upper);
+    }
+    /**
+     * Returns weither a date is in between two numbers.
+     * @param date The date which to compare with.
+     * @param lower The lower inclusive bound.
+     * @param upper The upper inclusive bound.
+     */
+    static between(date: Date, lower?: Date, upper?: Date): boolean {
         if (util.isUndefined(lower)) lower = new Date();
         if (util.isUndefined(upper)) upper = new Date(9999999999999);
-        return (lower <= this.date && this.date <= upper);
+        return (lower <= date && date <= upper);
     }
 
     addYears(years: number): DatesHelper { return this.addMonths(years * 12); }

@@ -19,11 +19,18 @@
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i - 0] = arguments[_i];
             }
-            for (var i = 0; i < arguments.length; i++) {
-                var regex = new RegExp("\\{" + i + "\\}", "g");
-                this.str = this.str.replace(regex, arguments[i]);
+            return StringsHelper.format.apply(null, [this.str].concat(args));
+        };
+        StringsHelper.format = function (str) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
             }
-            return this.str;
+            for (var i = 0; i < args.length; i++) {
+                var regex = new RegExp("\\{" + i + "\\}", "g");
+                str = str.replace(regex, args[i]);
+            }
+            return str;
         };
         return StringsHelper;
     }());

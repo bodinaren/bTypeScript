@@ -19,13 +19,25 @@ describe("Dates", () => {
         expect(Dates(d).between(before, d)).toEqual(true);
         expect(Dates(before).between(before, after)).toEqual(true);
         expect(Dates(after).between(before, after)).toEqual(true);
+
+        expect(DatesHelper.between(d, before, after)).toEqual(true);
+        expect(DatesHelper.between(d, d, after)).toEqual(true);
+        expect(DatesHelper.between(d, before, d)).toEqual(true);
+        expect(DatesHelper.between(before, before, after)).toEqual(true);
+        expect(DatesHelper.between(after, before, after)).toEqual(true);
     });
 
-    it("addMinutes", () => {
+    it("addWeeks", () => {
         var d = new Date(1500000000000);
         expect(Dates(d).addWeeks(1).date).toEqual(new Date(1500000000000 + 7 * 24 * 60 * 60 * 1000));
 
         d = new Date(1500000000000);
+        // test with 4 years to make sure we get exactly 1 leap year, no more, no less.
+        expect(Dates(d).addYears(4).date).toEqual(new Date(1500000000000 + (365 + 365 + 365 + 366) * 24 * 60 * 60 * 1000));
+    });
+
+    it("addYears", () => {
+        var d = new Date(1500000000000);
         // test with 4 years to make sure we get exactly 1 leap year, no more, no less.
         expect(Dates(d).addYears(4).date).toEqual(new Date(1500000000000 + (365 + 365 + 365 + 366) * 24 * 60 * 60 * 1000));
     });

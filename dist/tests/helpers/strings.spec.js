@@ -14,6 +14,10 @@
             expect(strings_1.default("{0}, {1} and {2}!").format("Hello", "World", "everybody else")).toEqual("Hello, World and everybody else!");
             expect(strings_1.default("{0}{1}{2}").format("a", "b", "c")).toEqual("abc");
             expect(strings_1.default("{0}{1}{0}{2}{0}").format("a", "b", "c")).toEqual("abaca");
+            expect(strings_1.StringsHelper.format("Hello, {0}!", "World")).toEqual("Hello, World!");
+            expect(strings_1.StringsHelper.format("{0}, {1} and {2}!", "Hello", "World", "Gusy")).toEqual("Hello, World and Gusy!");
+            expect(strings_1.StringsHelper.format("{0}{1}{2}", "a", "b", "c")).toEqual("abc");
+            expect(strings_1.StringsHelper.format("{0}{1}{0}{2}{0}", "a", "b", "c")).toEqual("abaca");
         });
     });
 });

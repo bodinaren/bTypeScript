@@ -7,7 +7,7 @@ export default class Iterator {
     constructor(source: any[] | Iterator) {
         this._source = source;
     }
-    
+
     getIteratorFromPipeline(type: any): any {
         if (this instanceof type) return this;
         let source = this;
@@ -15,7 +15,7 @@ export default class Iterator {
         }
         return source;
     }
-    
+
     protected _next(): any {
         let n: any = undefined;
         if (this._source instanceof Iterator) {

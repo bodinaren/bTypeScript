@@ -1,7 +1,7 @@
 import * as Util from "../util";
 
 export default class LinkedList<T> {
-    
+
     private _first: LinkedListNode;
     private _last: LinkedListNode;
 

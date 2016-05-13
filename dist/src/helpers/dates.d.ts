@@ -4,6 +4,7 @@ export declare class DatesHelper {
     constructor(date: Date);
     static toDate(date: any): Date;
     between(lower?: Date, upper?: Date): boolean;
+    static between(date: Date, lower?: Date, upper?: Date): boolean;
     addYears(years: number): DatesHelper;
     addMonths(months: number): DatesHelper;
     addWeeks(week: number): DatesHelper;

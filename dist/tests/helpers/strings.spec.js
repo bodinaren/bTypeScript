@@ -1,24 +1,16 @@
-(function (factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports", "../../src/helpers/strings"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    var strings_1 = require("../../src/helpers/strings");
-    describe("Strings", function () {
-        it("format", function () {
-            expect(strings_1.default("Hello, {0}!").format("World")).toEqual("Hello, World!");
-            expect(strings_1.default("{0}, {1} and {2}!").format("Hello", "World", "everybody else")).toEqual("Hello, World and everybody else!");
-            expect(strings_1.default("{0}{1}{2}").format("a", "b", "c")).toEqual("abc");
-            expect(strings_1.default("{0}{1}{0}{2}{0}").format("a", "b", "c")).toEqual("abaca");
-            expect(strings_1.StringsHelper.format("Hello, {0}!", "World")).toEqual("Hello, World!");
-            expect(strings_1.StringsHelper.format("{0}, {1} and {2}!", "Hello", "World", "Gusy")).toEqual("Hello, World and Gusy!");
-            expect(strings_1.StringsHelper.format("{0}{1}{2}", "a", "b", "c")).toEqual("abc");
-            expect(strings_1.StringsHelper.format("{0}{1}{0}{2}{0}", "a", "b", "c")).toEqual("abaca");
-        });
+"use strict";
+var strings_1 = require("../../src/helpers/strings");
+var chai_1 = require('chai');
+describe("Strings", function () {
+    it("format", function () {
+        chai_1.expect(strings_1.default("Hello, {0}!").format("World")).to.eql("Hello, World!");
+        chai_1.expect(strings_1.default("{0}, {1} and {2}!").format("Hello", "World", "everybody else")).to.eql("Hello, World and everybody else!");
+        chai_1.expect(strings_1.default("{0}{1}{2}").format("a", "b", "c")).to.eql("abc");
+        chai_1.expect(strings_1.default("{0}{1}{0}{2}{0}").format("a", "b", "c")).to.eql("abaca");
+        chai_1.expect(strings_1.StringsHelper.format("Hello, {0}!", "World")).to.eql("Hello, World!");
+        chai_1.expect(strings_1.StringsHelper.format("{0}, {1} and {2}!", "Hello", "World", "Gusy")).to.eql("Hello, World and Gusy!");
+        chai_1.expect(strings_1.StringsHelper.format("{0}{1}{2}", "a", "b", "c")).to.eql("abc");
+        chai_1.expect(strings_1.StringsHelper.format("{0}{1}{0}{2}{0}", "a", "b", "c")).to.eql("abaca");
     });
 });
 //# sourceMappingURL=strings.spec.js.map

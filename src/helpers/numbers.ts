@@ -4,16 +4,16 @@ import * as util from "../util";
  * Shorthand function to create a NumbersHelper object.
  * @param number The number on which to perform the various functions.
  */
-export default function Numbers(number: number): NumbersHelper { return new NumbersHelper(number); }
+export default function Numbers(num: number): NumbersHelper { return new NumbersHelper(num); }
 export class NumbersHelper {
-    number: number;
+    num: number;
 
     /**
      * Creates a NumbersHelper object.
      * @param number The number on which to perform the various functions.
      */
-    constructor(number: number) {
-        this.number = number;
+    constructor(num: number) {
+        this.num = num;
     }
 
     /**
@@ -22,7 +22,7 @@ export class NumbersHelper {
      * @param upper The upper inclusive bound.
      */
     between(lower?: number, upper?: number): boolean {
-        return NumbersHelper.between(this.number, lower, upper);
+        return NumbersHelper.between(this.num, lower, upper);
     }
     /**
      * Returns weither a number is in between two numbers.
@@ -30,10 +30,10 @@ export class NumbersHelper {
      * @param lower The lower inclusive bound.
      * @param upper The upper inclusive bound.
      */
-    static between(number: number, lower?: number, upper?: number): boolean {
+    static between(num: number, lower?: number, upper?: number): boolean {
         if (util.isUndefined(lower)) lower = Number.MIN_VALUE;
         if (util.isUndefined(upper)) upper = Number.MAX_VALUE;
-        return (lower <= number && number <= upper);
+        return (lower <= num && num <= upper);
     }
 
     /**
@@ -41,16 +41,16 @@ export class NumbersHelper {
      * @param numbers The array of numbers to compare with.
      */
     in(numbers: number[]): boolean {
-        return NumbersHelper.in(this.number, numbers);
+        return NumbersHelper.in(this.num, numbers);
     }
     /**
      * Returns weither a number is in an array.
      * @param number The number which to compare with.
      * @param numbers The array of numbers to compare with.
      */
-    static in(number: number, numbers: number[]): boolean {
+    static in(num: number, numbers: number[]): boolean {
         for (let i = 0; i < numbers.length; i++) {
-            if (numbers[i] == number) return true;
+            if (numbers[i] == num) return true;
         }
         return false;
     }
@@ -61,14 +61,14 @@ export class NumbersHelper {
      * @param precision How many decimals the number should have.
      */
     toFixed(precision) {
-        return NumbersHelper.toFixed(this.number, precision);
+        return NumbersHelper.toFixed(this.num, precision);
     }
     /**
      * Safely round numbers in JS without hitting imprecisions of floating-point arithmetics
      * Kindly borrowed from AngularJS: https://github.com/angular/angular.js/blob/g3_v1_3/src/ng/filter/filters.js#L173
      * @param precision How many decimals the number should have.
      */
-    static toFixed(number: number, precision) {
-        return +(Math.round(+(number.toString() + 'e' + precision)).toString() + 'e' + -precision);
+    static toFixed(num: number, precision) {
+        return +(Math.round(+(num.toString() + "e" + precision)).toString() + "e" + -precision);
     }
 }

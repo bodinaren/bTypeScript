@@ -6,7 +6,6 @@ import SkipIterator from "./skip";
 import SkipWhileIterator from "./skipWhile";
 import TakeIterator from "./take";
 import TakeWhileIterator from "./takeWhile";
-import LinqOrdered from "./linqOrdered";
 import * as Util from "../util";
 
 export default class Linq {
@@ -47,6 +46,13 @@ export default class Linq {
     map(callback: (item: any, idx: number) => any): Linq {
         return new Linq(new MapIterator(this._source, callback));
     }
+    /**
+     * Creates a new sequence with the results of calling a provided function on every element in this array.
+     * @param callback Function that produces an element of the new sequence
+     */
+    static map<T, U>(source: T[], callback: (item: any, idx: number) => U): U[] {
+        return new Linq(source).map(callback).toArray();
+    }
 
     /**
      * Filters a sequence of values based on a predicate.
@@ -59,8 +65,22 @@ export default class Linq {
      * Filters a sequence of values based on a predicate.
      * @param predicate A function to test each element for a condition.
      */
+    static filter<T>(source: T[], predicate: (predicate) => boolean): T[] {
+        return new Linq(source).filter(predicate).toArray();
+    }
+    /**
+     * Filters a sequence of values based on a predicate.
+     * @param predicate A function to test each element for a condition.
+     */
     where(predicate: (predicate) => boolean): Linq {
         return this.filter(predicate);
+    }
+    /**
+     * Filters a sequence of values based on a predicate.
+     * @param predicate A function to test each element for a condition.
+     */
+    static where<T>(source: T[], predicate: (predicate) => boolean): T[] {
+        return Linq.filter(source, predicate);
     }
 
     /**
@@ -78,6 +98,13 @@ export default class Linq {
     take(count: number): Linq {
         return new Linq(new TakeIterator(this._source, count));
     }
+    /**
+     * Returns a specified number of contiguous elements from the start of a sequence.
+     * @param count The number of elements to return.
+     */
+    static take<T>(source: T[], count: number): T[] {
+        return new Linq(source).take(count).toArray();
+    }
 
     /**
      * Returns elements from a sequence as long as a specified condition is true.
@@ -85,6 +112,13 @@ export default class Linq {
      */
     takeWhile(predicate: Util.IPredicate<any> = Util.defaultPredicate) {
         return new Linq(new TakeWhileIterator(this._source, predicate));
+    }
+    /**
+     * Returns elements from a sequence as long as a specified condition is true.
+     * @param predicate A function to test each element for a condition.
+     */
+    static takeWhile<T>(source: T[], predicate: Util.IPredicate<any> = Util.defaultPredicate): T[] {
+        return new Linq(source).takeWhile(predicate).toArray();
     }
 
     /**
@@ -94,6 +128,13 @@ export default class Linq {
     skip(count: number): Linq {
         return new Linq(new SkipIterator(this._source, count));
     }
+    /**
+     * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+     * @param count The number of elements to skip before returning the remaining elements.
+     */
+    static skip<T>(source: T[], count: number): T[] {
+        return new Linq(source).skip(count).toArray();
+    }
 
     /**
      * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
@@ -102,15 +143,30 @@ export default class Linq {
     skipWhile(predicate: Util.IPredicate<any> = Util.defaultPredicate) {
         return new Linq(new SkipWhileIterator(this._source, predicate));
     }
+    /**
+     * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+     * @param predicate A function to test each element for a condition.
+     */
+    static skipWhile<T>(source: T[], predicate: Util.IPredicate<any> = Util.defaultPredicate): T[] {
+        return new Linq(source).skipWhile(predicate).toArray();
+    }
 
     /**
      * Sorts the elements of a sequence in ascending order by using a specified comparer.
      * @param keySelector A function to extract a key from an element.
      * @param comparer An IComparer<any> to compare keys.
      */
-    orderBy(keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): LinqOrdered {
+    orderBy(keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): OrderedLinq {
         let selectorFn = this._makeValuePredicate(keySelector);
-        return new LinqOrdered(new OrderIterator(this._source, selectorFn, comparer, false));
+        return new OrderedLinq(new OrderIterator(this._source, selectorFn, comparer, false));
+    }
+    /**
+     * Sorts the elements of a sequence in ascending order by using a specified comparer.
+     * @param keySelector A function to extract a key from an element.
+     * @param comparer An IComparer<any> to compare keys.
+     */
+    static orderBy<T>(source: T[], keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): T[] {
+        return new Linq(source).orderBy(keySelector, comparer).toArray();
     }
 
     /**
@@ -118,9 +174,17 @@ export default class Linq {
      * @param keySelector A function to extract a key from an element.
      * @param comparer An IComparer<any> to compare keys.
      */
-    orderByDesc(keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): LinqOrdered {
+    orderByDesc(keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): OrderedLinq {
         let selectorFn = this._makeValuePredicate(keySelector);
-        return new LinqOrdered(new OrderIterator(this._source, selectorFn, comparer, true));
+        return new OrderedLinq(new OrderIterator(this._source, selectorFn, comparer, true));
+    }
+    /**
+     * Sorts the elements of a sequence in descending order by using a specified comparer.
+     * @param keySelector A function to extract a key from an element.
+     * @param comparer An IComparer<any> to compare keys.
+     */
+    static orderByDesc<T>(source: T[], keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): T[] {
+        return new Linq(source).orderByDesc(keySelector, comparer).toArray();
     }
 
     /**
@@ -134,6 +198,13 @@ export default class Linq {
         }
         return sum;
     }
+    /**
+     * Computes the sum of the sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @param selector A transform function to apply to each element.
+     */
+    static sum(source: any[], selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return new Linq(source).sum(selector);
+    }
 
     /**
      * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -145,6 +216,13 @@ export default class Linq {
             total += selector(arr[i]);
         }
         return total / arr.length;
+    }
+    /**
+     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @param selector
+     */
+    static average(source: any[], selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return new Linq(source).average(selector);
     }
 
     /**
@@ -164,6 +242,14 @@ export default class Linq {
         }
         return false;
     }
+    /**
+     * Determines whether any element of a sequence satisfies a condition.
+     * @param predicate A function to test each element for a condition. If not provided, determines whether the sequence contains any elements.
+     * @param invert If true, determines whether any element of a sequence does not satisfies a condition.
+     */
+    static any(source: any[], predicate: (predicate) => boolean, invert: boolean = false): boolean {
+        return new Linq(source).any(predicate, invert);
+    }
 
     /**
      * Determines whether all elements of a sequence satisfy a condition.
@@ -173,17 +259,34 @@ export default class Linq {
     all(predicate: (predicate) => boolean, invert: boolean = false): boolean {
         return !(this.any(predicate, !invert));
     }
+    /**
+     * Determines whether all elements of a sequence satisfy a condition.
+     * @param predicate A function to test each element for a condition.
+     * @param invert If true, determines whether none elements of a sequence satisfy a condition.
+     */
+    static all(source: any[], predicate: (predicate) => boolean, invert: boolean = false): boolean {
+        return new Linq(source).all(predicate, invert);
+    }
 
     /**
      * Returns the matching item in the array. If there are several matches an exception will be thrown
      * @param predicate
-     * @throws The input sequence contains more than one element.
+     * @throws Error.
      */
-    single(predicate: (predicate) => boolean): any {
+    single<T>(predicate: (predicate) => boolean): T {
         let arr = this.filter(predicate).take(2).toArray();
-        if (arr.length == 2) throw "The input sequence contains more than one element.";
+        if (arr.length == 0) throw new Error("The sequence is empty.");
+        if (arr.length == 2) throw new Error("The input sequence contains more than one element.");
         if (arr.length == 1) return arr[0];
         else return undefined;
+    }
+    /**
+     * Returns the matching item in the array. If there are several matches an exception will be thrown
+     * @param predicate
+     * @throws Error
+     */
+    static single<T>(source: T[], predicate: (predicate) => boolean): T {
+        return new Linq(source).single<T>(predicate);
     }
 
     /**
@@ -195,7 +298,14 @@ export default class Linq {
         if (arr.length == 1) return arr[0];
         else return undefined;
     }
-    
+    /**
+     * Returns the first matching item in the array.
+     * @param predicate
+     */
+    static first(source: any[], predicate: (predicate) => boolean = (() => true)): any {
+        return new Linq(source).first(predicate);
+    }
+
     /**
      * Returns the last matching item in the array.
      * @param predicate
@@ -203,7 +313,14 @@ export default class Linq {
     last(predicate: (predicate) => boolean = (() => true)): any {
         return this.reverse().first(predicate);
     }
-    
+    /**
+     * Returns the last matching item in the array.
+     * @param predicate
+     */
+    static last(source: any[], predicate: (predicate) => boolean = (() => true)): any {
+        return new Linq(source).last(predicate);
+    }
+
     /**
      * Get a list of items that exists in all datasets.
      * @param a The first dataset.
@@ -215,7 +332,7 @@ export default class Linq {
 
         let list = (a instanceof Linq) ? a : new Linq(Util.cast<any[]>(a));
         lists.push((b instanceof Linq) ? b : new Linq(Util.cast<any[]>(b)));
-        more.forEach(dataset => {
+        more.forEach((dataset) => {
             lists.push((dataset instanceof Linq) ? dataset : new Linq(Util.cast<any[]>(dataset)));
         });
 
@@ -235,7 +352,7 @@ export default class Linq {
      * @param more If you have even more dataset to compare to.
      */
     intersect(other: any[] | Linq, ...more: Array<any[] | Linq>): Linq {
-        return new Linq(Linq.intersect(this, other, more));
+        return new Linq(Linq.intersect(this, other, ...more));
     }
 
     /**
@@ -258,7 +375,7 @@ export default class Linq {
                 let exists = false;
                 lists.forEach(other => {
                     if (list === other) return;
-                    if (other.contains(item)) exists = true;
+                    if (other.contains(item)) (exists = true);
                 });
                 if (!exists) result.push(item);
             });
@@ -272,7 +389,7 @@ export default class Linq {
      * @param more If you have even more dataset to compare to.
      */
     except(other: any[] | Linq, ...more: Array<any[] | Linq>): Linq {
-        return new Linq(Linq.intersect(this, more));
+        return new Linq(Linq.except(this, other, ...more));
     }
 
     /**
@@ -310,12 +427,14 @@ export default class Linq {
         let i,
             arr = [],
             original = this.toArray(),
-            pred = this._makeValuePredicate(keySelector);
+            pred = this._makeValuePredicate(keySelector),
+            group: IGrouping,
+            groupValue: any;
 
         for (i = 0; i < original.length; i++) {
 
-            let groupValue = pred(original[i]),
-                group = new Linq(arr).single(x => x.key == groupValue);
+            groupValue = pred(original[i]);
+            group = new Linq(arr).first(x => x.key == groupValue);
 
             if (!group) {
                 group = {
@@ -330,7 +449,14 @@ export default class Linq {
 
         return new Linq(arr);
     }
-    
+    /**
+     * Groups the elements of a sequence according to a specified key selector function.
+     * @param keySelector A function to extract the key for each element.
+     */
+    static groupBy(source: any[], keySelector: Util.ISelector<any, any> | string): IGrouping[] {
+        return new Linq(source).groupBy(keySelector).toArray();
+    }
+
     /**
      * Executes the pipeline and return the resulting array.
      */
@@ -368,4 +494,43 @@ export default class Linq {
         }
     }
 
+}
+
+export function LQ(source: any[]) {
+    return new Linq(source);
+}
+
+export interface IGrouping {
+    key: any;
+    values: any[];
+}
+
+export class OrderedLinq extends Linq {
+    constructor(source: any[] | Iterator) {
+        super(source);
+    }
+
+    /**
+     * Sorts the elements of a sequence in descending order by using a specified comparer.
+     * @param keySelector A function to extract a key from an element.
+     * @param comparer An IComparer<any> to compare keys.
+     */
+    thenBy(keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): OrderedLinq {
+        let selectorFn = this._makeValuePredicate(keySelector);
+        let orderIterator: OrderIterator = this._source.getIteratorFromPipeline(OrderIterator);
+        orderIterator.thenBy(selectorFn, comparer, false);
+        return this;
+    }
+
+    /**
+     * Sorts the elements of a sequence in descending order by using a specified comparer.
+     * @param keySelector A function to extract a key from an element.
+     * @param comparer An IComparer<any> to compare keys.
+     */
+    thenByDesc(keySelector: Util.ISelector<any, any> | string, comparer: Util.IComparer<any> = Util.defaultComparer): OrderedLinq {
+        let selectorFn = this._makeValuePredicate(keySelector);
+        let orderIterator: OrderIterator = this._source.getIteratorFromPipeline(OrderIterator);
+        orderIterator.thenBy(selectorFn, comparer, true);
+        return this;
+    }
 }

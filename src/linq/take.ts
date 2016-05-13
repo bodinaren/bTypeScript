@@ -3,7 +3,7 @@ import Iterator from "./iterator";
 export default class TakeIterator extends Iterator {
     private _count: number;
     private _counter: number = 0;
-    
+
     constructor(source: any[] | Iterator, count: number) {
         super(source);
         this._count = count;

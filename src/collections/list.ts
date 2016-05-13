@@ -15,7 +15,7 @@ export default class List<T> {
     constructor(source?: T[]) {
         this._source = source || [];
     }
-    
+
     /**
      * Get the list as a array.
      */
@@ -55,7 +55,7 @@ export default class List<T> {
     forEach(callback: Util.ILoopFunction<T>): void {
         this._source.forEach(callback);
     }
-    
+
     /**
      * Searches for the specified object and returns the zero-based index of the first occurrence within the specified range of elements in the list.
      * @param item The object to locate in the list.
@@ -79,7 +79,7 @@ export default class List<T> {
         if (idx < index + 1 - count) return -1;
         return idx;
     }
-    
+
     /**
      * Inserts an element into the list at the specified index.
      * @param index The zero-based index at which item should be inserted.
@@ -177,7 +177,7 @@ export default class List<T> {
         });
         return sum;
     }
-    
+
     /**
      * Reverses the order of the elements in the specified range.
      * If index and count is omitted the entire list will be reversed.

@@ -6,7 +6,7 @@ export default class BinaryTree<T> {
     private _compare: Util.IComparer<T>;
 
     length: number = 0;
-    
+
     constructor(compareFunction?: Util.IComparer<T>) {
         this._compare = compareFunction || Util.defaultComparer;
     }
@@ -121,7 +121,7 @@ export default class BinaryTree<T> {
      */
     toArray(): T[] {
         let arr: Array<T> = [];
-        this.forEach(item => { arr.push(item) });
+        this.forEach(item => { arr.push(item); });
         return arr;
     }
 
@@ -196,7 +196,7 @@ export default class BinaryTree<T> {
      * Traverse the tree one level at a time and execute callback on each an item
      * @param callback What should we do when we get there.
      */
-    levelTraversal(callback: Util.ILoopFunction<T>): void { this.levelTraversalAux(this._root, callback, { stop: false }) }
+    levelTraversal(callback: Util.ILoopFunction<T>): void { this.levelTraversalAux(this._root, callback, { stop: false }); }
     /**
      * Traverse the tree one level at a time and execute callback on each an item
      * @private
@@ -269,7 +269,7 @@ export default class BinaryTree<T> {
         return Math.max(this.depthAux(tree.left), this.depthAux(tree.right)) + 1;
 
     }
-    
+
     /**
      * Search the tree for a specific item.
      * @private

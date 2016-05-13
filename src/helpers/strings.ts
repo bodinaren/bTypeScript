@@ -7,7 +7,7 @@ import * as util from "../util";
 export default function Strings(str: string): StringsHelper { return new StringsHelper(str); }
 export class StringsHelper {
     str: string;
-    
+
     /**
      * Creates a StringsHelper object.
      * @param str The string on which to perform the various functions.
@@ -15,9 +15,9 @@ export class StringsHelper {
     constructor(str: string) {
         this.str = str;
     }
-    
+
     format(...args: string[]) {
-        return StringsHelper.format.apply(null, [this.str].concat(args));
+        return StringsHelper.format.apply(undefined, [this.str].concat(args));
     }
 
     static format(str: string, ...args: string[]): string {

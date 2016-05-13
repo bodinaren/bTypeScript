@@ -1,7 +1,7 @@
 import LinkedList from "./linkedList";
 
 export default class Stack<T> {
-    
+
     private _list: LinkedList<T>;
 
     length: number;

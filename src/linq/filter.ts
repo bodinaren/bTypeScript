@@ -3,7 +3,7 @@ import * as Util from "../util";
 
 export default class FilterIterator extends Iterator {
     private _callback: (predicate) => any;
-    
+
     constructor(source: any[] | Iterator, callback: (predicate) => any) {
         super(source);
         this._callback = callback;

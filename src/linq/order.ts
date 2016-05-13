@@ -4,23 +4,24 @@ import * as Util from "../util";
 export default class OrderIterator extends Iterator {
     private _orders: LinqOrder[];
     private _descending: boolean;
-    
+    private _isOrdered: boolean = false;
+
     constructor(source: any[] | Iterator, keySelector: (x) => any, comparer: Util.IComparer<any> = Util.defaultComparer, descending: boolean = false) {
         super(source);
         this._orders = [new LinqOrder(keySelector, comparer, descending)];
         this._descending = descending;
         this._buffers = true;
     }
-    
+
     next(): any {
-        if (this._source instanceof Iterator) {
+        if (!this._isOrdered) {
             let arr = [], item;
 
             do {
                 item = this._next();
                 if (item) arr.push(item);
             } while (item);
-            
+
             this._source = arr.sort((a, b) => {
                 let i = 0, rs;
                 do {
@@ -28,6 +29,7 @@ export default class OrderIterator extends Iterator {
                 } while (rs === 0);
                 return rs;
             });
+            this._isOrdered = true;
         }
         return this._next();
     }

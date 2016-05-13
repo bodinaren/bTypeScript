@@ -1,19 +1,20 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import Stack from "../../src/collections/stack";
+import {expect} from 'chai';
 
-describe("Stack", () => {
-    it("push", () => {
+describe("Stack", function() {
+    it("push", function() {
         var list = new Stack();
 
-        expect(list.push(6)).toEqual(1);
-        expect(list.push(7)).toEqual(2);
-        expect(list.push(8)).toEqual(3);
-        expect(list.push(9)).toEqual(4);
-        expect(list.length).toEqual(4);
+        expect(list.push(6)).to.eql(1);
+        expect(list.push(7)).to.eql(2);
+        expect(list.push(8)).to.eql(3);
+        expect(list.push(9)).to.eql(4);
+        expect(list.length).to.eql(4);
     });
 
-    it("pop", () => {
+    it("pop", function() {
         var list = new Stack();
 
         list.push(6);
@@ -21,14 +22,14 @@ describe("Stack", () => {
         list.push(8);
         list.push(9);
 
-        expect(list.pop()).toEqual(9);
-        expect(list.pop()).toEqual(8);
-        expect(list.pop()).toEqual(7);
-        expect(list.pop()).toEqual(6);
-        expect(list.length).toEqual(0);
+        expect(list.pop()).to.eql(9);
+        expect(list.pop()).to.eql(8);
+        expect(list.pop()).to.eql(7);
+        expect(list.pop()).to.eql(6);
+        expect(list.length).to.eql(0);
     });
 
-    it("peek", () => {
+    it("peek", function() {
         var list = new Stack();
 
         list.push(6);
@@ -36,8 +37,8 @@ describe("Stack", () => {
         list.push(8);
         list.push(9);
 
-        expect(list.peek()).toEqual(9);
-        expect(list.length).toEqual(4);
+        expect(list.peek()).to.eql(9);
+        expect(list.length).to.eql(4);
     });
 
 });

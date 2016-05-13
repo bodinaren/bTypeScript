@@ -37,8 +37,8 @@ new Linq(arr1).intersect(arr2, arr3).toArray(); // [5];
 new Linq(arr1)
     .filter(x => x % 2 == 1) // [9, 7, 5, 3, 1]
     .map(x => x * 2) // [18, 14, 10, 6, 2]
-    .skip(3) // [18, 14, 10]
-    .sum(); // 42
+    .skip(3) // [6, 2]
+    .sum(); // 8
 ```
 
 #### Short-hand ####
@@ -60,8 +60,8 @@ LQ(arr1).intersect(arr2, arr3).toArray(); // [5];
 LQ(arr1)
     .filter(x => x % 2 == 1) // [9, 7, 5, 3, 1]
     .map(x => x * 2) // [18, 14, 10, 6, 2]
-    .skip(3) // [18, 14, 10]
-    .sum(); // 42
+    .skip(3) // [6, 2]
+    .sum(); // 8
 ```
 
 #### Static calls ####

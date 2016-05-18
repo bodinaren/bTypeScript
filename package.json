@@ -1,7 +1,12 @@
 {
-  "name": "bTypeScript",
+  "name": "btypescript",
   "version": "1.0.0",
   "description": "TypeScript collections, Linq and various helpers.",
+  "main": "./dist/src/bTypeScript.js",
+  "typings": "./dist/src/bTypeScript.d.ts",
+  "typescript": {
+    "main": "./src/bTypeScript.ts"
+  },
   "scripts": {
     "devtools": "npm install && typings install",
     "tsc": "tsc",

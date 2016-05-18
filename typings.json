@@ -1,4 +1,6 @@
 {
+  "name": "btypescript",
+  "version": false,
   "ambientDevDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160317120654",
     "jasmine": "registry:dt/jasmine#2.2.0+20160505161446"

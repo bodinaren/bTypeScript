@@ -1,12 +1,15 @@
 # bTypeScript
 TypeScript collections, Linq and various helpers.
 
-##Examples##
+## Install
+I'm still working on the packaging, install directly from Git for now: `npm install https://github.com/bodinaren/bTypeScript`
+
+## Examples
 See tests for a complete set of examples.
 
-###Collections###
+### Collections
 ```
-import {Queue, List} from './src/collections';
+import {Queue, List} from 'btypescript';
 
 var q = new Queue<number>();
 q.enqueue(10);
@@ -17,11 +20,11 @@ l.addRange(List.range(10, 20));
 l.count(); // 20
 ```
 
-### Linq ###
+### Linq
 
-#### Usage ####
+#### Usage
 ```
-import Linq from './src/linq';
+import {Linq} from 'btypescript';
 
 var arr1 = [2, 4, 6, 8, 9, 7, 5, 3, 1],
     arr2 = [0, 3, 5, 7, 10],
@@ -44,7 +47,7 @@ new Linq(arr1)
 #### Short-hand ####
 You can also use the short-hand LQ.
 ```
-import {LQ} from './src/linq'; // Note { } around LQ!
+import {LQ} from 'btypescript';
 
 var arr1 = [2, 4, 6, 8, 9, 7, 5, 3, 1],
     arr2 = [0, 3, 5, 7, 10],
@@ -67,7 +70,7 @@ LQ(arr1)
 #### Static calls ####
 If you're not looking to build chains you can also use static versions of all functions, no trailing `.toArray()` required.
 ```
-import Linq from './src/linq';
+import {Linq} from 'btypescript';
 
 var arr1 = [2, 4, 6, 8, 9, 7, 5, 3, 1],
     arr2 = [0, 3, 5, 7, 10],

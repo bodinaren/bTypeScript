@@ -76,6 +76,10 @@ var LinkedList = (function () {
         }
         return --this.length;
     };
+    LinkedList.prototype.clear = function () {
+        this._first = this._last = undefined;
+        this.length = 0;
+    };
     return LinkedList;
 }());
 Object.defineProperty(exports, "__esModule", { value: true });

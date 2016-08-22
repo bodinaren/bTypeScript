@@ -7,8 +7,8 @@ export default class Linq {
     _makeBoolPredicate(predicate: any): (predicate) => boolean;
     map(callback: (item: any, idx: number) => any): Linq;
     static map<T, U>(source: T[], callback: (item: any, idx: number) => U): U[];
-    filter(predicate: (predicate) => boolean): Linq;
-    static filter<T>(source: T[], predicate: (predicate) => boolean): T[];
+    filter(predicate: (value, index) => boolean): Linq;
+    static filter<T>(source: T[], predicate: (value, index) => boolean): T[];
     where(predicate: (predicate) => boolean): Linq;
     static where<T>(source: T[], predicate: (predicate) => boolean): T[];
     reverse(): Linq;
@@ -47,8 +47,8 @@ export default class Linq {
     groupBy(keySelector: Util.ISelector<any, any> | string): Linq;
     static groupBy(source: any[], keySelector: Util.ISelector<any, any> | string): IGrouping[];
     toArray(): any[];
+    forEach(callback: Util.ILoopFunction<boolean>): boolean;
     private contains(a);
-    private forEach(callback);
 }
 export declare function LQ(source: any[]): Linq;
 export interface IGrouping {

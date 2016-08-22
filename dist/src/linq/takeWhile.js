@@ -8,14 +8,14 @@ var iterator_1 = require("./iterator");
 var Util = require("../util");
 var TakeWhileIterator = (function (_super) {
     __extends(TakeWhileIterator, _super);
-    function TakeWhileIterator(source, _predicate) {
-        if (_predicate === void 0) { _predicate = Util.defaultPredicate; }
+    function TakeWhileIterator(source, predicate) {
+        if (predicate === void 0) { predicate = Util.defaultPredicate; }
         _super.call(this, source);
-        this._predicate = _predicate;
+        this._predicate = predicate;
     }
     TakeWhileIterator.prototype.next = function () {
         var n = this._next();
-        if (this._predicate(n)) {
+        if (!!this._predicate(n, this._idx)) {
             return n;
         }
     };

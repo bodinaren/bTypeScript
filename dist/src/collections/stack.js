@@ -16,6 +16,9 @@ var Stack = (function () {
     Stack.prototype.peek = function () {
         return this._list.get(0);
     };
+    Stack.prototype.clear = function () {
+        this._list.clear();
+    };
     return Stack;
 }());
 Object.defineProperty(exports, "__esModule", { value: true });

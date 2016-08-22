@@ -2,9 +2,9 @@ import Iterator from "./iterator";
 import * as Util from "../util";
 
 export default class FilterIterator extends Iterator {
-    private _callback: (predicate) => any;
+    private _callback: Util.IPredicate<any>;
 
-    constructor(source: any[] | Iterator, callback: (predicate) => any) {
+    constructor(source: any[] | Iterator, callback: Util.IPredicate<any> = Util.defaultPredicate) {
         super(source);
         this._callback = callback;
     }
@@ -16,8 +16,8 @@ export default class FilterIterator extends Iterator {
             item = this._next();
             if (Util.isUndefined(item)) break;
 
-            if (true === this._callback(item)) break;
-        } while (item);
+            if (this._callback(item, this._idx)) break;
+        } while (!Util.isUndefined(item));
 
         return item;
     }

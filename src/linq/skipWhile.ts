@@ -14,7 +14,7 @@ export default class SkipWhileIterator extends Iterator {
         let item;
         do {
             item = this._next();
-        } while (!this._done && this._predicate(item));
+        } while (!this._done && this._predicate(item, this._idx));
 
         this._done = true;
         return item;

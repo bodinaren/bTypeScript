@@ -17,16 +17,17 @@ export default class OrderIterator extends Iterator {
         if (!this._isOrdered) {
             let arr = [], item;
 
+            // can't someone else do this? e.g. FilterIterator?
             do {
                 item = this._next();
-                if (item) arr.push(item);
-            } while (item);
+                if (!Util.isUndefined(item)) arr.push(item);
+            } while (!Util.isUndefined(item));
 
             this._source = arr.sort((a, b) => {
                 let i = 0, rs;
                 do {
                     rs = this._orders[i++].compare(a, b);
-                } while (rs === 0);
+                } while (rs === 0 && this._orders.length < i);
                 return rs;
             });
             this._isOrdered = true;
@@ -44,7 +45,7 @@ class LinqOrder {
     private _comparer: Util.IComparer<any>;
     private _descending: boolean;
 
-    constructor(keySelector: Util.ISelector<any, any>, comparer: Util.IComparer<any>, descending: boolean = false) {
+    constructor(keySelector: Util.ISelector<any, any>, comparer: Util.IComparer<any> = Util.defaultComparer, descending: boolean = false) {
         this._keySelector = keySelector;
         this._comparer = comparer;
         this._descending = descending;

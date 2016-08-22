@@ -1,7 +1,7 @@
 ﻿/// <reference path="../typings/main.d.ts" />
 
 import * as Util from "../src/util";
-import Linq, {TakeIterator, TakeWhileIterator, SkipIterator, SkipWhileIterator, MapIterator, FilterIterator, OrderIterator, OrderedLinq} from "../src/linq";
+import {Linq, TakeIterator, TakeWhileIterator, SkipIterator, SkipWhileIterator, MapIterator, FilterIterator, OrderIterator, OrderedLinq} from "../src/linq";
 import {expect} from 'chai';
 
 describe("Linq", function() {
@@ -11,7 +11,7 @@ describe("Linq", function() {
         _mimmi = { first: "mimmi", last: "anka" },
         _joakim = { first: "joakim", last: "anka" },
 
-        _numbers = [2, 4, 6, 8, 9, 7, 5, 3, 1],
+        _numbers = [0, 2, 4, 6, 8, 9, 7, 5, 3, 1],
         _strings = [_kalle.first, _musse.first, _långben.first, _mimmi.first, _joakim.first],
         _objects = [_kalle, _musse, _långben, _mimmi, _joakim],
         _associative = {
@@ -25,13 +25,14 @@ describe("Linq", function() {
     describe("Iterators", function() {
         it("TakeIterator", function() {
             var it = new TakeIterator(_numbers, 2);
+            expect(it.next()).to.eql(0);
             expect(it.next()).to.eql(2);
-            expect(it.next()).to.eql(4);
             expect(it.next()).to.be.undefined;
         });
     
         it("TakeWhileIterator", function() {
             var it = new TakeWhileIterator(_numbers, x => x < 8);
+            expect(it.next()).to.eql(0);
             expect(it.next()).to.eql(2);
             expect(it.next()).to.eql(4);
             expect(it.next()).to.eql(6);
@@ -40,6 +41,7 @@ describe("Linq", function() {
     
         it("SkipIterator", function() {
             var it = new SkipIterator(_numbers, 7);
+            expect(it.next()).to.eql(5);
             expect(it.next()).to.eql(3);
             expect(it.next()).to.eql(1);
             expect(it.next()).to.be.undefined;
@@ -71,10 +73,11 @@ describe("Linq", function() {
             expect(it.next()).to.eql(_joakim);
             expect(it.next()).to.be.undefined;
         });
-        
+
         describe("OrderIterator", function() {
             it("ascending", function() {
                 var it = new OrderIterator(_numbers, x => x);
+                expect(it.next()).to.eql(0);
                 expect(it.next()).to.eql(1);
                 expect(it.next()).to.eql(2);
                 expect(it.next()).to.eql(3);
@@ -98,6 +101,7 @@ describe("Linq", function() {
                 expect(it.next()).to.eql(3);
                 expect(it.next()).to.eql(2);
                 expect(it.next()).to.eql(1);
+                expect(it.next()).to.eql(0);
                 expect(it.next()).to.be.undefined;
             });
         });
@@ -135,7 +139,7 @@ describe("Linq", function() {
                         .map(item => item / 2)
                         .toArray();
 
-                    expect(arr).to.eql([3, 6, 9, 12, 13.5, 10.5, 7.5, 4.5, 1.5]);
+                    expect(arr).to.eql([0, 3, 6, 9, 12, 13.5, 10.5, 7.5, 4.5, 1.5]);
                 });
             });
 
@@ -172,10 +176,10 @@ describe("Linq", function() {
 
             it("numbers", function() {
                 expect(new Linq(_numbers).map(item => item * 2).toArray())
-                    .to.eql([4, 8, 12, 16, 18, 14, 10, 6, 2]);
+                    .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2]);
                     
                 expect(Linq.map(_numbers, item => item * 2))
-                    .to.eql([4, 8, 12, 16, 18, 14, 10, 6, 2]);
+                    .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2]);
             });
         });
 
@@ -191,8 +195,8 @@ describe("Linq", function() {
             });
             
             it("numbers", function() {
-                expect(new Linq(_numbers).take(2).toArray()).to.eql([2, 4]);
-                expect(Linq.take(_numbers, 2)).to.eql([2, 4]);
+                expect(new Linq(_numbers).take(2).toArray()).to.eql([0, 2]);
+                expect(Linq.take(_numbers, 2)).to.eql([0, 2]);
             });
         });
 
@@ -208,8 +212,8 @@ describe("Linq", function() {
             });
             
             it("numbers", function() {
-                expect(new Linq(_numbers).skip(3).toArray()).to.eql([8, 9, 7, 5, 3, 1]);
-                expect(Linq.skip(_numbers, 3)).to.eql([8, 9, 7, 5, 3, 1]);
+                expect(new Linq(_numbers).skip(3).toArray()).to.eql([6, 8, 9, 7, 5, 3, 1]);
+                expect(Linq.skip(_numbers, 3)).to.eql([6, 8, 9, 7, 5, 3, 1]);
             });
         });
 
@@ -225,8 +229,8 @@ describe("Linq", function() {
             });
 
             it("numbers", function() {
-                expect(new Linq(_numbers).takeWhile(x => x < 8).toArray()).to.eql([2, 4, 6]);
-                expect(Linq.takeWhile(_numbers, x => x < 8)).to.eql([2, 4, 6]);
+                expect(new Linq(_numbers).takeWhile(x => x < 8).toArray()).to.eql([0, 2, 4, 6]);
+                expect(Linq.takeWhile(_numbers, x => x < 8)).to.eql([0, 2, 4, 6]);
             });
         });
 
@@ -283,10 +287,11 @@ describe("Linq", function() {
 
             it("numbers", function() {
                 expect(new Linq(_numbers).filter(item => item % 2 == 0).toArray())
-                    .to.eql([2, 4, 6, 8]);
+                    .to.eql([0, 2, 4, 6, 8]);
                 
                 expect(Linq.filter(_numbers, item => item % 2 == 0))
-                    .to.eql([2, 4, 6, 8]);});
+                    .to.eql([0, 2, 4, 6, 8]);
+            });
         });
 
         describe("filter none", function() {
@@ -301,8 +306,8 @@ describe("Linq", function() {
             });
 
             it("numbers", function() {
-                expect(new Linq(_numbers).filter(() => false).toArray()).to.eql([]);
-                expect(Linq.filter(_numbers, () => false)).to.eql([]);
+                expect(new Linq(_numbers).filter((x) => x === -1).toArray()).to.eql([]);
+                expect(Linq.filter(_numbers, (x) => x === -1)).to.eql([]);
             });
         });
 
@@ -336,8 +341,8 @@ describe("Linq", function() {
                 });
 
                 it("numbers", function() {
-                    expect(new Linq(_numbers).first()).to.eql(2);
-                    expect(Linq.first(_numbers)).to.eql(2);
+                    expect(new Linq(_numbers).first()).to.eql(0);
+                    expect(Linq.first(_numbers)).to.eql(0);
                 });
             });
         });
@@ -450,10 +455,10 @@ describe("Linq", function() {
                 });
             });
             it("numbers", function() {
-                expect(new Linq(_numbers).orderBy(x => x).first()).to.eql(1);
+                expect(new Linq(_numbers).orderBy(x => x).first()).to.eql(0);
                 expect(new Linq(_numbers).orderBy(x => x).last()).to.eql(9);
                 
-                expect(Linq.orderBy(_numbers, x => x)[0]).to.eql(1);
+                expect(Linq.orderBy(_numbers, x => x)[0]).to.eql(0);
                 expect(Linq.orderBy(_numbers, x => x)[_numbers.length - 1]).to.eql(9);
             });
         });
@@ -475,8 +480,8 @@ describe("Linq", function() {
                 });
             });
             it("numbers",() => { 
-                    expect(new Linq(_numbers).orderByDesc(x => x).first()).to.eql(9);
-                    expect(Linq.orderByDesc(_numbers, x => x)[0]).to.eql(9);
+                expect(new Linq(_numbers).orderByDesc(x => x).first()).to.eql(9);
+                expect(Linq.orderByDesc(_numbers, x => x)[0]).to.eql(9);
             });
         });
 
@@ -493,7 +498,9 @@ describe("Linq", function() {
                 });
             });
             it("numbers", function() {
-                expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).first()).to.eql(2);
+                var arr = new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).toArray();
+                console.log(arr);
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).first()).to.eql(0);
                 expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).last()).to.eql(9);
             });
         });
@@ -530,13 +537,13 @@ describe("Linq", function() {
 
         describe("average", function() {
             it("without selector", function() {
-                expect(new Linq(_numbers).average()).to.eql(5);
-                expect(Linq.average(_numbers)).to.eql(5);
+                expect(new Linq(_numbers).average()).to.eql(4.5);
+                expect(Linq.average(_numbers)).to.eql(4.5);
             });
 
             it("with selector", function() {
-                expect(new Linq(_numbers).average(x => x)).to.eql(5);
-                expect(Linq.average(_numbers, x => x)).to.eql(5);
+                expect(new Linq(_numbers).average(x => x)).to.eql(4.5);
+                expect(Linq.average(_numbers, x => x)).to.eql(4.5);
             });
         });
 
@@ -564,6 +571,12 @@ describe("Linq", function() {
                 expect(Linq.any(_numbers, item => item == 1)).to.eql(true);
                 expect(Linq.any(_numbers, item => item == 10)).to.eql(false);
             });
+
+            describe("booleans", function () {
+                it("1", function () { expect(Linq.any([true, true, true], x => x)).to.eql(true); });
+                it("2", function () { expect(Linq.any([true, true, false], x => x)).to.eql(true); });
+                it("3", function () { expect(Linq.any([false, true, true], x => x)).to.eql(true); });
+            });
         });
 
         describe("all", function() {
@@ -589,6 +602,12 @@ describe("Linq", function() {
                 
                 expect(Linq.all(_numbers, item => item < 5)).to.eql(false);
                 expect(Linq.all(_numbers, item => item < 10)).to.eql(true);
+            });
+
+            describe("booleans", function () {
+                it("1", function () { expect(new Linq([true, true, true]).all(x => x)).to.eql(true); });
+                it("2", function () { expect(new Linq([true, true, false]).all(x => x)).to.eql(false); });
+                it("3", function () { expect(new Linq([false, true, true]).all(x => x)).to.eql(false); });
             });
         });
         

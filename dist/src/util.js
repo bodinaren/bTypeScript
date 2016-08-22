@@ -16,7 +16,7 @@ function defaultEqualityComparer(a, b) {
     return a === b;
 }
 exports.defaultEqualityComparer = defaultEqualityComparer;
-function defaultPredicate(a) {
+function defaultPredicate(value, index) {
     return true;
 }
 exports.defaultPredicate = defaultPredicate;

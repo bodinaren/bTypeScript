@@ -7,4 +7,5 @@ export default class LinkedList<T> {
     insert(val: any): number;
     insertAt(at: number, val: any): number;
     removeAt(at: number): number;
+    clear(): void;
 }

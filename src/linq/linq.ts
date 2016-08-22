@@ -8,6 +8,8 @@ import TakeIterator from "./take";
 import TakeWhileIterator from "./takeWhile";
 import * as Util from "../util";
 
+declare var process;
+
 export default class Linq {
     protected _source: Iterator;
 
@@ -58,14 +60,14 @@ export default class Linq {
      * Filters a sequence of values based on a predicate.
      * @param predicate A function to test each element for a condition.
      */
-    filter(predicate: (predicate) => boolean): Linq {
+    filter(predicate: (value, index) => boolean): Linq {
         return new Linq(new FilterIterator(this._source, predicate));
     }
     /**
      * Filters a sequence of values based on a predicate.
      * @param predicate A function to test each element for a condition.
      */
-    static filter<T>(source: T[], predicate: (predicate) => boolean): T[] {
+    static filter<T>(source: T[], predicate: (value, index) => boolean): T[] {
         return new Linq(source).filter(predicate).toArray();
     }
     /**
@@ -231,16 +233,7 @@ export default class Linq {
      * @param invert If true, determines whether any element of a sequence does not satisfies a condition.
      */
     any(predicate: (predicate) => boolean, invert: boolean = false): boolean {
-        predicate = this._makeBoolPredicate(predicate);
-
-        let i, arr = this.toArray();
-        if (arr.length == 0) return false;
-        for (i = 0; i < arr.length; i++) {
-            if (predicate(arr[i]) !== invert) {
-                return true;
-            }
-        }
-        return false;
+        return typeof this.first(x => !!predicate(x) !== invert) !== "undefined";
     }
     /**
      * Determines whether any element of a sequence satisfies a condition.
@@ -475,6 +468,20 @@ export default class Linq {
         return arr;
     }
 
+    /**
+     * Executes the pipeline and execute callback on each item in the resulting array.
+     * Same as doing .toArray().forEach(callback);
+     * @param callback {Util.ILoopFunction<boolean>} forEach is cancelled as soon as it returns false
+     * @return {boolean} Weither the callback was executed on all items or not.
+     */
+    forEach(callback: Util.ILoopFunction<boolean>): boolean {
+        let arr = this.toArray();
+        for (let i = 0; i < arr.length; i++) {
+            if (callback(arr[i], i) === false) return false;
+        }
+        return true;
+    }
+
     /* Helper functions */
     private contains(a: any) {
         let result;
@@ -484,14 +491,7 @@ export default class Linq {
                 return false;
             }
         });
-        return !!result;
-    }
-
-    private forEach(callback: Util.ILoopFunction<any>): void {
-        let arr = this.toArray();
-        for (let i = 0; i < arr.length; i++) {
-            if (callback(arr[i], i) === false) return;
-        }
+        return typeof result !== "undefined";
     }
 
 }

@@ -17,8 +17,8 @@ export function defaultEqualityComparer<T>(a: T, b: T): boolean {
     return a === b;
 }
 
-export interface IPredicate<T> { (a: T): boolean; }
-export function defaultPredicate<T>(a: T): boolean {
+export interface IPredicate<T> { (value: T, index?: number): boolean; }
+export function defaultPredicate<T>(value: T, index?: number): boolean {
     return true;
 }
 

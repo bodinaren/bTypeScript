@@ -14,9 +14,9 @@ export interface IEqualityComparer<T> {
 }
 export declare function defaultEqualityComparer<T>(a: T, b: T): boolean;
 export interface IPredicate<T> {
-    (a: T): boolean;
+    (value: T, index?: number): boolean;
 }
-export declare function defaultPredicate<T>(a: T): boolean;
+export declare function defaultPredicate<T>(value: T, index?: number): boolean;
 export declare function cast<T>(a: any): T;
 export declare function toString(value: any): string;
 export declare function isUndefined(value: any): boolean;

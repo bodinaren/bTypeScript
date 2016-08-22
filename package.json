@@ -2,17 +2,17 @@
   "name": "btypescript",
   "version": "1.0.0",
   "description": "TypeScript collections, Linq and various helpers.",
-  "main": "./dist/src/bTypeScript.js",
-  "typings": "./dist/src/bTypeScript.d.ts",
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
   "typescript": {
-    "main": "./src/bTypeScript.ts"
+    "main": "./src/index.ts"
   },
   "scripts": {
     "devtools": "npm install && typings install",
     "tsc": "tsc",
     "lint": "tslint -c tslint.json ./src/**/*.ts",
     "umd": "node umd.browserify.js && node umd.uglify.js",
-    "test": "mocha --reporter dot ./dist/**/*.spec.js",
+    "test": "npm run tsc && mocha --reporter dot ./dist/**/*.spec.js",
     "build": "npm run lint && npm run tsc && npm run umd",
     "all": "npm run build && npm run test"
   },
@@ -28,12 +28,13 @@
   "homepage": "https://github.com/bodinaren/bTypeScript",
   "dependencies": {},
   "devDependencies": {
-    "typescript": "^1.8.10",
-    "typings": "^0.8.1",
-    "mocha": "^2.4.5",
-    "chai": "^3.5.0",
     "browserify": "^13.0.1",
     "browserify-umdify": "^1.0.3",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "tslint": "^3.12.1",
+    "typescript": "^1.8.10",
+    "typings": "^0.8.1",
     "uglify-js": "^2.6.2",
     "uglifyify": "^3.0.1"
   }

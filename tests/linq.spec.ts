@@ -498,10 +498,11 @@ describe("Linq", function() {
                 });
             });
             it("numbers", function() {
-                var arr = new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).toArray();
-                console.log(arr);
                 expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).first()).to.eql(0);
                 expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x).last()).to.eql(9);
+       
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x % 4).thenBy(x => x).first()).to.eql(0);
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenBy(x => x % 4).thenBy(x => x).last()).to.eql(7);
             });
         });
 
@@ -520,6 +521,12 @@ describe("Linq", function() {
             it("numbers", function() {
                 expect(new Linq(_numbers).orderBy(x => x % 2).thenByDesc(x => x).first()).to.eql(8);
                 expect(new Linq(_numbers).orderBy(x => x % 2).thenByDesc(x => x).last()).to.eql(1);
+
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenBy(x => x).first()).to.eql(2);
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenBy(x => x).last()).to.eql(9);
+                
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenByDesc(x => x).first()).to.eql(6);
+                expect(new Linq(_numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenByDesc(x => x).last()).to.eql(1);
             });
         });
 

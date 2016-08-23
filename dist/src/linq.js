@@ -16,8 +16,7 @@ exports.TakeIterator = take_1.default;
 var takeWhile_1 = require("./linq/takeWhile");
 exports.TakeWhileIterator = takeWhile_1.default;
 var linq_1 = require("./linq/linq");
+exports.Linq = linq_1.default;
 exports.LQ = linq_1.LQ;
 exports.OrderedLinq = linq_1.OrderedLinq;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = linq_1.default;
 //# sourceMappingURL=linq.js.map

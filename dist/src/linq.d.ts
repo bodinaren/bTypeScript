@@ -7,5 +7,4 @@ import SkipWhileIterator from "./linq/skipWhile";
 import TakeIterator from "./linq/take";
 import TakeWhileIterator from "./linq/takeWhile";
 import Linq, { LQ, OrderedLinq } from "./linq/linq";
-export default Linq;
-export { LQ, OrderedLinq, Iterator, FilterIterator, MapIterator, OrderIterator, SkipIterator, SkipWhileIterator, TakeIterator, TakeWhileIterator };
+export { Linq, LQ, OrderedLinq, Iterator, FilterIterator, MapIterator, OrderIterator, SkipIterator, SkipWhileIterator, TakeIterator, TakeWhileIterator };

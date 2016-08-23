@@ -120,4 +120,9 @@ describe("List", function() {
         x.reverse(1, 3);
         expect(x.toArray()).to.eql([5, 3, 2, 1, 4]);
     });
+
+    it("range", function () {
+        expect(List.range(1, 5).toArray()).to.eql([1, 2, 3, 4, 5]);
+        expect(List.range(5, 5).toArray()).to.eql([5, 6, 7, 8, 9]);
+    });
 });

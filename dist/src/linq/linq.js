@@ -133,16 +133,7 @@ var Linq = (function () {
     };
     Linq.prototype.any = function (predicate, invert) {
         if (invert === void 0) { invert = false; }
-        predicate = this._makeBoolPredicate(predicate);
-        var i, arr = this.toArray();
-        if (arr.length == 0)
-            return false;
-        for (i = 0; i < arr.length; i++) {
-            if (predicate(arr[i]) !== invert) {
-                return true;
-            }
-        }
-        return false;
+        return typeof this.first(function (x) { return !!predicate(x) !== invert; }) !== "undefined";
     };
     Linq.any = function (source, predicate, invert) {
         if (invert === void 0) { invert = false; }
@@ -305,6 +296,14 @@ var Linq = (function () {
         }
         return arr;
     };
+    Linq.prototype.forEach = function (callback) {
+        var arr = this.toArray();
+        for (var i = 0; i < arr.length; i++) {
+            if (callback(arr[i], i) === false)
+                return false;
+        }
+        return true;
+    };
     Linq.prototype.contains = function (a) {
         var result;
         this.forEach(function (item) {
@@ -313,14 +312,7 @@ var Linq = (function () {
                 return false;
             }
         });
-        return !!result;
-    };
-    Linq.prototype.forEach = function (callback) {
-        var arr = this.toArray();
-        for (var i = 0; i < arr.length; i++) {
-            if (callback(arr[i], i) === false)
-                return;
-        }
+        return typeof result !== "undefined";
     };
     return Linq;
 }());

@@ -9,6 +9,7 @@ var Util = require("../util");
 var FilterIterator = (function (_super) {
     __extends(FilterIterator, _super);
     function FilterIterator(source, callback) {
+        if (callback === void 0) { callback = Util.defaultPredicate; }
         _super.call(this, source);
         this._callback = callback;
     }
@@ -18,9 +19,9 @@ var FilterIterator = (function (_super) {
             item = this._next();
             if (Util.isUndefined(item))
                 break;
-            if (true === this._callback(item))
+            if (this._callback(item, this._idx))
                 break;
-        } while (item);
+        } while (!Util.isUndefined(item));
         return item;
     };
     return FilterIterator;

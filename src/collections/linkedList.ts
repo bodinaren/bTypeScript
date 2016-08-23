@@ -96,6 +96,11 @@ export default class LinkedList<T> {
         return --this.length;
     }
 
+    clear() {
+        this._first = this._last = undefined;
+        this.length = 0;
+    }
+
     //protected removeAndGetAt(at: number): LinkedListNode {
     //    let item = this._getNode(at);
     //    this.removeAt(at);

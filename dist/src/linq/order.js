@@ -23,14 +23,14 @@ var OrderIterator = (function (_super) {
             var arr = [], item = void 0;
             do {
                 item = this._next();
-                if (item)
+                if (!Util.isUndefined(item))
                     arr.push(item);
-            } while (item);
+            } while (!Util.isUndefined(item));
             this._source = arr.sort(function (a, b) {
                 var i = 0, rs;
                 do {
                     rs = _this._orders[i++].compare(a, b);
-                } while (rs === 0);
+                } while (rs === 0 && i < _this._orders.length);
                 return rs;
             });
             this._isOrdered = true;
@@ -48,6 +48,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = OrderIterator;
 var LinqOrder = (function () {
     function LinqOrder(keySelector, comparer, descending) {
+        if (comparer === void 0) { comparer = Util.defaultComparer; }
         if (descending === void 0) { descending = false; }
         this._keySelector = keySelector;
         this._comparer = comparer;

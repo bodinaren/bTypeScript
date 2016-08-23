@@ -5,13 +5,12 @@ var fs = require("fs");
 var Umd = require("browserify-umdify");
 var UglifyJS = require("uglify-js");
 
-var browserifyFs = fs.createWriteStream("./dist/bTypeScript.umd.js", { encoding: "utf-8", flags: "w"})
-
+var browserifyFs = fs.createWriteStream("./dist/btypescript.umd.js", { encoding: "utf-8", flags: "w"});
 var bundled = browserify({
 		extensions: [".js", ".json"],
 		debug: true
 	})
-	.require("./dist/src/bTypeScript.js", { expose: "bTypeScript" })
+	.require("./dist/src/index.js", { expose: "index" })
 	.bundle()
 	.pipe(new Umd());
 

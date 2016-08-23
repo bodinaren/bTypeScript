@@ -40,6 +40,14 @@ var DatesHelper = (function () {
         this.date.setMilliseconds(this.date.getMilliseconds() + milliseconds);
         return this;
     };
+    DatesHelper.addYears = function (date, years) { return new DatesHelper(date).addYears(years).date; };
+    DatesHelper.addMonths = function (date, months) { return new DatesHelper(date).addMonths(months).date; };
+    DatesHelper.addWeeks = function (date, week) { return new DatesHelper(date).addWeeks(week).date; };
+    DatesHelper.addDays = function (date, days) { return new DatesHelper(date).addDays(days).date; };
+    DatesHelper.addHours = function (date, hours) { return new DatesHelper(date).addHours(hours).date; };
+    DatesHelper.addMinutes = function (date, minutes) { return new DatesHelper(date).addMinutes(minutes).date; };
+    DatesHelper.addSeconds = function (date, seconds) { return new DatesHelper(date).addSeconds(seconds).date; };
+    DatesHelper.addMilliseconds = function (date, milliseconds) { return new DatesHelper(date).addMilliseconds(milliseconds).date; };
     return DatesHelper;
 }());
 exports.DatesHelper = DatesHelper;

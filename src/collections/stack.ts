@@ -24,4 +24,8 @@ export default class Stack<T> {
     peek(): T {
         return this._list.get(0);
     }
+
+    clear() {
+        this._list.clear();
+    }
 }

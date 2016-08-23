@@ -414,6 +414,8 @@ describe("Linq", function () {
             it("numbers", function () {
                 chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x; }).first()).to.eql(8);
                 chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x; }).last()).to.eql(1);
+                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenBy(function (x) { return x; }).first()).to.eql(2);
+                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenBy(function (x) { return x; }).last()).to.eql(9);
                 chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenByDesc(function (x) { return x; }).first()).to.eql(6);
                 chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenByDesc(function (x) { return x; }).last()).to.eql(1);
             });

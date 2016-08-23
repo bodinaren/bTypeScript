@@ -8,8 +8,6 @@ import TakeIterator from "./take";
 import TakeWhileIterator from "./takeWhile";
 import * as Util from "../util";
 
-declare var process;
-
 export default class Linq {
     protected _source: Iterator;
 

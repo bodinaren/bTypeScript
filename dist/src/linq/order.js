@@ -30,7 +30,7 @@ var OrderIterator = (function (_super) {
                 var i = 0, rs;
                 do {
                     rs = _this._orders[i++].compare(a, b);
-                } while (rs === 0 && _this._orders.length < i);
+                } while (rs === 0 && i < _this._orders.length);
                 return rs;
             });
             this._isOrdered = true;

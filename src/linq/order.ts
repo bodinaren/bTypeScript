@@ -27,7 +27,7 @@ export default class OrderIterator extends Iterator {
                 let i = 0, rs;
                 do {
                     rs = this._orders[i++].compare(a, b);
-                } while (rs === 0 && this._orders.length < i);
+                } while (rs === 0 && i < this._orders.length);
                 return rs;
             });
             this._isOrdered = true;

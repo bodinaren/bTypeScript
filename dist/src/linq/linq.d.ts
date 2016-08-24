@@ -28,6 +28,10 @@ export default class Linq {
     static sum(source: any[], selector?: Util.ISelector<any, number>): number;
     average(selector?: Util.ISelector<any, number>): number;
     static average(source: any[], selector?: Util.ISelector<any, number>): number;
+    min(selector?: Util.ISelector<any, number>): number;
+    static min(source: any[], selector?: Util.ISelector<any, number>): number;
+    max(selector?: Util.ISelector<any, number>): number;
+    static max(source: any[], selector?: Util.ISelector<any, number>): number;
     any(predicate: (predicate) => boolean, invert?: boolean): boolean;
     static any(source: any[], predicate: (predicate) => boolean, invert?: boolean): boolean;
     all(predicate: (predicate) => boolean, invert?: boolean): boolean;

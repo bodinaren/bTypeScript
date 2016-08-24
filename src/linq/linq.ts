@@ -226,6 +226,36 @@ export default class Linq {
     }
 
     /**
+     * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @param selector
+     */
+    min(selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return Math.min.apply(undefined, this.toArray().map(selector));
+    }
+    /**
+     * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @param selector
+     */
+    static min(source: any[], selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return new Linq(source).min(selector);
+    }
+
+    /**
+     * Computes the maximum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @param selector
+     */
+    max(selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return Math.max.apply(undefined, this.toArray().map(selector));
+    }
+    /**
+     * Computes the maximum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @param selector
+     */
+    static max(source: any[], selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return new Linq(source).max(selector);
+    }
+
+    /**
      * Determines whether any element of a sequence satisfies a condition.
      * @param predicate A function to test each element for a condition. If not provided, determines whether the sequence contains any elements.
      * @param invert If true, determines whether any element of a sequence does not satisfies a condition.

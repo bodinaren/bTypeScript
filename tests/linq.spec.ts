@@ -554,6 +554,30 @@ describe("Linq", function() {
             });
         });
 
+        describe("min", function() {
+            it("without selector", function() {
+                expect(new Linq(_numbers).min()).to.eql(0);
+                expect(Linq.min(_numbers)).to.eql(0);
+            });
+
+            it("with selector", function() {
+                expect(new Linq(_numbers).min(x => x)).to.eql(0);
+                expect(Linq.min(_numbers, x => x)).to.eql(0);
+            });
+        });
+
+        describe("max", function() {
+            it("without selector", function() {
+                expect(new Linq(_numbers).max()).to.eql(9);
+                expect(Linq.max(_numbers)).to.eql(9);
+            });
+
+            it("with selector", function() {
+                expect(new Linq(_numbers).max(x => x)).to.eql(9);
+                expect(Linq.max(_numbers, x => x)).to.eql(9);
+            });
+        });
+
         describe("any", function() {
             it("strings", function() {
                 expect(new Linq(_strings).any(item => item[0] == "m")).to.eql(true);

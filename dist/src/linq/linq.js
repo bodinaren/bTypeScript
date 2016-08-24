@@ -131,6 +131,22 @@ var Linq = (function () {
         if (selector === void 0) { selector = Util.defaultSelector; }
         return new Linq(source).average(selector);
     };
+    Linq.prototype.min = function (selector) {
+        if (selector === void 0) { selector = Util.defaultSelector; }
+        return Math.min.apply(undefined, this.toArray().map(selector));
+    };
+    Linq.min = function (source, selector) {
+        if (selector === void 0) { selector = Util.defaultSelector; }
+        return new Linq(source).min(selector);
+    };
+    Linq.prototype.max = function (selector) {
+        if (selector === void 0) { selector = Util.defaultSelector; }
+        return Math.max.apply(undefined, this.toArray().map(selector));
+    };
+    Linq.max = function (source, selector) {
+        if (selector === void 0) { selector = Util.defaultSelector; }
+        return new Linq(source).max(selector);
+    };
     Linq.prototype.any = function (predicate, invert) {
         if (invert === void 0) { invert = false; }
         return typeof this.first(function (x) { return !!predicate(x) !== invert; }) !== "undefined";

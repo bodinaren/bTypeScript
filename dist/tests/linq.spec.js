@@ -440,6 +440,26 @@ describe("Linq", function () {
                 chai_1.expect(linq_1.Linq.average(_numbers, function (x) { return x; })).to.eql(4.5);
             });
         });
+        describe("min", function () {
+            it("without selector", function () {
+                chai_1.expect(new linq_1.Linq(_numbers).min()).to.eql(0);
+                chai_1.expect(linq_1.Linq.min(_numbers)).to.eql(0);
+            });
+            it("with selector", function () {
+                chai_1.expect(new linq_1.Linq(_numbers).min(function (x) { return x; })).to.eql(0);
+                chai_1.expect(linq_1.Linq.min(_numbers, function (x) { return x; })).to.eql(0);
+            });
+        });
+        describe("max", function () {
+            it("without selector", function () {
+                chai_1.expect(new linq_1.Linq(_numbers).max()).to.eql(9);
+                chai_1.expect(linq_1.Linq.max(_numbers)).to.eql(9);
+            });
+            it("with selector", function () {
+                chai_1.expect(new linq_1.Linq(_numbers).max(function (x) { return x; })).to.eql(9);
+                chai_1.expect(linq_1.Linq.max(_numbers, function (x) { return x; })).to.eql(9);
+            });
+        });
         describe("any", function () {
             it("strings", function () {
                 chai_1.expect(new linq_1.Linq(_strings).any(function (item) { return item[0] == "m"; })).to.eql(true);

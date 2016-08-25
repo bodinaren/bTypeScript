@@ -219,10 +219,26 @@ export default class Linq {
     }
     /**
      * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @alias average
+     * @param selector
+     */
+    avg(selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return this.average(selector);
+    }
+    /**
+     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
      * @param selector
      */
     static average(source: any[], selector: Util.ISelector<any, number> = Util.defaultSelector): number {
         return new Linq(source).average(selector);
+    }
+    /**
+     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
+     * @alias average
+     * @param selector
+     */
+    static avg(source: any[], selector: Util.ISelector<any, number> = Util.defaultSelector): number {
+        return Linq.average(source, selector);
     }
 
     /**

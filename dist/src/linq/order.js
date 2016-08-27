@@ -21,6 +21,7 @@ var OrderIterator = (function (_super) {
         var _this = this;
         if (!this._isOrdered) {
             var arr = [], item = void 0;
+            // can't someone else do this? e.g. FilterIterator?
             do {
                 item = this._next();
                 if (!Util.isUndefined(item))

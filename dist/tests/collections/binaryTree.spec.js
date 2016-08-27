@@ -1,3 +1,4 @@
+/// <reference path="../../typings/main.d.ts" />
 "use strict";
 var binaryTree_1 = require("../../src/collections/binaryTree");
 var chai_1 = require('chai');
@@ -12,6 +13,11 @@ describe("BinaryTree", function () {
         defaultTree.insert(3);
         defaultTree.insert(5);
         defaultTree.insert(7);
+        //      __4__
+        //     /     \
+        //    2       6
+        //   / \     / \
+        //  1   3   5   7
     });
     it("length", function () {
         chai_1.expect(defaultTree.length).to.eql(7);
@@ -19,6 +25,9 @@ describe("BinaryTree", function () {
     it("contains", function () {
         chai_1.expect(defaultTree.contains(3)).to.eql(true);
     });
+    //it("remove", function() {
+    //    expect(defaultTree.contains(3)).to.eql(true);
+    //});
     it("forEach", function () {
         var sum = 0;
         defaultTree.forEach(function (item) { sum += item; });
@@ -86,11 +95,11 @@ describe("BinaryTree", function () {
     describe("remove", function () {
         it("leaf", function () {
             var arr = [];
-            defaultTree.remove(1);
+            defaultTree.remove(1); // remove a left child
             defaultTree.preorderTraversal(function (item) { arr.push(item); });
             chai_1.expect(arr).to.eql([4, 2, 3, 6, 5, 7]);
             arr = [];
-            defaultTree.remove(7);
+            defaultTree.remove(7); // remove a right child
             defaultTree.preorderTraversal(function (item) { arr.push(item); });
             chai_1.expect(arr).to.eql([4, 2, 3, 6, 5]);
         });
@@ -100,6 +109,19 @@ describe("BinaryTree", function () {
             defaultTree.preorderTraversal(function (item) { arr.push(item); });
             chai_1.expect(arr).to.eql([6, 2, 1, 3, 7, 5]);
         });
+        //it("root in non-perfect tree", function() {
+        //    var arr = [];
+        //    defaultTree.remove(7); // make non-perfect tree.
+        //    defaultTree.remove(4);
+        //    defaultTree.preorderTraversal(item => { arr.push(item) });
+        //    expect(arr).to.eql([6, 2, 1, 3, 5]);
+        //});
+        //it("child in perfect tree", function() {
+        //    var arr = [];
+        //    defaultTree.remove(4);
+        //    defaultTree.preorderTraversal(item => { arr.push(item) });
+        //    expect(arr).to.eql([6, 2, 1, 3, 7, 5]);
+        //});
     });
     it("min", function () {
         chai_1.expect(defaultTree.min()).to.eql(1);

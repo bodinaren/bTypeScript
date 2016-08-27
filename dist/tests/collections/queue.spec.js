@@ -1,3 +1,4 @@
+/// <reference path="../../typings/main.d.ts" />
 "use strict";
 var queue_1 = require("../../src/collections/queue");
 var chai_1 = require('chai');

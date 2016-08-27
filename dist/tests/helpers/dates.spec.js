@@ -1,3 +1,4 @@
+/// <reference path="../../typings/main.d.ts" />
 "use strict";
 var dates_1 = require("../../src/helpers/dates");
 var chai_1 = require('chai');
@@ -24,10 +25,12 @@ describe("Dates", function () {
         var d = new Date(1500000000000);
         chai_1.expect(dates_1.default(d).addWeeks(1).date).to.eql(new Date(1500000000000 + 7 * 24 * 60 * 60 * 1000));
         d = new Date(1500000000000);
+        // test with 4 years to make sure we get exactly 1 leap year, no more, no less.
         chai_1.expect(dates_1.default(d).addYears(4).date).to.eql(new Date(1500000000000 + (365 + 365 + 365 + 366) * 24 * 60 * 60 * 1000));
     });
     it("addYears", function () {
         var d = new Date(1500000000000);
+        // test with 4 years to make sure we get exactly 1 leap year, no more, no less.
         chai_1.expect(dates_1.default(d).addYears(4).date).to.eql(new Date(1500000000000 + (365 + 365 + 365 + 366) * 24 * 60 * 60 * 1000));
     });
 });

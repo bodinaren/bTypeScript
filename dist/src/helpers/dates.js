@@ -1,5 +1,9 @@
 "use strict";
 var util = require("../util");
+/**
+ * Shorthand function to create a DatesHelper object.
+ * @param number The date on which to perform the various functions.
+ */
 function Dates(date) { return new DatesHelper(date); }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Dates;
@@ -16,9 +20,20 @@ var DatesHelper = (function () {
             date = new Date(date);
         return date;
     };
+    /**
+     * Returns weither the date is in between two numbers.
+     * @param lower The lower inclusive bound.
+     * @param upper The upper inclusive bound.
+     */
     DatesHelper.prototype.between = function (lower, upper) {
         return DatesHelper.between(this.date, lower, upper);
     };
+    /**
+     * Returns weither a date is in between two numbers.
+     * @param date The date which to compare with.
+     * @param lower The lower inclusive bound.
+     * @param upper The upper inclusive bound.
+     */
     DatesHelper.between = function (date, lower, upper) {
         if (util.isUndefined(lower))
             lower = new Date();

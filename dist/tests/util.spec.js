@@ -1,3 +1,4 @@
+/// <reference path="../typings/main.d.ts" />
 "use strict";
 var Util = require("../src/util");
 var chai_1 = require('chai');

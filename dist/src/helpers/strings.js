@@ -1,8 +1,16 @@
 "use strict";
+/**
+ * Shorthand function to create a StringsHelper object.
+ * @param number The string on which to perform the various functions.
+ */
 function Strings(str) { return new StringsHelper(str); }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Strings;
 var StringsHelper = (function () {
+    /**
+     * Creates a StringsHelper object.
+     * @param str The string on which to perform the various functions.
+     */
     function StringsHelper(str) {
         this.str = str;
     }

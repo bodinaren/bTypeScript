@@ -32,7 +32,7 @@ var Iterator = (function () {
             }
         }
         if (this._idx == this._source.length) {
-            this._idx = -1;
+            this._idx = -1; // we finished, reset the counter
         }
         return n;
     };

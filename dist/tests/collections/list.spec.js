@@ -1,3 +1,4 @@
+/// <reference path="../../typings/main.d.ts" />
 "use strict";
 var list_1 = require("../../src/collections/list");
 var chai_1 = require('chai');
@@ -81,6 +82,12 @@ describe("List", function () {
         var x = new list_1.default([1, 2, 3, 2, 1]).clear();
         chai_1.expect(x.length).to.eql(0);
     });
+    //it("count", function() {
+    //    var x = new List([1, 2, 3, 2, 1]);
+    //    expect(x.count()).to.eql(5);
+    //    expect(x.count(x => x == 1)).to.eql(2);
+    //    expect(x.count(x => x == 3)).to.eql(1);
+    //});
     it("reverse", function () {
         var x = new list_1.default([1, 2, 3, 4, 5]);
         x.reverse();

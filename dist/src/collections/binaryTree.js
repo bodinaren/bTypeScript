@@ -6,11 +6,26 @@ var BinaryTree = (function () {
         this.length = 0;
         this._compare = compareFunction || Util.defaultComparer;
     }
+    /**
+     * Insert an item into the tree.
+     * @param item
+     * @returns boolean Return false if the item already exists.
+     */
     BinaryTree.prototype.insert = function (item) { return this.insertAux(this._root, new TreeNode(item)); };
+    /**
+     * Insert a range of items into the tree.
+     * @param item
+     */
     BinaryTree.prototype.insertRange = function (items) {
         var _this = this;
         items.forEach(function (item) { _this.insert(item); });
     };
+    /**
+     * Insert an item into the tree.
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     * @param node The node we wish to insert
+     */
     BinaryTree.prototype.insertAux = function (tree, node) {
         if (!this._root) {
             this._root = node;
@@ -55,9 +70,9 @@ var BinaryTree = (function () {
             var right = node;
             while (right.right) {
                 right = right.right;
-            }
+            } // Get right most item.
             if (right.left) {
-                right = right.left;
+                right = right.left; // If the right most item has a left, use that instead.
             }
             else {
                 while (right.value !== node.value) {
@@ -77,18 +92,42 @@ var BinaryTree = (function () {
         }
         return false;
     };
+    /**
+     * Check if the tree contains a given item.
+     * @param item
+     * @returns True if the item exists in the tree.
+     */
     BinaryTree.prototype.contains = function (item) {
         return !!this._search(this._root, item);
     };
+    /**
+     * Execute callback for each item.
+     * @param callback What should we do when we get there.
+     * @see inorderTraversal
+     */
     BinaryTree.prototype.forEach = function (callback) {
         this.inorderTraversal(callback);
     };
+    /**
+     * Make into an (ordered) array.
+     */
     BinaryTree.prototype.toArray = function () {
         var arr = [];
         this.forEach(function (item) { arr.push(item); });
         return arr;
     };
+    /**
+     * Traverse the tree and execute callback when entering (passing on the left side of) an item.
+     * @param callback What should we do when we get there.
+     */
     BinaryTree.prototype.preorderTraversal = function (callback) { this.preorderTraversalAux(this._root, callback, { stop: false }); };
+    /**
+     * Traverse the tree and execute callback when entering (passing on the left side of) an item.
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     * @param callback What should we do when we get there.
+     * @param signal Object (so it's a reference) that we use to know when the callback returned false.
+     */
     BinaryTree.prototype.preorderTraversalAux = function (tree, callback, signal) {
         if (!tree || signal.stop)
             return;
@@ -100,7 +139,18 @@ var BinaryTree = (function () {
             return;
         this.preorderTraversalAux(tree.right, callback, signal);
     };
+    /**
+     * Traverse the tree and execute callback when passing (pass under the item) an item
+     * @param callback What should we do when we get there.
+     */
     BinaryTree.prototype.inorderTraversal = function (callback) { this.inorderTraversalAux(this._root, callback, { stop: false }); };
+    /**
+     * Traverse the tree and execute callback when passing (pass under the item) an item
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     * @param callback What should we do when we get there.
+     * @param signal Object (so it's a reference) that we use to know when the callback returned false.
+     */
     BinaryTree.prototype.inorderTraversalAux = function (tree, callback, signal) {
         if (!tree || signal.stop)
             return;
@@ -112,7 +162,18 @@ var BinaryTree = (function () {
             return;
         this.inorderTraversalAux(tree.right, callback, signal);
     };
+    /**
+     * Traverse the tree and execute callback when leaving (passing on the right side of) an item
+     * @param callback What should we do when we get there.
+     */
     BinaryTree.prototype.postorderTraversal = function (callback) { this.postorderTraversalAux(this._root, callback, { stop: false }); };
+    /**
+     * Traverse the tree and execute callback when passing (pass under the item) an item
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     * @param callback What should we do when we get there.
+     * @param signal Object (so it's a reference) that we use to know when the callback returned false.
+     */
     BinaryTree.prototype.postorderTraversalAux = function (tree, callback, signal) {
         if (!tree || signal.stop)
             return;
@@ -124,7 +185,18 @@ var BinaryTree = (function () {
             return;
         signal.stop = (callback(tree.value) === false);
     };
+    /**
+     * Traverse the tree one level at a time and execute callback on each an item
+     * @param callback What should we do when we get there.
+     */
     BinaryTree.prototype.levelTraversal = function (callback) { this.levelTraversalAux(this._root, callback, { stop: false }); };
+    /**
+     * Traverse the tree one level at a time and execute callback on each an item
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     * @param callback What should we do when we get there.
+     * @param signal Object (so it's a reference) that we use to know when the callback returned false.
+     */
     BinaryTree.prototype.levelTraversalAux = function (tree, callback, signal) {
         var queue = new queue_1.default();
         if (tree)
@@ -139,34 +211,68 @@ var BinaryTree = (function () {
                 queue.enqueue(tree.right);
         }
     };
+    /**
+     * Get the minimum value in the tree.
+     */
     BinaryTree.prototype.min = function () {
         var min = this.minAux(this._root);
         if (min)
             return min.value;
     };
+    /**
+     * Get the minimum value in the tree.
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     */
     BinaryTree.prototype.minAux = function (tree) {
         if (tree.left)
             return this.minAux(tree.left);
         else
             return tree;
     };
+    /**
+     * Get the maximum value in the tree.
+     */
     BinaryTree.prototype.max = function () {
         var max = this.maxAux(this._root);
         if (max)
             return max.value;
     };
+    /**
+     * Get the maximum value in the tree.
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     */
     BinaryTree.prototype.maxAux = function (tree) {
         if (tree.right)
             return this.maxAux(tree.right);
         else
             return tree;
     };
+    /**
+     * Get the depth of a tree.
+     * -1 = Empty
+     * 0 = Only root
+     */
     BinaryTree.prototype.depth = function () { return this.depthAux(this._root); };
+    /**
+     * Get the minimum value in the tree.
+     * -1 = Empty
+     * 0 = Only root
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     */
     BinaryTree.prototype.depthAux = function (tree) {
         if (!tree)
             return -1;
         return Math.max(this.depthAux(tree.left), this.depthAux(tree.right)) + 1;
     };
+    /**
+     * Search the tree for a specific item.
+     * @private
+     * @param tree Which TreeNode we're traversing.
+     * @param item
+     */
     BinaryTree.prototype._search = function (tree, item) {
         if (Util.isUndefined(tree))
             return undefined;
@@ -187,6 +293,9 @@ var TreeNode = (function () {
     function TreeNode(value) {
         this.value = value;
     }
+    /**
+     * If the node has neither a right or left child.
+     */
     TreeNode.prototype.isEmpty = function () { return !this.left && !this.right; };
     return TreeNode;
 }());

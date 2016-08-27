@@ -1,9 +1,24 @@
+/**
+ * Shorthand function to create a DatesHelper object.
+ * @param number The date on which to perform the various functions.
+ */
 export default function Dates(date: Date): DatesHelper;
 export declare class DatesHelper {
     date: Date;
     constructor(date: Date);
     static toDate(date: any): Date;
+    /**
+     * Returns weither the date is in between two numbers.
+     * @param lower The lower inclusive bound.
+     * @param upper The upper inclusive bound.
+     */
     between(lower?: Date, upper?: Date): boolean;
+    /**
+     * Returns weither a date is in between two numbers.
+     * @param date The date which to compare with.
+     * @param lower The lower inclusive bound.
+     * @param upper The upper inclusive bound.
+     */
     static between(date: Date, lower?: Date, upper?: Date): boolean;
     addYears(years: number): this;
     addMonths(months: number): this;

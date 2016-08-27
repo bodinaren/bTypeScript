@@ -1,3 +1,4 @@
+/// <reference path="../typings/main.d.ts" />
 "use strict";
 var Util = require("../src/util");
 var linq_1 = require("../src/linq");
@@ -387,6 +388,7 @@ describe("Linq", function () {
             });
         });
         describe("thenBy", function () {
+            // thenBy is not possible with static functions.
             describe("objects", function () {
                 it("with function", function () {
                     chai_1.expect(new linq_1.Linq(_objects).orderBy(function (x) { return x.last; }).thenBy(function (x) { return x.first; }).first()).to.eql(_joakim);
@@ -403,6 +405,7 @@ describe("Linq", function () {
             });
         });
         describe("thenByDesc", function () {
+            // thenBy is not possible with static functions.
             describe("objects", function () {
                 it("with function", function () {
                     chai_1.expect(new linq_1.Linq(_objects).orderBy(function (x) { return x.last; }).thenByDesc(function (x) { return x.first; }).first()).to.eql(_mimmi);

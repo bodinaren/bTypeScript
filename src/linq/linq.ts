@@ -515,10 +515,10 @@ export default class Linq {
     /**
      * Executes the pipeline and execute callback on each item in the resulting array.
      * Same as doing .toArray().forEach(callback);
-     * @param callback {Util.ILoopFunction<boolean>} forEach is cancelled as soon as it returns false
+     * @param callback {Util.ILoopFunction<any>} forEach is cancelled as soon as it returns false
      * @return {boolean} Weither the callback was executed on all items or not.
      */
-    forEach(callback: Util.ILoopFunction<boolean>): boolean {
+    forEach(callback: Util.ILoopFunction<any>): boolean {
         let arr = this.toArray();
         for (let i = 0; i < arr.length; i++) {
             if (callback(arr[i], i) === false) return false;

@@ -127,9 +127,17 @@ var Linq = (function () {
         }
         return total / arr.length;
     };
+    Linq.prototype.avg = function (selector) {
+        if (selector === void 0) { selector = Util.defaultSelector; }
+        return this.average(selector);
+    };
     Linq.average = function (source, selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
         return new Linq(source).average(selector);
+    };
+    Linq.avg = function (source, selector) {
+        if (selector === void 0) { selector = Util.defaultSelector; }
+        return Linq.average(source, selector);
     };
     Linq.prototype.min = function (selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }

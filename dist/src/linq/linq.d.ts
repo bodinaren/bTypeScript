@@ -27,7 +27,9 @@ export default class Linq {
     sum(selector?: Util.ISelector<any, number>): number;
     static sum(source: any[], selector?: Util.ISelector<any, number>): number;
     average(selector?: Util.ISelector<any, number>): number;
+    avg(selector?: Util.ISelector<any, number>): number;
     static average(source: any[], selector?: Util.ISelector<any, number>): number;
+    static avg(source: any[], selector?: Util.ISelector<any, number>): number;
     min(selector?: Util.ISelector<any, number>): number;
     static min(source: any[], selector?: Util.ISelector<any, number>): number;
     max(selector?: Util.ISelector<any, number>): number;
@@ -51,7 +53,7 @@ export default class Linq {
     groupBy(keySelector: Util.ISelector<any, any> | string): Linq;
     static groupBy(source: any[], keySelector: Util.ISelector<any, any> | string): IGrouping[];
     toArray(): any[];
-    forEach(callback: Util.ILoopFunction<boolean>): boolean;
+    forEach(callback: Util.ILoopFunction<any>): boolean;
     private contains(a);
 }
 export declare function LQ(source: any[]): Linq;

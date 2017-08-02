@@ -1,10 +1,10 @@
-import Iterator from "./iterator";
+import BaseIterator, { IteratorResult } from "./iterator";
 import * as Util from "../util";
-export default class OrderIterator extends Iterator {
+export default class OrderIterator<TSource, TKey> extends BaseIterator<TSource> {
+    private descending;
     private _orders;
-    private _descending;
     private _isOrdered;
-    constructor(source: any[] | Iterator, keySelector: (x) => any, comparer?: Util.IComparer<any>, descending?: boolean);
-    next(): any;
-    thenBy(keySelector: (x) => any, comparer?: Util.IComparer<any>, descending?: boolean): void;
+    constructor(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean);
+    next(): IteratorResult<TSource>;
+    thenBy(keySelector: (x) => any, comparer?: Util.IComparer<TKey>, descending?: boolean): void;
 }

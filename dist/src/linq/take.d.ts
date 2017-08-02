@@ -1,7 +1,7 @@
-import Iterator from "./iterator";
-export default class TakeIterator extends Iterator {
-    private _count;
+import BaseIterator, { IteratorResult } from "./iterator";
+export default class TakeIterator<TSource> extends BaseIterator<TSource> {
+    private count;
     private _counter;
-    constructor(source: any[] | Iterator, count: number);
-    next(): any;
+    constructor(source: TSource[] | BaseIterator<TSource>, count: number);
+    next(): IteratorResult<TSource>;
 }

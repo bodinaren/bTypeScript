@@ -1,7 +1,7 @@
 import * as Util from "../util";
 export default class List<T> {
     _source: T[];
-    length: number;
+    readonly length: number;
     /**
      * Creates a new list object.
      * Utilizes a normal array behind the scenes and native functions whenever possible,
@@ -25,10 +25,6 @@ export default class List<T> {
      */
     addRange(collection: T[] | List<T>): this;
     static addRange<T>(source: T[], collection: T[] | List<T>): T[];
-    /**
-     * Returns a new read only instance of the list.
-     */
-    asReadOnly(): List<T>;
     /**
      * Performs the specified action on each element of the list.
      * @param callback The callback to execute on each element of the list.

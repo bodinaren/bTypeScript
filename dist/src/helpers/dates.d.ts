@@ -28,6 +28,8 @@ export declare class DatesHelper {
     addMinutes(minutes: number): this;
     addSeconds(seconds: number): this;
     addMilliseconds(milliseconds: number): this;
+    isToday(): boolean;
+    toMidnight(): this;
     static addYears(date: Date, years: number): Date;
     static addMonths(date: Date, months: number): Date;
     static addWeeks(date: Date, week: number): Date;
@@ -36,4 +38,6 @@ export declare class DatesHelper {
     static addMinutes(date: Date, minutes: number): Date;
     static addSeconds(date: Date, seconds: number): Date;
     static addMilliseconds(date: Date, milliseconds: number): Date;
+    static isToday(date: Date): boolean;
+    static getMidnight(date: Date): Date;
 }

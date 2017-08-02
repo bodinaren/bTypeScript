@@ -3,14 +3,13 @@ import Queue from "./queue";
 
 export default class BinaryTree<T> {
     private _root: TreeNode;
-    private _compare: Util.IComparer<T>;
+    private _selector: Util.ISelector<T, number>;
 
     length: number = 0;
 
-    constructor(compareFunction?: Util.IComparer<T>) {
-        this._compare = compareFunction || Util.defaultComparer;
+    constructor(selectorFunction?: Util.ISelector<T, number>) {
+        this._selector = selectorFunction || Util.defaultSelector;
     }
-
 
     /**
      * Insert an item into the tree.
@@ -39,7 +38,7 @@ export default class BinaryTree<T> {
             return true;
         }
 
-        let comp: number = this._compare(node.value, tree.value);
+        let comp: number = Util.defaultComparer(this._selector(node.value), this._selector(tree.value));
 
         if (comp < 0) {
             if (tree.left) {
@@ -68,18 +67,21 @@ export default class BinaryTree<T> {
         let node = this._search(this._root, item);
 
         if (node && node.isEmpty()) {
+            if (node === this._root) {
+                delete this._root;
+                return true;
+            }
             if (node.value < node.parent.value) delete node.parent.left;
             else delete node.parent.right;
             delete node.parent;
+            return true;
         } else if (node) {
             let right = node;
             while (right.right) { right = right.right; } // Get right most item.
+
             if (right.left) {
                 right = right.left; // If the right most item has a left, use that instead.
-
-
             } else {
-
                 while (right.value !== node.value) {
                     right.left = right.parent.left;
                     right.left.parent = right;
@@ -278,8 +280,9 @@ export default class BinaryTree<T> {
      */
     private _search(tree: TreeNode, item: T): TreeNode {
         if (Util.isUndefined(tree)) return undefined;
+        if (tree.value === item) return tree;
 
-        let comp = this._compare(item, tree.value);
+        let comp = Util.defaultComparer(this._selector(item), this._selector(tree.value));
         if (comp < 0) {
             tree = this._search(tree.left, item);
         } else if (comp > 0) {
@@ -289,7 +292,7 @@ export default class BinaryTree<T> {
     }
 }
 
-class TreeNode {
+export class TreeNode {
     left: TreeNode;
     right: TreeNode;
     parent: TreeNode;

@@ -1,7 +1,7 @@
-import Iterator from "./iterator";
+import BaseIterator, { IteratorResult } from "./iterator";
 import * as Util from "../util";
-export default class TakeWhileIterator extends Iterator {
-    private _predicate;
-    constructor(source: any[] | Iterator, predicate?: Util.IPredicate<any>);
-    next(): any;
+export default class TakeWhileIterator<TSource> extends BaseIterator<TSource> {
+    private predicate;
+    constructor(source: TSource[] | BaseIterator<TSource>, predicate?: Util.IPredicate<TSource>);
+    next(): IteratorResult<TSource>;
 }

@@ -1,6 +1,4 @@
-﻿/// <reference path="../typings/main.d.ts" />
-
-import * as Util from "../src/util";
+﻿import * as Util from "../src/util";
 import {expect} from 'chai';
 
 describe("Util", function() {

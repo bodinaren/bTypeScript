@@ -1,12 +1,14 @@
 "use strict";
-var Iterator = (function () {
-    function Iterator(source) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var BaseIterator = (function () {
+    function BaseIterator(source) {
         this._idx = -1;
         this._buffers = false;
         this._reversed = false;
+        this._done = false;
         this._source = source;
     }
-    Iterator.prototype.getIteratorFromPipeline = function (type) {
+    BaseIterator.prototype.getIteratorFromPipeline = function (type) {
         if (this instanceof type)
             return this;
         var source = this;
@@ -14,10 +16,12 @@ var Iterator = (function () {
         }
         return source;
     };
-    Iterator.prototype._next = function () {
+    BaseIterator.prototype.next = function () {
         var n = undefined;
-        if (this._source instanceof Iterator) {
-            return this._source.next();
+        if (this._source instanceof BaseIterator) {
+            var next = this._source.next();
+            this._idx++;
+            return next;
         }
         else {
             if (this._reversed) {
@@ -31,15 +35,21 @@ var Iterator = (function () {
                 }
             }
         }
-        if (this._idx == this._source.length) {
-            this._idx = -1; // we finished, reset the counter
+        if (this._idx >= this._source.length) {
+            // this._idx = -1; // we finished, reset the counter
+            this._done = true;
         }
-        return n;
+        return {
+            value: n,
+            done: this._done
+        };
     };
-    Iterator.prototype.next = function () { };
-    Iterator.prototype.reverse = function () { this._reversed = !this._reversed; };
-    return Iterator;
+    BaseIterator.prototype.reverse = function () { this._reversed = !this._reversed; };
+    BaseIterator.prototype.reset = function () {
+        this._idx = -1;
+        this._done = false;
+    };
+    return BaseIterator;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = Iterator;
+exports.default = BaseIterator;
 //# sourceMappingURL=iterator.js.map

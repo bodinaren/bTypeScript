@@ -1,10 +1,13 @@
-export default class Iterator {
+export default class BaseIterator<TSource> implements Iterator<TSource> {
     protected _source: any;
     protected _idx: number = -1;
     protected _buffers: boolean = false;
     protected _reversed: boolean = false;
+    protected _done: boolean = false;
 
-    constructor(source: any[] | Iterator) {
+    constructor(
+        source: any[] | BaseIterator<TSource>
+    ) {
         this._source = source;
     }
 
@@ -16,10 +19,12 @@ export default class Iterator {
         return source;
     }
 
-    protected _next(): any {
-        let n: any = undefined;
-        if (this._source instanceof Iterator) {
-            return this._source.next();
+    next(): IteratorResult<any> {
+        let n: TSource = undefined;
+        if (this._source instanceof BaseIterator) {
+            let next: IteratorResult<TSource> = this._source.next();
+            this._idx++;
+            return next;
         } else {
             if (this._reversed) {
                 if (this._idx < this._source.length) {
@@ -31,13 +36,32 @@ export default class Iterator {
                 }
             }
         }
-        if (this._idx == this._source.length) {
-            this._idx = -1; // we finished, reset the counter
+
+        if (this._idx >= this._source.length) {
+            // this._idx = -1; // we finished, reset the counter
+            this._done = true;
         }
-        return n;
+        return {
+            value: n,
+            done: this._done
+        };
     }
 
-    next(): any { }
-
     reverse() { this._reversed = !this._reversed; }
+
+    protected reset() {
+        this._idx = -1;
+        this._done = false;
+    }
+}
+
+export interface Iterator<T> {
+    next(value?: any): IteratorResult<T>;
+    return?(value?: any): IteratorResult<T>;
+    throw?(e?: any): IteratorResult<T>;
+}
+
+export interface IteratorResult<T> {
+    done: boolean;
+    value?: T;
 }

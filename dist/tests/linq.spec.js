@@ -1,553 +1,557 @@
-/// <reference path="../typings/main.d.ts" />
 "use strict";
-var Util = require("../src/util");
+Object.defineProperty(exports, "__esModule", { value: true });
 var linq_1 = require("../src/linq");
-var chai_1 = require('chai');
+var TestItems = require("./linq/testitems");
+var chai_1 = require("chai");
 describe("Linq", function () {
-    var _kalle = { first: "kalle", last: "anka" }, _musse = { first: "musse", last: "pigg" }, _långben = { first: "långben", last: "långben" }, _mimmi = { first: "mimmi", last: "anka" }, _joakim = { first: "joakim", last: "anka" }, _numbers = [0, 2, 4, 6, 8, 9, 7, 5, 3, 1], _strings = [_kalle.first, _musse.first, _långben.first, _mimmi.first, _joakim.first], _objects = [_kalle, _musse, _långben, _mimmi, _joakim], _associative = {
-        "kalle": _kalle,
-        "musse": _musse,
-        "långben": _långben,
-        "mimmi": _mimmi,
-        "joakim": _joakim,
-    };
-    describe("Iterators", function () {
-        it("TakeIterator", function () {
-            var it = new linq_1.TakeIterator(_numbers, 2);
-            chai_1.expect(it.next()).to.eql(0);
-            chai_1.expect(it.next()).to.eql(2);
-            chai_1.expect(it.next()).to.be.undefined;
-        });
-        it("TakeWhileIterator", function () {
-            var it = new linq_1.TakeWhileIterator(_numbers, function (x) { return x < 8; });
-            chai_1.expect(it.next()).to.eql(0);
-            chai_1.expect(it.next()).to.eql(2);
-            chai_1.expect(it.next()).to.eql(4);
-            chai_1.expect(it.next()).to.eql(6);
-            chai_1.expect(it.next()).to.be.undefined;
-        });
-        it("SkipIterator", function () {
-            var it = new linq_1.SkipIterator(_numbers, 7);
-            chai_1.expect(it.next()).to.eql(5);
-            chai_1.expect(it.next()).to.eql(3);
-            chai_1.expect(it.next()).to.eql(1);
-            chai_1.expect(it.next()).to.be.undefined;
-        });
-        it("SkipWhileIterator", function () {
-            var it = new linq_1.SkipWhileIterator(_numbers, function (x) { return x != 7; });
-            chai_1.expect(it.next()).to.eql(7);
-            chai_1.expect(it.next()).to.eql(5);
-            chai_1.expect(it.next()).to.eql(3);
-            chai_1.expect(it.next()).to.eql(1);
-            chai_1.expect(it.next()).to.be.undefined;
-        });
-        it("MapIterator", function () {
-            var it = new linq_1.MapIterator(_strings, function (x) { return x[0]; });
-            chai_1.expect(it.next()).to.eql("k");
-            chai_1.expect(it.next()).to.eql("m");
-            chai_1.expect(it.next()).to.eql("l");
-            chai_1.expect(it.next()).to.eql("m");
-            chai_1.expect(it.next()).to.eql("j");
-            chai_1.expect(it.next()).to.be.undefined;
-        });
-        it("FilterIterator", function () {
-            var it = new linq_1.FilterIterator(_objects, function (x) { return x.last == "anka"; });
-            chai_1.expect(it.next()).to.eql(_kalle);
-            chai_1.expect(it.next()).to.eql(_mimmi);
-            chai_1.expect(it.next()).to.eql(_joakim);
-            chai_1.expect(it.next()).to.be.undefined;
-        });
-        describe("OrderIterator", function () {
-            it("ascending", function () {
-                var it = new linq_1.OrderIterator(_numbers, function (x) { return x; });
-                chai_1.expect(it.next()).to.eql(0);
-                chai_1.expect(it.next()).to.eql(1);
-                chai_1.expect(it.next()).to.eql(2);
-                chai_1.expect(it.next()).to.eql(3);
-                chai_1.expect(it.next()).to.eql(4);
-                chai_1.expect(it.next()).to.eql(5);
-                chai_1.expect(it.next()).to.eql(6);
-                chai_1.expect(it.next()).to.eql(7);
-                chai_1.expect(it.next()).to.eql(8);
-                chai_1.expect(it.next()).to.eql(9);
-                chai_1.expect(it.next()).to.be.undefined;
+    describe("LQ", function () {
+        chai_1.expect(linq_1.LQ(TestItems.strings).toArray()).to.eql(TestItems.strings);
+    });
+    describe("chaining", function () {
+        describe("strings", function () {
+            it("maps before next function", function () {
+                var arr = new linq_1.Linq(TestItems.strings)
+                    .map(function (item) { return item.substr(0, 2); })
+                    .map(function (item) { return item.substr(1); })
+                    .toArray();
+                chai_1.expect(arr).to.eql(["a", "u", "å", "i", "o"]);
             });
-            it("descending", function () {
-                var it = new linq_1.OrderIterator(_numbers, function (x) { return x; }, Util.defaultComparer, true);
-                chai_1.expect(it.next()).to.eql(9);
-                chai_1.expect(it.next()).to.eql(8);
-                chai_1.expect(it.next()).to.eql(7);
-                chai_1.expect(it.next()).to.eql(6);
-                chai_1.expect(it.next()).to.eql(5);
-                chai_1.expect(it.next()).to.eql(4);
-                chai_1.expect(it.next()).to.eql(3);
-                chai_1.expect(it.next()).to.eql(2);
-                chai_1.expect(it.next()).to.eql(1);
-                chai_1.expect(it.next()).to.eql(0);
-                chai_1.expect(it.next()).to.be.undefined;
+        });
+        describe("objects", function () {
+            it("maps before next function", function () {
+                var arr = new linq_1.Linq(TestItems.objects)
+                    .map(function (item) { return item.first; })
+                    .map(function (item) { return item.substr(0, 2); })
+                    .map(function (item) { return item.substr(1); })
+                    .toArray();
+                chai_1.expect(arr).to.eql(["a", "u", "å", "i", "o"]);
+            });
+        });
+        describe("numbers", function () {
+            it("maps before next function", function () {
+                var arr = new linq_1.Linq(TestItems.numbers)
+                    .map(function (item) { return item * 3; })
+                    .map(function (item) { return item / 2; })
+                    .toArray();
+                chai_1.expect(arr).to.eql([0, 3, 6, 9, 12, 13.5, 10.5, 7.5, 4.5, 1.5]);
             });
         });
     });
-    describe("Linq", function () {
-        describe("chaining", function () {
-            describe("strings", function () {
-                it("maps before next function", function () {
-                    var arr = new linq_1.Linq(_strings)
-                        .map(function (item) { return item.substr(0, 2); })
-                        .map(function (item) { return item.substr(1); })
-                        .toArray();
-                    chai_1.expect(arr).to.eql(["a", "u", "å", "i", "o"]);
+    describe("toArray", function () {
+        it("string", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).toArray()).to.eql(TestItems.strings);
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).toArray()).to.eql(TestItems.objects);
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).toArray()).to.eql(TestItems.numbers);
+        });
+    });
+    describe("map", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).map(function (item) { return item.substr(0, 2); }).toArray())
+                .to.eql(["ka", "mu", "lå", "mi", "jo"], "intantiated:");
+            chai_1.expect(linq_1.Linq.map(TestItems.strings, function (item) { return item.substr(0, 2); }))
+                .to.eql(["ka", "mu", "lå", "mi", "jo"], "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).map(function (item) { return item.first.substr(0, 2); }).toArray())
+                .to.eql(["ka", "mu", "lå", "mi", "jo"], "intantiated:");
+            chai_1.expect(linq_1.Linq.map(TestItems.objects, function (item) { return item.first.substr(0, 2); }))
+                .to.eql(["ka", "mu", "lå", "mi", "jo"], "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).map(function (item) { return item * 2; }).toArray())
+                .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2], "intantiated:");
+            chai_1.expect(linq_1.Linq.map(TestItems.numbers, function (item) { return item * 2; }))
+                .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2], "static:");
+        });
+    });
+    describe("take", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).take(2).toArray()).to.eql(["kalle", "musse"], "intantiated:");
+            chai_1.expect(linq_1.Linq.take(TestItems.strings, 2)).to.eql(["kalle", "musse"], "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).take(2).toArray()).to.eql([TestItems.kalle, TestItems.musse], "intantiated:");
+            chai_1.expect(linq_1.Linq.take(TestItems.objects, 2)).to.eql([TestItems.kalle, TestItems.musse], "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).take(2).toArray()).to.eql([0, 2], "intantiated:");
+            chai_1.expect(linq_1.Linq.take(TestItems.numbers, 2)).to.eql([0, 2], "static:");
+        });
+    });
+    describe("skip", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).skip(3).toArray()).to.eql(["mimmi", "joakim"], "intantiated:");
+            chai_1.expect(linq_1.Linq.skip(TestItems.strings, 3)).to.eql(["mimmi", "joakim"], "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).skip(3).toArray()).to.eql([TestItems.mimmi, TestItems.joakim], "intantiated:");
+            chai_1.expect(linq_1.Linq.skip(TestItems.objects, 3)).to.eql([TestItems.mimmi, TestItems.joakim], "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).skip(3).toArray()).to.eql([6, 8, 9, 7, 5, 3, 1], "intantiated:");
+            chai_1.expect(linq_1.Linq.skip(TestItems.numbers, 3)).to.eql([6, 8, 9, 7, 5, 3, 1], "static:");
+        });
+    });
+    describe("takeWhile", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).takeWhile(function (x) { return x.length == 5; }).toArray()).to.eql([TestItems.kalle.first, TestItems.musse.first], "intantiated:");
+            chai_1.expect(linq_1.Linq.takeWhile(TestItems.strings, function (x) { return x.length == 5; })).to.eql([TestItems.kalle.first, TestItems.musse.first], "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).takeWhile(function (x) { return x.first.length == 5; }).toArray()).to.eql([TestItems.kalle, TestItems.musse], "intantiated:");
+            chai_1.expect(linq_1.Linq.takeWhile(TestItems.objects, function (x) { return x.first.length == 5; })).to.eql([TestItems.kalle, TestItems.musse], "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).takeWhile(function (x) { return x < 8; }).toArray()).to.eql([0, 2, 4, 6], "intantiated:");
+            chai_1.expect(linq_1.Linq.takeWhile(TestItems.numbers, function (x) { return x < 8; })).to.eql([0, 2, 4, 6], "static:");
+        });
+    });
+    describe("skipWhile", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).skipWhile(function (x) { return x.length == 5; }).toArray()).to.eql([TestItems.långben.first, TestItems.mimmi.first, TestItems.joakim.first], "intantiated:");
+            chai_1.expect(linq_1.Linq.skipWhile(TestItems.strings, function (x) { return x.length == 5; })).to.eql([TestItems.långben.first, TestItems.mimmi.first, TestItems.joakim.first], "static:");
+            // expect(new Linq(TestItems.strings).skipWhile().toArray()).to.eql(TestItems.strings);
+            // expect(Linq.skipWhile(TestItems.strings)).to.eql(TestItems.strings);
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).skipWhile(function (x) { return x.first.length == 5; }).toArray()).to.eql([TestItems.långben, TestItems.mimmi, TestItems.joakim], "intantiated:");
+            chai_1.expect(linq_1.Linq.skipWhile(TestItems.objects, function (x) { return x.first.length == 5; })).to.eql([TestItems.långben, TestItems.mimmi, TestItems.joakim], "static:");
+            // expect(new Linq(TestItems.objects).skipWhile().toArray()).to.eql(TestItems.objects);
+            // expect(Linq.skipWhile(TestItems.objects)).to.eql(TestItems.objects);
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).skipWhile(function (x) { return x !== 7; }).toArray()).to.eql([7, 5, 3, 1], "intantiated:");
+            chai_1.expect(linq_1.Linq.skipWhile(TestItems.numbers, function (x) { return x !== 7; })).to.eql([7, 5, 3, 1], "static:");
+            // expect(new Linq(TestItems.numbers).skipWhile().toArray()).to.eql(TestItems.numbers);
+            // expect(Linq.skipWhile(TestItems.numbers)).to.eql(TestItems.numbers);
+        });
+    });
+    describe("filter all", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).filter(function () { return true; }).toArray()).to.eql(TestItems.strings, "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.strings, function () { return true; })).to.eql(TestItems.strings, "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.strings).where(function () { return true; }).toArray()).to.eql(TestItems.strings, "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.strings, function () { return true; })).to.eql(TestItems.strings, "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).filter(function () { return true; }).toArray()).to.eql(TestItems.objects, "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.objects, function () { return true; })).to.eql(TestItems.objects, "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.objects).where(function () { return true; }).toArray()).to.eql(TestItems.objects, "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.objects, function () { return true; })).to.eql(TestItems.objects, "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).filter(function () { return true; }).toArray()).to.eql(TestItems.numbers, "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.numbers, function () { return true; })).to.eql(TestItems.numbers, "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).where(function () { return true; }).toArray()).to.eql(TestItems.numbers, "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.numbers, function () { return true; })).to.eql(TestItems.numbers, "static:");
+        });
+    });
+    describe("filter some", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).filter(function (item) { return item[0] == "m"; }).toArray()).to.eql(["musse", "mimmi"], "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql(["musse", "mimmi"], "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.strings).where(function (item) { return item[0] == "m"; }).toArray()).to.eql(["musse", "mimmi"], "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql(["musse", "mimmi"], "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).filter(function (item) { return (item.first[0] == "m"); }).toArray()).to.eql([TestItems.musse, TestItems.mimmi], "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.objects, function (item) { return (item.first[0] == "m"); })).to.eql([TestItems.musse, TestItems.mimmi], "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.objects).where(function (item) { return (item.first[0] == "m"); }).toArray()).to.eql([TestItems.musse, TestItems.mimmi], "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.objects, function (item) { return (item.first[0] == "m"); })).to.eql([TestItems.musse, TestItems.mimmi], "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).filter(function (item) { return item % 2 == 0; }).toArray()).to.eql([0, 2, 4, 6, 8], "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.numbers, function (item) { return item % 2 == 0; })).to.eql([0, 2, 4, 6, 8], "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).where(function (item) { return item % 2 == 0; }).toArray()).to.eql([0, 2, 4, 6, 8], "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.numbers, function (item) { return item % 2 == 0; })).to.eql([0, 2, 4, 6, 8], "static:");
+        });
+    });
+    describe("filter none", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).filter(function () { return false; }).toArray()).to.eql([], "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.strings, function () { return false; })).to.eql([], "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.strings).where(function () { return false; }).toArray()).to.eql([], "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.strings, function () { return false; })).to.eql([], "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).filter(function () { return false; }).toArray()).to.eql([], "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.objects, function () { return false; })).to.eql([]);
+            chai_1.expect(new linq_1.Linq(TestItems.objects).where(function () { return false; }).toArray()).to.eql([], "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.objects, function () { return false; })).to.eql([], "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).filter(function (x) { return x === -1; }).toArray()).to.eql([], "intantiated:");
+            chai_1.expect(linq_1.Linq.filter(TestItems.numbers, function (x) { return x === -1; })).to.eql([], "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).where(function (x) { return x === -1; }).toArray()).to.eql([], "intantiated:");
+            chai_1.expect(linq_1.Linq.where(TestItems.numbers, function (x) { return x === -1; })).to.eql([], "static:");
+        });
+    });
+    describe("first", function () {
+        describe("with predicate", function () {
+            it("strings", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.strings).first(function (item) { return item[0] == "m"; })).to.eql("musse", "intantiated:");
+                chai_1.expect(linq_1.Linq.first(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql("musse", "static:");
+            });
+            it("objects", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).first(function (item) { return item.first[0] == "m"; })).to.eql(TestItems.musse, "intantiated:");
+                chai_1.expect(linq_1.Linq.first(TestItems.objects, function (item) { return item.first[0] == "m"; })).to.eql(TestItems.musse, "static:");
+            });
+            it("numbers", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.numbers).first(function (item) { return item % 2 == 1; })).to.eql(9, "intantiated:");
+                chai_1.expect(linq_1.Linq.first(TestItems.numbers, function (item) { return item % 2 == 1; })).to.eql(9, "static:");
+            });
+        });
+        describe("without predicate", function () {
+            it("strings", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.strings).first()).to.eql("kalle", "intantiated:");
+                chai_1.expect(linq_1.Linq.first(TestItems.strings)).to.eql("kalle", "static:");
+            });
+            it("objects", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).first()).to.eql(TestItems.kalle, "intantiated:");
+                chai_1.expect(linq_1.Linq.first(TestItems.objects)).to.eql(TestItems.kalle, "static:");
+            });
+            it("numbers", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.numbers).first()).to.eql(0, "intantiated:");
+                chai_1.expect(linq_1.Linq.first(TestItems.numbers)).to.eql(0, "static:");
+            });
+        });
+    });
+    describe("last", function () {
+        describe("with predicate", function () {
+            it("strings", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.strings).last(function (item) { return item[0] == "m"; })).to.eql("mimmi", "intantiated:");
+                chai_1.expect(linq_1.Linq.last(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql("mimmi", "static:");
+            });
+            it("objects", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).last(function (item) { return item.first[0] == "m"; })).to.eql(TestItems.mimmi, "intantiated:");
+                chai_1.expect(linq_1.Linq.last(TestItems.objects, function (item) { return item.first[0] == "m"; })).to.eql(TestItems.mimmi, "static:");
+            });
+            it("numbers", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.numbers).last(function (item) { return item % 2 == 0; })).to.eql(8, "intantiated:");
+                chai_1.expect(linq_1.Linq.last(TestItems.numbers, function (item) { return item % 2 == 0; })).to.eql(8, "static:");
+            });
+        });
+        describe("without predicate", function () {
+            it("strings", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.strings).last()).to.eql("joakim", "intantiated:");
+                chai_1.expect(linq_1.Linq.last(TestItems.strings)).to.eql("joakim", "static:");
+            });
+            it("objects", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).last()).to.eql(TestItems.joakim, "intantiated:");
+                chai_1.expect(linq_1.Linq.last(TestItems.objects)).to.eql(TestItems.joakim, "static:");
+            });
+            it("numbers", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.numbers).last()).to.eql(1, "intantiated:");
+                chai_1.expect(linq_1.Linq.last(TestItems.numbers)).to.eql(1, "static:");
+            });
+        });
+    });
+    describe("single", function () {
+        describe("with predicate", function () {
+            describe("returns single", function () {
+                it("string", function () {
+                    chai_1.expect(new linq_1.Linq(TestItems.strings).single(function (item) { return item[0] == "l"; })).to.eql(TestItems.långben.first, "intantiated:");
+                    chai_1.expect(linq_1.Linq.single(TestItems.strings, function (item) { return item[0] == "l"; })).to.eql(TestItems.långben.first, "static:");
+                });
+                it("object", function () {
+                    chai_1.expect(new linq_1.Linq(TestItems.objects).single(function (item) { return item.first[0] == "l"; })).to.eql(TestItems.långben, "intantiated:");
+                    chai_1.expect(linq_1.Linq.single(TestItems.objects, function (item) { return item.first[0] == "l"; })).to.eql(TestItems.långben, "static:");
+                });
+                it("number", function () {
+                    chai_1.expect(new linq_1.Linq(TestItems.numbers).single(function (item) { return item / 9 == 1; })).to.eql(9, "intantiated:");
+                    chai_1.expect(linq_1.Linq.single(TestItems.numbers, function (item) { return item / 9 == 1; })).to.eql(9, "static:");
                 });
             });
-            describe("objects", function () {
-                it("maps before next function", function () {
-                    var arr = new linq_1.Linq(_objects)
-                        .map(function (item) { return item.first; })
-                        .map(function (item) { return item.substr(0, 2); })
-                        .map(function (item) { return item.substr(1); })
-                        .toArray();
-                    chai_1.expect(arr).to.eql(["a", "u", "å", "i", "o"]);
-                });
-            });
-            describe("numbers", function () {
-                it("maps before next function", function () {
-                    var arr = new linq_1.Linq(_numbers)
-                        .map(function (item) { return item * 3; })
-                        .map(function (item) { return item / 2; })
-                        .toArray();
-                    chai_1.expect(arr).to.eql([0, 3, 6, 9, 12, 13.5, 10.5, 7.5, 4.5, 1.5]);
-                });
-            });
-        });
-        describe("toArray", function () {
-            it("string", function () { return chai_1.expect(new linq_1.Linq(_strings).toArray()).to.eql(_strings); });
-            it("objects", function () { return chai_1.expect(new linq_1.Linq(_objects).toArray()).to.eql(_objects); });
-            it("numbers", function () { return chai_1.expect(new linq_1.Linq(_numbers).toArray()).to.eql(_numbers); });
-        });
-        describe("map", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).map(function (item) { return item.substr(0, 2); }).toArray())
-                    .to.eql(["ka", "mu", "lå", "mi", "jo"]);
-                chai_1.expect(linq_1.Linq.map(_strings, function (item) { return item.substr(0, 2); }))
-                    .to.eql(["ka", "mu", "lå", "mi", "jo"]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).map(function (item) { return item.first.substr(0, 2); }).toArray())
-                    .to.eql(["ka", "mu", "lå", "mi", "jo"]);
-                chai_1.expect(linq_1.Linq.map(_objects, function (item) { return item.first.substr(0, 2); }))
-                    .to.eql(["ka", "mu", "lå", "mi", "jo"]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).map(function (item) { return item * 2; }).toArray())
-                    .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2]);
-                chai_1.expect(linq_1.Linq.map(_numbers, function (item) { return item * 2; }))
-                    .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2]);
-            });
-        });
-        describe("take", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).take(2).toArray()).to.eql(["kalle", "musse"]);
-                chai_1.expect(linq_1.Linq.take(_strings, 2)).to.eql(["kalle", "musse"]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).take(2).toArray()).to.eql([_kalle, _musse]);
-                chai_1.expect(linq_1.Linq.take(_objects, 2)).to.eql([_kalle, _musse]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).take(2).toArray()).to.eql([0, 2]);
-                chai_1.expect(linq_1.Linq.take(_numbers, 2)).to.eql([0, 2]);
-            });
-        });
-        describe("skip", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).skip(3).toArray()).to.eql(["mimmi", "joakim"]);
-                chai_1.expect(linq_1.Linq.skip(_strings, 3)).to.eql(["mimmi", "joakim"]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).skip(3).toArray()).to.eql([_mimmi, _joakim]);
-                chai_1.expect(linq_1.Linq.skip(_objects, 3)).to.eql([_mimmi, _joakim]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).skip(3).toArray()).to.eql([6, 8, 9, 7, 5, 3, 1]);
-                chai_1.expect(linq_1.Linq.skip(_numbers, 3)).to.eql([6, 8, 9, 7, 5, 3, 1]);
-            });
-        });
-        describe("takeWhile", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).takeWhile(function (x) { return x.length == 5; }).toArray()).to.eql(["kalle", "musse"]);
-                chai_1.expect(linq_1.Linq.takeWhile(_strings, function (x) { return x.length == 5; })).to.eql(["kalle", "musse"]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).takeWhile(function (x) { return x.first.length == 5; }).toArray()).to.eql([_kalle, _musse]);
-                chai_1.expect(linq_1.Linq.takeWhile(_objects, function (x) { return x.first.length == 5; })).to.eql([_kalle, _musse]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).takeWhile(function (x) { return x < 8; }).toArray()).to.eql([0, 2, 4, 6]);
-                chai_1.expect(linq_1.Linq.takeWhile(_numbers, function (x) { return x < 8; })).to.eql([0, 2, 4, 6]);
-            });
-        });
-        describe("skipWhile", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).skipWhile(function (x) { return x.length == 5; }).toArray()).to.eql(["långben", "mimmi", "joakim"]);
-                chai_1.expect(linq_1.Linq.skipWhile(_strings, function (x) { return x.length == 5; })).to.eql(["långben", "mimmi", "joakim"]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).skipWhile(function (x) { return x.first.length == 5; }).toArray()).to.eql([_långben, _mimmi, _joakim]);
-                chai_1.expect(linq_1.Linq.skipWhile(_objects, function (x) { return x.first.length == 5; })).to.eql([_långben, _mimmi, _joakim]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).skipWhile(function (x) { return x !== 7; }).toArray()).to.eql([7, 5, 3, 1]);
-                chai_1.expect(linq_1.Linq.skipWhile(_numbers, function (x) { return x !== 7; })).to.eql([7, 5, 3, 1]);
-            });
-        });
-        describe("filter all", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).filter(function () { return true; }).toArray()).to.eql(_strings);
-                chai_1.expect(linq_1.Linq.filter(_strings, function () { return true; })).to.eql(_strings);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).filter(function () { return true; }).toArray()).to.eql(_objects);
-                chai_1.expect(linq_1.Linq.filter(_objects, function () { return true; })).to.eql(_objects);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).filter(function () { return true; }).toArray()).to.eql(_numbers);
-                chai_1.expect(linq_1.Linq.filter(_numbers, function () { return true; })).to.eql(_numbers);
-            });
-        });
-        describe("filter some", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).filter(function (item) { return item[0] == "m"; }).toArray())
-                    .to.eql(["musse", "mimmi"]);
-                chai_1.expect(linq_1.Linq.filter(_strings, function (item) { return item[0] == "m"; }))
-                    .to.eql(["musse", "mimmi"]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).filter(function (item) { return (item.first[0] == "m"); }).toArray())
-                    .to.eql([_musse, _mimmi]);
-                chai_1.expect(linq_1.Linq.filter(_objects, function (item) { return (item.first[0] == "m"); }))
-                    .to.eql([_musse, _mimmi]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).filter(function (item) { return item % 2 == 0; }).toArray())
-                    .to.eql([0, 2, 4, 6, 8]);
-                chai_1.expect(linq_1.Linq.filter(_numbers, function (item) { return item % 2 == 0; }))
-                    .to.eql([0, 2, 4, 6, 8]);
-            });
-        });
-        describe("filter none", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).filter(function () { return false; }).toArray()).to.eql([]);
-                chai_1.expect(linq_1.Linq.filter(_strings, function () { return false; })).to.eql([]);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).filter(function () { return false; }).toArray()).to.eql([]);
-                chai_1.expect(linq_1.Linq.filter(_objects, function () { return false; })).to.eql([]);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).filter(function (x) { return x === -1; }).toArray()).to.eql([]);
-                chai_1.expect(linq_1.Linq.filter(_numbers, function (x) { return x === -1; })).to.eql([]);
-            });
-        });
-        describe("first", function () {
-            describe("with predicate", function () {
+            describe("throws on multiple", function () {
                 it("strings", function () {
-                    chai_1.expect(new linq_1.Linq(_strings).first(function (item) { return item[0] == "m"; })).to.eql("musse");
-                    chai_1.expect(linq_1.Linq.first(_strings, function (item) { return item[0] == "m"; })).to.eql("musse");
+                    var lq = new linq_1.Linq(TestItems.strings);
+                    var single1 = lq.single.bind(lq, function (item) { return item[0] == "m"; });
+                    chai_1.expect(single1).to.throw("The sequence contains more than one element.", "intantiated:");
+                    var single2 = linq_1.Linq.single.bind(undefined, TestItems.strings, function (item) { return item[0] == "m"; });
+                    chai_1.expect(single2).to.throw("The sequence contains more than one element.", "static:");
                 });
                 it("objects", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).first(function (item) { return item.first[0] == "m"; })).to.eql(_musse);
-                    chai_1.expect(linq_1.Linq.first(_objects, function (item) { return item.first[0] == "m"; })).to.eql(_musse);
+                    var lq = new linq_1.Linq(TestItems.objects);
+                    var single1 = lq.single.bind(lq, function (item) { return item.first[0] == "m"; });
+                    chai_1.expect(single1).to.throw("The sequence contains more than one element.", "intantiated:");
+                    var single2 = linq_1.Linq.single.bind(undefined, TestItems.objects, function (item) { return item.first[0] == "m"; });
+                    chai_1.expect(single2).to.throw("The sequence contains more than one element.", "static:");
                 });
                 it("numbers", function () {
-                    chai_1.expect(new linq_1.Linq(_numbers).first(function (item) { return item % 2 == 1; })).to.eql(9);
-                    chai_1.expect(linq_1.Linq.first(_numbers, function (item) { return item % 2 == 1; })).to.eql(9);
+                    var lq = new linq_1.Linq(TestItems.numbers);
+                    var single1 = lq.single.bind(lq, function (item) { return item % 2 == 1; });
+                    chai_1.expect(single1).to.throw("The sequence contains more than one element.", "intantiated:");
+                    var single2 = linq_1.Linq.single.bind(undefined, TestItems.numbers, function (item) { return item % 2 == 1; });
+                    chai_1.expect(single2).to.throw("The sequence contains more than one element.", "static:");
                 });
             });
-            describe("without predicate", function () {
-                it("strings", function () {
-                    chai_1.expect(new linq_1.Linq(_strings).first()).to.eql("kalle");
-                    chai_1.expect(linq_1.Linq.first(_strings)).to.eql("kalle");
+            describe("throws on no matching", function () {
+                it("string", function () {
+                    var lq = new linq_1.Linq(TestItems.strings);
+                    var single1 = lq.single.bind(lq, function (item) { return item[0] == "q"; });
+                    chai_1.expect(single1).to.throw("The sequence is empty.", "intantiated:");
+                    var single2 = linq_1.Linq.single.bind(undefined, TestItems.strings, function (item) { return item[0] == "q"; });
+                    chai_1.expect(single2).to.throw("The sequence is empty.", "static:");
                 });
-                it("objects", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).first()).to.eql(_kalle);
-                    chai_1.expect(linq_1.Linq.first(_objects)).to.eql(_kalle);
+                it("object", function () {
+                    var lq = new linq_1.Linq(TestItems.objects);
+                    var single1 = lq.single.bind(lq, function (item) { return item.first[0] == "q"; });
+                    chai_1.expect(single1).to.throw("The sequence is empty.", "intantiated:");
+                    var single2 = linq_1.Linq.single.bind(undefined, TestItems.objects, function (item) { return item.first[0] == "q"; });
+                    chai_1.expect(single2).to.throw("The sequence is empty.", "static:");
                 });
-                it("numbers", function () {
-                    chai_1.expect(new linq_1.Linq(_numbers).first()).to.eql(0);
-                    chai_1.expect(linq_1.Linq.first(_numbers)).to.eql(0);
-                });
-            });
-        });
-        describe("last", function () {
-            describe("with predicate", function () {
-                it("strings", function () {
-                    chai_1.expect(new linq_1.Linq(_strings).last(function (item) { return item[0] == "m"; })).to.eql("mimmi");
-                    chai_1.expect(linq_1.Linq.last(_strings, function (item) { return item[0] == "m"; })).to.eql("mimmi");
-                });
-                it("objects", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).last(function (item) { return item.first[0] == "m"; })).to.eql(_mimmi);
-                    chai_1.expect(linq_1.Linq.last(_objects, function (item) { return item.first[0] == "m"; })).to.eql(_mimmi);
-                });
-                it("numbers", function () {
-                    chai_1.expect(new linq_1.Linq(_numbers).last(function (item) { return item % 2 == 0; })).to.eql(8);
-                    chai_1.expect(linq_1.Linq.last(_numbers, function (item) { return item % 2 == 0; })).to.eql(8);
-                });
-            });
-            describe("without predicate", function () {
-                it("strings", function () {
-                    chai_1.expect(new linq_1.Linq(_strings).last()).to.eql("joakim");
-                    chai_1.expect(linq_1.Linq.last(_strings)).to.eql("joakim");
-                });
-                it("objects", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).last()).to.eql(_joakim);
-                    chai_1.expect(linq_1.Linq.last(_objects)).to.eql(_joakim);
-                });
-                it("numbers", function () {
-                    chai_1.expect(new linq_1.Linq(_numbers).last()).to.eql(1);
-                    chai_1.expect(linq_1.Linq.last(_numbers)).to.eql(1);
+                it("number", function () {
+                    var lq = new linq_1.Linq(TestItems.numbers);
+                    var single1 = lq.single.bind(lq, function (item) { return item == 100; });
+                    chai_1.expect(single1).to.throw("The sequence is empty.", "intantiated:");
+                    var single2 = linq_1.Linq.single.bind(undefined, TestItems.numbers, function (item) { return item == 100; });
+                    chai_1.expect(single2).to.throw("The sequence is empty.", "static:");
                 });
             });
         });
-        describe("single", function () {
-            describe("with predicate", function () {
-                it("strings", function () {
-                    var single1 = new linq_1.Linq(_strings).single, single2 = linq_1.Linq.single;
-                    single1.bind(function (item) { return item[0] == "m"; });
-                    single2.bind(_strings, function (item) { return item[0] == "m"; });
-                    chai_1.expect(single1).to.throw();
-                    chai_1.expect(new linq_1.Linq(_strings).single(function (item) { return item[0] == "l"; })).to.eql(_långben.first);
-                    chai_1.expect(single2).to.throw();
-                    chai_1.expect(linq_1.Linq.single(_strings, function (item) { return item[0] == "l"; })).to.eql(_långben.first);
-                });
-                it("objects", function () {
-                    var single1 = new linq_1.Linq(_strings).single, single2 = linq_1.Linq.single;
-                    single1.bind(function (item) { return item.first[0] == "m"; });
-                    single2.bind(_strings, function (item) { return item.first[0] == "m"; });
-                    chai_1.expect(single1).to.throw();
-                    chai_1.expect(new linq_1.Linq(_objects).single(function (item) { return item.first[0] == "l"; })).to.eql(_långben);
-                    chai_1.expect(single2).to.throw();
-                    chai_1.expect(linq_1.Linq.single(_objects, function (item) { return item.first[0] == "l"; })).to.eql(_långben);
-                });
-                it("numbers", function () {
-                    var single1 = new linq_1.Linq(_strings).single, single2 = linq_1.Linq.single;
-                    single1.bind(function (item) { return item % 2 == 1; });
-                    single2.bind(_strings, function (item) { return item % 2 == 1; });
-                    chai_1.expect(single1).to.throw();
-                    chai_1.expect(new linq_1.Linq(_numbers).single(function (item) { return item / 9 == 1; })).to.eql(9);
-                    chai_1.expect(single2).to.throw();
-                    chai_1.expect(linq_1.Linq.single(_numbers, function (item) { return item / 9 == 1; })).to.eql(9);
-                });
+    });
+    describe("orderBy", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).orderBy(function (x) { return x; }).first()).to.eql("joakim", "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.strings).orderBy(function (x) { return x; }).last()).to.eql("musse", "intantiated:");
+            chai_1.expect(linq_1.Linq.orderBy(TestItems.strings, function (x) { return x; })[0]).to.eql("joakim", "static:");
+            chai_1.expect(linq_1.Linq.orderBy(TestItems.strings, function (x) { return x; })[TestItems.strings.length - 1]).to.eql("musse", "static:");
+        });
+        describe("objects", function () {
+            it("with function", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy(function (x) { return x.first; }).first()).to.eql(TestItems.joakim, "intantiated:");
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy(function (x) { return x.first; }).last()).to.eql(TestItems.musse, "intantiated:");
+                chai_1.expect(linq_1.Linq.orderBy(TestItems.objects, function (x) { return x.first; })[0]).to.eql(TestItems.joakim, "static:");
+                chai_1.expect(linq_1.Linq.orderBy(TestItems.objects, function (x) { return x.first; })[TestItems.objects.length - 1]).to.eql(TestItems.musse, "static:");
+            });
+            it("with string", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy("first").first()).to.eql(TestItems.joakim, "intantiated:");
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy("first").last()).to.eql(TestItems.musse, "intantiated:");
+                chai_1.expect(linq_1.Linq.orderBy(TestItems.objects, "first")[0]).to.eql(TestItems.joakim, "static:");
+                chai_1.expect(linq_1.Linq.orderBy(TestItems.objects, "first")[TestItems.objects.length - 1]).to.eql(TestItems.musse, "static:");
             });
         });
-        describe("orderBy", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).orderBy(function (x) { return x; }).first()).to.eql("joakim");
-                chai_1.expect(new linq_1.Linq(_strings).orderBy(function (x) { return x; }).last()).to.eql("musse");
-                chai_1.expect(linq_1.Linq.orderBy(_strings, function (x) { return x; })[0]).to.eql("joakim");
-                chai_1.expect(linq_1.Linq.orderBy(_strings, function (x) { return x; })[_strings.length - 1]).to.eql("musse");
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x; }).first()).to.eql(0, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x; }).last()).to.eql(9, "intantiated:");
+            chai_1.expect(linq_1.Linq.orderBy(TestItems.numbers, function (x) { return x; })[0]).to.eql(0, "static:");
+            chai_1.expect(linq_1.Linq.orderBy(TestItems.numbers, function (x) { return x; })[TestItems.numbers.length - 1]).to.eql(9, "static:");
+        });
+    });
+    describe("orderByDesc", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).orderByDesc(function (x) { return x; }).first()).to.eql("musse", "intantiated:");
+            chai_1.expect(linq_1.Linq.orderByDesc(TestItems.strings, function (x) { return x; })[0]).to.eql("musse"), "static:";
+        });
+        describe("objects", function () {
+            it("with function", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderByDesc(function (x) { return x.first; }).last()).to.eql(TestItems.joakim, "intantiated:");
+                chai_1.expect(linq_1.Linq.orderByDesc(TestItems.objects, function (x) { return x.first; })[TestItems.objects.length - 1]).to.eql(TestItems.joakim, "static:");
             });
-            describe("objects", function () {
-                it("with function", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy(function (x) { return x.first; }).first()).to.eql(_joakim);
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy(function (x) { return x.first; }).last()).to.eql(_musse);
-                    chai_1.expect(linq_1.Linq.orderBy(_objects, function (x) { return x.first; })[0]).to.eql(_joakim);
-                    chai_1.expect(linq_1.Linq.orderBy(_objects, function (x) { return x.first; })[_objects.length - 1]).to.eql(_musse);
-                });
-                it("with string", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy("first").first()).to.eql(_joakim);
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy("first").last()).to.eql(_musse);
-                    chai_1.expect(linq_1.Linq.orderBy(_objects, "first")[0]).to.eql(_joakim);
-                    chai_1.expect(linq_1.Linq.orderBy(_objects, "first")[_objects.length - 1]).to.eql(_musse);
-                });
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x; }).first()).to.eql(0);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x; }).last()).to.eql(9);
-                chai_1.expect(linq_1.Linq.orderBy(_numbers, function (x) { return x; })[0]).to.eql(0);
-                chai_1.expect(linq_1.Linq.orderBy(_numbers, function (x) { return x; })[_numbers.length - 1]).to.eql(9);
+            it("with string", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderByDesc("first").last()).to.eql(TestItems.joakim, "intantiated:");
+                chai_1.expect(linq_1.Linq.orderByDesc(TestItems.objects, "first")[TestItems.objects.length - 1]).to.eql(TestItems.joakim, "static:");
             });
         });
-        describe("orderByDesc", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).orderByDesc(function (x) { return x; }).first()).to.eql("musse");
-                chai_1.expect(linq_1.Linq.orderByDesc(_strings, function (x) { return x; })[0]).to.eql("musse");
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderByDesc(function (x) { return x; }).first()).to.eql(9, "intantiated:");
+            chai_1.expect(linq_1.Linq.orderByDesc(TestItems.numbers, function (x) { return x; })[0]).to.eql(9, "static:");
+        });
+    });
+    describe("thenBy", function () {
+        // thenBy is not possible with static functions.
+        describe("objects", function () {
+            it("with function", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy(function (x) { return x.last; }).thenBy(function (x) { return x.first; }).first()).to.eql(TestItems.joakim, "intantiated:");
             });
-            describe("objects", function () {
-                it("with function", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderByDesc(function (x) { return x.first; }).last()).to.eql(_joakim);
-                    chai_1.expect(linq_1.Linq.orderByDesc(_objects, function (x) { return x.first; })[_objects.length - 1]).to.eql(_joakim);
-                });
-                it("with string", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderByDesc("first").last()).to.eql(_joakim);
-                    chai_1.expect(linq_1.Linq.orderByDesc(_objects, "first")[_objects.length - 1]).to.eql(_joakim);
-                });
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).orderByDesc(function (x) { return x; }).first()).to.eql(9);
-                chai_1.expect(linq_1.Linq.orderByDesc(_numbers, function (x) { return x; })[0]).to.eql(9);
+            it("with string", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy("last").thenBy("first").first()).to.eql(TestItems.joakim, "intantiated:");
             });
         });
-        describe("thenBy", function () {
-            // thenBy is not possible with static functions.
-            describe("objects", function () {
-                it("with function", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy(function (x) { return x.last; }).thenBy(function (x) { return x.first; }).first()).to.eql(_joakim);
-                });
-                it("with string", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy("last").thenBy("first").first()).to.eql(_joakim);
-                });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x; }).first()).to.eql(0, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x; }).last()).to.eql(9, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x % 4; }).thenBy(function (x) { return x; }).first()).to.eql(0, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x % 4; }).thenBy(function (x) { return x; }).last()).to.eql(7, "intantiated:");
+        });
+    });
+    describe("thenByDesc", function () {
+        // thenBy is not possible with static functions.
+        describe("objects", function () {
+            it("with function", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy(function (x) { return x.last; }).thenByDesc(function (x) { return x.first; }).first()).to.eql(TestItems.mimmi, "intantiated:");
             });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x; }).first()).to.eql(0);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x; }).last()).to.eql(9);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x % 4; }).thenBy(function (x) { return x; }).first()).to.eql(0);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenBy(function (x) { return x % 4; }).thenBy(function (x) { return x; }).last()).to.eql(7);
+            it("with string", function () {
+                chai_1.expect(new linq_1.Linq(TestItems.objects).orderBy("last").thenByDesc("first").first()).to.eql(TestItems.mimmi, "intantiated:");
             });
         });
-        describe("thenByDesc", function () {
-            // thenBy is not possible with static functions.
-            describe("objects", function () {
-                it("with function", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy(function (x) { return x.last; }).thenByDesc(function (x) { return x.first; }).first()).to.eql(_mimmi);
-                });
-                it("with string", function () {
-                    chai_1.expect(new linq_1.Linq(_objects).orderBy("last").thenByDesc("first").first()).to.eql(_mimmi);
-                });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x; }).first()).to.eql(8, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x; }).last()).to.eql(1, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenBy(function (x) { return x; }).first()).to.eql(2, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenBy(function (x) { return x; }).last()).to.eql(9, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenByDesc(function (x) { return x; }).first()).to.eql(6, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenByDesc(function (x) { return x; }).last()).to.eql(1, "intantiated:");
+        });
+    });
+    describe("sum", function () {
+        it("without selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).sum()).to.eql(45, "intantiated:");
+            chai_1.expect(linq_1.Linq.sum(TestItems.numbers)).to.eql(45);
+        });
+        it("with selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).sum(function (x) { return x; })).to.eql(45, "intantiated:");
+            chai_1.expect(linq_1.Linq.sum(TestItems.numbers, function (x) { return x; })).to.eql(45);
+        });
+    });
+    describe("average", function () {
+        it("without selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).average()).to.eql(4.5, "intantiated:");
+            chai_1.expect(linq_1.Linq.average(TestItems.numbers)).to.eql(4.5, "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).avg()).to.eql(4.5, "intantiated:");
+            chai_1.expect(linq_1.Linq.avg(TestItems.numbers)).to.eql(4.5, "static:");
+        });
+        it("with selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).average(function (x) { return x; })).to.eql(4.5, "intantiated:");
+            chai_1.expect(linq_1.Linq.average(TestItems.numbers, function (x) { return x; })).to.eql(4.5, "static:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).avg(function (x) { return x; })).to.eql(4.5, "intantiated:");
+            chai_1.expect(linq_1.Linq.avg(TestItems.numbers, function (x) { return x; })).to.eql(4.5, "static:");
+        });
+    });
+    describe("min", function () {
+        it("without selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).min()).to.eql(0, "intantiated:");
+            chai_1.expect(linq_1.Linq.min(TestItems.numbers)).to.eql(0, "static:");
+        });
+        it("with selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).min(function (x) { return x; })).to.eql(0, "intantiated:");
+            chai_1.expect(linq_1.Linq.min(TestItems.numbers, function (x) { return x; })).to.eql(0, "static:");
+        });
+    });
+    describe("max", function () {
+        it("without selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).max()).to.eql(9, "intantiated:");
+            chai_1.expect(linq_1.Linq.max(TestItems.numbers)).to.eql(9, "static:");
+        });
+        it("with selector", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).max(function (x) { return x; })).to.eql(9, "intantiated:");
+            chai_1.expect(linq_1.Linq.max(TestItems.numbers, function (x) { return x; })).to.eql(9, "static:");
+        });
+    });
+    describe("any", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).any(function (item) { return item[0] == "m"; })).to.eql(true, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.strings).any(function (item) { return item[0] == "å"; })).to.eql(false, "intantiated:");
+            chai_1.expect(linq_1.Linq.any(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql(true, "static:");
+            chai_1.expect(linq_1.Linq.any(TestItems.strings, function (item) { return item[0] == "å"; })).to.eql(false, "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).any(function (item) { return item.first[0] == "m"; })).to.eql(true, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.objects).any(function (item) { return item.first[0] == "å"; })).to.eql(false, "intantiated:");
+            chai_1.expect(linq_1.Linq.any(TestItems.objects, function (item) { return item.first[0] == "m"; })).to.eql(true, "static:");
+            chai_1.expect(linq_1.Linq.any(TestItems.objects, function (item) { return item.first[0] == "å"; })).to.eql(false, "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).any(function (item) { return item == 1; })).to.eql(true, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).any(function (item) { return item == 10; })).to.eql(false, "intantiated:");
+            chai_1.expect(linq_1.Linq.any(TestItems.numbers, function (item) { return item == 1; })).to.eql(true, "static:");
+            chai_1.expect(linq_1.Linq.any(TestItems.numbers, function (item) { return item == 10; })).to.eql(false, "static:");
+        });
+        describe("booleans", function () {
+            it("1", function () { chai_1.expect(linq_1.Linq.any([true, true, true], function (x) { return x; })).to.eql(true); });
+            it("2", function () { chai_1.expect(linq_1.Linq.any([true, true, false], function (x) { return x; })).to.eql(true); });
+            it("3", function () { chai_1.expect(linq_1.Linq.any([false, true, true], function (x) { return x; })).to.eql(true); });
+        });
+    });
+    describe("all", function () {
+        it("strings", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.strings).all(function (item) { return item[0] == "m"; })).to.eql(false, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.strings).all(function (item) { return item.length > 1; })).to.eql(true, "intantiated:");
+            chai_1.expect(linq_1.Linq.all(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql(false, "static:");
+            chai_1.expect(linq_1.Linq.all(TestItems.strings, function (item) { return item.length > 1; })).to.eql(true, "static:");
+        });
+        it("objects", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.objects).all(function (item) { return item.first[0] == "m"; })).to.eql(false, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.objects).all(function (item) { return item.first.length > 1; })).to.eql(true, "intantiated:");
+            chai_1.expect(linq_1.Linq.all(TestItems.objects, function (item) { return item.first[0] == "m"; })).to.eql(false, "static:");
+            chai_1.expect(linq_1.Linq.all(TestItems.objects, function (item) { return item.first.length > 1; })).to.eql(true, "static:");
+        });
+        it("numbers", function () {
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).all(function (item) { return item < 5; })).to.eql(false, "intantiated:");
+            chai_1.expect(new linq_1.Linq(TestItems.numbers).all(function (item) { return item < 10; })).to.eql(true, "intantiated:");
+            chai_1.expect(linq_1.Linq.all(TestItems.numbers, function (item) { return item < 5; })).to.eql(false, "static:");
+            chai_1.expect(linq_1.Linq.all(TestItems.numbers, function (item) { return item < 10; })).to.eql(true, "static:");
+        });
+        describe("booleans", function () {
+            it("1", function () { chai_1.expect(new linq_1.Linq([true, true, true]).all(function (x) { return x; })).to.eql(true); });
+            it("2", function () { chai_1.expect(new linq_1.Linq([true, true, false]).all(function (x) { return x; })).to.eql(false); });
+            it("3", function () { chai_1.expect(new linq_1.Linq([false, true, true]).all(function (x) { return x; })).to.eql(false); });
+        });
+    });
+    it("intersect", function () {
+        it("default comparer", function () {
+            var x = [0, 1, 2, 3], y = [2, 3, 4, 5];
+            chai_1.expect(new linq_1.Linq(x).intersect(y).toArray()).to.eql([2, 3], "intantiated:");
+            chai_1.expect(linq_1.Linq.intersect(x, y)).to.eql([2, 3], "static:");
+        });
+        it("with comparer", function () {
+            var x = TestItems.objects.slice(0, 3), y = TestItems.objects.slice(2), fn = function (x, y) { return x.last === y.last; };
+            chai_1.expect(new linq_1.Linq(x).intersect(y, fn).toArray()).to.eql([TestItems.kalle, TestItems.långben, "intantiated:"]);
+            chai_1.expect(linq_1.Linq.intersect(x, y, fn)).to.eql([TestItems.kalle, TestItems.långben, "static:"]);
+        });
+    });
+    describe("except", function () {
+        it("default comparer", function () {
+            var x = [0, 1, 2, 3], y = [2, 3, 4, 5];
+            chai_1.expect(new linq_1.Linq(x).except(y).toArray()).to.eql([0, 1], "intantiated:");
+            chai_1.expect(linq_1.Linq.except(x, y)).to.eql([0, 1], "static:");
+        });
+        it("with comparer", function () {
+            var x = TestItems.objects.slice(0, 3), y = TestItems.objects.slice(2), fn = function (x, y) { return x.last === y.last; };
+            chai_1.expect(new linq_1.Linq(x).except(y, fn).toArray()).to.eql([TestItems.musse], "intantiated:");
+            chai_1.expect(linq_1.Linq.except(x, y, fn)).to.eql([TestItems.musse], "static:");
+        });
+    });
+    describe("distinct", function () {
+        it("default comparer", function () {
+            var x = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+            chai_1.expect(new linq_1.Linq(x).distinct().toArray()).to.eql([1, 2, 3, 4, 5], "intantiated:");
+            chai_1.expect(linq_1.Linq.distinct(x)).to.eql([1, 2, 3, 4, 5], "static:");
+        });
+        it("with comparer", function () {
+            // we compare only lastnames, therefore "mimmi anka" and "joakim anka" will be excluded, because we already have "kalle anka"
+            var fn = function (x, y) { return x.last === y.last; };
+            chai_1.expect(new linq_1.Linq(TestItems.objects).distinct(fn).toArray()).to.eql([TestItems.kalle, TestItems.musse, TestItems.långben], "intantiated:");
+            chai_1.expect(linq_1.Linq.distinct(TestItems.objects, fn)).to.eql([TestItems.kalle, TestItems.musse, TestItems.långben], "static:");
+        });
+    });
+    describe("groupBy", function () {
+        describe("objects", function () {
+            var groupByArr = [
+                { key: 1, value: 1 },
+                { key: 2, value: 3 },
+                { key: 1, value: 2 },
+                { key: 3, value: 5 },
+                { key: 2, value: 4 }
+            ];
+            it("with function", function () {
+                chai_1.expect(new linq_1.Linq(groupByArr).groupBy(function (x) { return x.key; }).toArray().length).to.eql(3, "intantiated:");
+                chai_1.expect(linq_1.Linq.groupBy(groupByArr, function (x) { return x.key; }).length).to.eql(3, "static:");
             });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x; }).first()).to.eql(8);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x; }).last()).to.eql(1);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenBy(function (x) { return x; }).first()).to.eql(2);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenBy(function (x) { return x; }).last()).to.eql(9);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenByDesc(function (x) { return x; }).first()).to.eql(6);
-                chai_1.expect(new linq_1.Linq(_numbers).orderBy(function (x) { return x % 2; }).thenByDesc(function (x) { return x % 4; }).thenByDesc(function (x) { return x; }).last()).to.eql(1);
+            it("with string", function () {
+                chai_1.expect(new linq_1.Linq(groupByArr).groupBy("key").toArray().length).to.eql(3, "intantiated:");
+                chai_1.expect(linq_1.Linq.groupBy(groupByArr, "key").length).to.eql(3, "static:");
             });
         });
-        describe("sum", function () {
-            it("without selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).sum()).to.eql(45);
-                chai_1.expect(linq_1.Linq.sum(_numbers)).to.eql(45);
-            });
-            it("with selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).sum(function (x) { return x; })).to.eql(45);
-                chai_1.expect(linq_1.Linq.sum(_numbers, function (x) { return x; })).to.eql(45);
-            });
-        });
-        describe("average", function () {
-            it("without selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).average()).to.eql(4.5);
-                chai_1.expect(linq_1.Linq.average(_numbers)).to.eql(4.5);
-            });
-            it("with selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).average(function (x) { return x; })).to.eql(4.5);
-                chai_1.expect(linq_1.Linq.average(_numbers, function (x) { return x; })).to.eql(4.5);
-            });
-        });
-        describe("min", function () {
-            it("without selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).min()).to.eql(0);
-                chai_1.expect(linq_1.Linq.min(_numbers)).to.eql(0);
-            });
-            it("with selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).min(function (x) { return x; })).to.eql(0);
-                chai_1.expect(linq_1.Linq.min(_numbers, function (x) { return x; })).to.eql(0);
-            });
-        });
-        describe("max", function () {
-            it("without selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).max()).to.eql(9);
-                chai_1.expect(linq_1.Linq.max(_numbers)).to.eql(9);
-            });
-            it("with selector", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).max(function (x) { return x; })).to.eql(9);
-                chai_1.expect(linq_1.Linq.max(_numbers, function (x) { return x; })).to.eql(9);
-            });
-        });
-        describe("any", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).any(function (item) { return item[0] == "m"; })).to.eql(true);
-                chai_1.expect(new linq_1.Linq(_strings).any(function (item) { return item[0] == "å"; })).to.eql(false);
-                chai_1.expect(linq_1.Linq.any(_strings, function (item) { return item[0] == "m"; })).to.eql(true);
-                chai_1.expect(linq_1.Linq.any(_strings, function (item) { return item[0] == "å"; })).to.eql(false);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).any(function (item) { return item.first[0] == "m"; })).to.eql(true);
-                chai_1.expect(new linq_1.Linq(_objects).any(function (item) { return item.first[0] == "å"; })).to.eql(false);
-                chai_1.expect(linq_1.Linq.any(_objects, function (item) { return item.first[0] == "m"; })).to.eql(true);
-                chai_1.expect(linq_1.Linq.any(_objects, function (item) { return item.first[0] == "å"; })).to.eql(false);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).any(function (item) { return item == 1; })).to.eql(true);
-                chai_1.expect(new linq_1.Linq(_numbers).any(function (item) { return item == 10; })).to.eql(false);
-                chai_1.expect(linq_1.Linq.any(_numbers, function (item) { return item == 1; })).to.eql(true);
-                chai_1.expect(linq_1.Linq.any(_numbers, function (item) { return item == 10; })).to.eql(false);
-            });
-            describe("booleans", function () {
-                it("1", function () { chai_1.expect(linq_1.Linq.any([true, true, true], function (x) { return x; })).to.eql(true); });
-                it("2", function () { chai_1.expect(linq_1.Linq.any([true, true, false], function (x) { return x; })).to.eql(true); });
-                it("3", function () { chai_1.expect(linq_1.Linq.any([false, true, true], function (x) { return x; })).to.eql(true); });
-            });
-        });
-        describe("all", function () {
-            it("strings", function () {
-                chai_1.expect(new linq_1.Linq(_strings).all(function (item) { return item[0] == "m"; })).to.eql(false);
-                chai_1.expect(new linq_1.Linq(_strings).all(function (item) { return item.length > 1; })).to.eql(true);
-                chai_1.expect(linq_1.Linq.all(_strings, function (item) { return item[0] == "m"; })).to.eql(false);
-                chai_1.expect(linq_1.Linq.all(_strings, function (item) { return item.length > 1; })).to.eql(true);
-            });
-            it("objects", function () {
-                chai_1.expect(new linq_1.Linq(_objects).all(function (item) { return item.first[0] == "m"; })).to.eql(false);
-                chai_1.expect(new linq_1.Linq(_objects).all(function (item) { return item.first.length > 1; })).to.eql(true);
-                chai_1.expect(linq_1.Linq.all(_objects, function (item) { return item.first[0] == "m"; })).to.eql(false);
-                chai_1.expect(linq_1.Linq.all(_objects, function (item) { return item.first.length > 1; })).to.eql(true);
-            });
-            it("numbers", function () {
-                chai_1.expect(new linq_1.Linq(_numbers).all(function (item) { return item < 5; })).to.eql(false);
-                chai_1.expect(new linq_1.Linq(_numbers).all(function (item) { return item < 10; })).to.eql(true);
-                chai_1.expect(linq_1.Linq.all(_numbers, function (item) { return item < 5; })).to.eql(false);
-                chai_1.expect(linq_1.Linq.all(_numbers, function (item) { return item < 10; })).to.eql(true);
-            });
-            describe("booleans", function () {
-                it("1", function () { chai_1.expect(new linq_1.Linq([true, true, true]).all(function (x) { return x; })).to.eql(true); });
-                it("2", function () { chai_1.expect(new linq_1.Linq([true, true, false]).all(function (x) { return x; })).to.eql(false); });
-                it("3", function () { chai_1.expect(new linq_1.Linq([false, true, true]).all(function (x) { return x; })).to.eql(false); });
-            });
-        });
-        it("intersect", function () {
-            var x = [0, 1, 2, 3], y = [1, 2, 3, 4], z = [2, 3, 4, 5];
-            chai_1.expect(new linq_1.Linq(x).intersect(y, z).toArray()).to.eql([2, 3]);
-            chai_1.expect(linq_1.Linq.intersect(x, y, z)).to.eql([2, 3]);
-        });
-        it("except", function () {
-            var x = [0, 1, 2, 3], y = [3, 4, 5, 6], z = [6, 7, 8, 9];
-            chai_1.expect(new linq_1.Linq(x).except(y, z).toArray()).to.eql([0, 1, 2, 4, 5, 7, 8, 9]);
-            chai_1.expect(linq_1.Linq.except(x, y, z)).to.eql([0, 1, 2, 4, 5, 7, 8, 9]);
-        });
-        it("distinct", function () {
-            var x = [1, 2, 3, 4, 5, 4, 3, 2, 1], y = [5, 6, 7, 8, 9, 8, 7, 6, 5];
-            chai_1.expect(new linq_1.Linq(x).distinct().toArray()).to.eql([1, 2, 3, 4, 5]);
-            chai_1.expect(linq_1.Linq.distinct(x)).to.eql([1, 2, 3, 4, 5]);
-            chai_1.expect(linq_1.Linq.distinct(x, y)).to.eql([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-        });
-        describe("groupBy", function () {
-            describe("objects", function () {
-                var groupByArr = [
-                    { key: 1, value: 1 },
-                    { key: 2, value: 3 },
-                    { key: 1, value: 2 },
-                    { key: 3, value: 5 },
-                    { key: 2, value: 4 }
-                ];
-                it("with function", function () {
-                    chai_1.expect(new linq_1.Linq(groupByArr).groupBy(function (x) { return x.key; }).toArray().length).to.eql(3);
-                    chai_1.expect(linq_1.Linq.groupBy(groupByArr, function (x) { return x.key; }).length).to.eql(3);
-                });
-                it("with string", function () {
-                    chai_1.expect(new linq_1.Linq(groupByArr).groupBy("key").toArray().length).to.eql(3);
-                    chai_1.expect(linq_1.Linq.groupBy(groupByArr, "key").length).to.eql(3);
-                });
-            });
-        });
+    });
+    it("zip", function () {
+        function cb(str, obj) { return { first: str, last: obj.last }; }
+        chai_1.expect(new linq_1.Linq(TestItems.strings).zip(TestItems.objects, cb).toArray()).to.eql(TestItems.objects, "intantiated:");
+        chai_1.expect(linq_1.Linq.zip(TestItems.strings, TestItems.objects, cb)).to.eql(TestItems.objects, "static:");
     });
 });
 //# sourceMappingURL=linq.spec.js.map

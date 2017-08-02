@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../util");
 var List = (function () {
     /**
@@ -44,12 +45,12 @@ var List = (function () {
     List.addRange = function (source, collection) {
         return new List(source).addRange(collection).toArray();
     };
-    /**
-     * Returns a new read only instance of the list.
-     */
-    List.prototype.asReadOnly = function () {
-        return new List(Object.freeze(this._source.slice()));
-    };
+    // /**
+    //  * Returns a new read only instance of the list.
+    //  */
+    // asReadOnly(): List<T> {
+    //     return new List(Object.freeze(this._source.slice()));
+    // }
     /**
      * Performs the specified action on each element of the list.
      * @param callback The callback to execute on each element of the list.
@@ -94,8 +95,8 @@ var List = (function () {
         return idx;
     };
     List.lastIndexOf = function (source, item, index, count) {
-        if (index === void 0) { index = this.length - 1; }
-        if (count === void 0) { count = this.length; }
+        if (index === void 0) { index = source.length - 1; }
+        if (count === void 0) { count = source.length; }
         return new List(source).lastIndexOf(item, index, count);
     };
     /**
@@ -259,6 +260,5 @@ var List = (function () {
     };
     return List;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = List;
 //# sourceMappingURL=list.js.map

@@ -1,7 +1,7 @@
-/// <reference path="../../typings/main.d.ts" />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var strings_1 = require("../../src/helpers/strings");
-var chai_1 = require('chai');
+var chai_1 = require("chai");
 describe("Strings", function () {
     it("format", function () {
         chai_1.expect(strings_1.default("Hello, {0}!").format("World")).to.eql("Hello, World!");

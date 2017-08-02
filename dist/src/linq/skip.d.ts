@@ -1,7 +1,7 @@
-import Iterator from "./iterator";
-export default class SkipIterator extends Iterator {
-    private _count;
-    private _counter;
-    constructor(source: any[] | Iterator, count: number);
-    next(): any;
+import BaseIterator, { IteratorResult } from "./iterator";
+export default class SkipIterator<TSource> extends BaseIterator<TSource> {
+    private count;
+    private counter;
+    constructor(source: TSource[] | BaseIterator<TSource>, count: number);
+    next(): IteratorResult<TSource>;
 }

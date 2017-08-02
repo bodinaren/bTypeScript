@@ -1,30 +1,49 @@
 import LinkedList from "./linkedList";
 
+/**
+ * A Stack works by last in, first out.
+ */
 export default class Stack<T> {
 
     private _list: LinkedList<T>;
 
-    length: number;
+    /** Get the number of items in the stack */
+    get length(): number { return this._list.length; };
 
-    constructor() {
-        this._list = new LinkedList<T>();
+    /**
+     * @param items T[] Items to start filling the stack with.
+     */
+    constructor(items?: T[]) {
+        this._list = new LinkedList<T>(items);
     }
 
-    push(val: T): number {
-        this._list.insertAt(0, val);
-        return this.length = this._list.length;
+    /**
+     * Adds an item to the top of the stack.
+     */
+    push(item: T): number {
+        this._list.insertAt(0, item);
+        return this._list.length;
     }
 
+    /**
+     * Get and remove an item from the top of the stack.
+     */
     pop(): T {
         let item = this.peek();
-        this.length = this._list.removeAt(0);
+        this._list.removeAt(0);
         return item;
     }
 
+    /**
+     * Get an item from the top of the stack without removing it.
+     */
     peek(): T {
         return this._list.get(0);
     }
 
+    /** 
+     * Clear the stack
+     */
     clear() {
         this._list.clear();
     }

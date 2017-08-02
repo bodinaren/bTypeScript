@@ -1,18 +1,19 @@
 import * as Util from "../util";
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 
-export default class LinqMapIterator extends Iterator {
-    private _callback: (item: any, idx: number) => any;
+export default class MapIterator<TSource, TResult> extends BaseIterator<TSource> {
 
-    constructor(source: any[] | Iterator, callback: (item: any, idx: number) => any) {
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        private callback: (item: TSource, idx: number) => TResult
+    ) {
         super(source);
-        this._callback = callback;
     }
 
-    next(): any {
-        let item = this._next();
-        return (!Util.isUndefined(item))
-            ? this._callback(item, this._idx)
-            : undefined;
+    next(): IteratorResult<TResult> {
+        let item = super.next();
+        return (!Util.isUndefined(item.value))
+            ? { value: this.callback(item.value, this._idx), done: false }
+            : { value: undefined, done: true };
     }
 }

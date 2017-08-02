@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import Stack from "../../src/collections/stack";
 import {expect} from 'chai';
 
@@ -38,7 +36,21 @@ describe("Stack", function() {
         list.push(9);
 
         expect(list.peek()).to.eql(9);
+        
         expect(list.length).to.eql(4);
+    });
+
+    it("clear", function() {
+        var x = new Stack();
+
+        x.push(6);
+        x.push(7);
+        x.push(8);
+        x.push(9);
+        
+        x.clear();
+
+        expect(x.length).to.eql(0);
     });
 
 });

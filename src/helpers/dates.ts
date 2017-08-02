@@ -1,4 +1,4 @@
-import * as util from "../util";
+import * as Util from "../util";
 
 /**
  * Shorthand function to create a DatesHelper object.
@@ -13,9 +13,9 @@ export class DatesHelper {
     }
 
     static toDate(date: any): Date {
-        if (util.isUndefined(date)) return new Date();
-        if (util.isString(date)) date = Date.parse(date);
-        if (util.isNumber(date)) date = new Date(date);
+        if (Util.isUndefined(date)) return new Date();
+        if (Util.isString(date)) date = Date.parse(date);
+        if (Util.isNumber(date)) date = new Date(date);
         return date;
     }
 
@@ -34,8 +34,8 @@ export class DatesHelper {
      * @param upper The upper inclusive bound.
      */
     static between(date: Date, lower?: Date, upper?: Date): boolean {
-        if (util.isUndefined(lower)) lower = new Date();
-        if (util.isUndefined(upper)) upper = new Date(9999999999999);
+        if (Util.isUndefined(lower)) lower = new Date(0);
+        if (Util.isUndefined(upper)) upper = new Date(9999999999999);
         return (lower <= date && date <= upper);
     }
 
@@ -55,6 +55,18 @@ export class DatesHelper {
         return this;
     }
 
+    isToday(): boolean {
+        return this.date.toDateString() === new Date().toDateString();
+    }
+
+    toMidnight(): this {
+        this.date.setHours(0);
+        this.date.setMinutes(0);
+        this.date.setSeconds(0);
+        this.date.setMilliseconds(0);
+        return this;
+    }
+
     static addYears(date: Date, years: number): Date { return new DatesHelper(date).addYears(years).date; }
     static addMonths(date: Date, months: number): Date { return new DatesHelper(date).addMonths(months).date; }
     static addWeeks(date: Date, week: number): Date { return new DatesHelper(date).addWeeks(week).date; }
@@ -63,4 +75,6 @@ export class DatesHelper {
     static addMinutes(date: Date, minutes: number): Date { return new DatesHelper(date).addMinutes(minutes).date; }
     static addSeconds(date: Date, seconds: number): Date { return new DatesHelper(date).addSeconds(seconds).date; }
     static addMilliseconds(date: Date, milliseconds: number): Date { return new DatesHelper(date).addMilliseconds(milliseconds).date; }
+    static isToday(date: Date): boolean { return new DatesHelper(date).isToday(); }
+    static getMidnight(date: Date): Date { return new DatesHelper(date).toMidnight().date; }
 }

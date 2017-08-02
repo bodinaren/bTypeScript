@@ -1,22 +1,23 @@
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 import * as Util from "../util";
 
-export default class SkipWhileIterator extends Iterator {
-    private _predicate: Util.IPredicate<any>;
-    private _done: boolean = false;
+export default class SkipWhileIterator<TSource> extends BaseIterator<TSource> {
+    private done: boolean = false;
 
-    constructor(source: any[] | Iterator, _predicate: Util.IPredicate<any> = Util.defaultPredicate) {
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        private predicate: Util.IPredicate<TSource> = Util.defaultPredicate
+    ) {
         super(source);
-        this._predicate = _predicate;
     }
 
-    next(): any {
-        let item;
+    next(): IteratorResult<TSource> {
+        let item: IteratorResult<TSource>;
         do {
-            item = this._next();
-        } while (!this._done && this._predicate(item, this._idx));
+            item = super.next();
+        } while (!this.done && !Util.isUndefined(item.value) && this.predicate(item.value, this._idx));
 
-        this._done = true;
+        this.done = true;
         return item;
     }
 }

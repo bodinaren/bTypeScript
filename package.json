@@ -8,13 +8,15 @@
     "main": "./src/index.ts"
   },
   "scripts": {
-    "devtools": "npm install && typings install",
+    "devtools": "npm install",
     "tsc": "tsc",
     "lint": "tslint -c tslint.json ./src/**/*.ts",
+    "mocha": "mocha --reporter dot ./dist/**/*.spec.js",
+    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha dist/tests -- -R dot --recursive",
     "umd": "node umd.browserify.js && node umd.uglify.js",
-    "test": "npm run tsc && mocha --reporter dot ./dist/**/*.spec.js",
+    "test": "npm run tsc && npm run istanbul",
     "build": "npm run lint && npm run tsc && npm run umd",
-    "all": "npm run build && npm run test"
+    "all": "npm run lint && npm run tsc && npm run istanbul && npm run umd"
   },
   "repository": {
     "type": "git",
@@ -28,13 +30,17 @@
   "homepage": "https://github.com/bodinaren/bTypeScript",
   "dependencies": {},
   "devDependencies": {
+    "@types/es6-shim": "^0.31.32",
+    "@types/jasmine": "^2.5.40",
     "browserify": "^13.0.1",
     "browserify-umdify": "^1.0.3",
     "chai": "^3.5.0",
+    "gulp-clean": "^0.3.2",
+    "intern": "^3.4.1",
     "mocha": "^2.4.5",
+    "remap-istanbul": "^0.7.0",
     "tslint": "^3.12.1",
-    "typescript": "^1.8.10",
-    "typings": "^0.8.1",
+    "typescript": "^2.2.1",
     "uglify-js": "^2.6.2",
     "uglifyify": "^3.0.1"
   }

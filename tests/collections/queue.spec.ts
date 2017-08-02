@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import Queue from "../../src/collections/queue";
 import {expect} from 'chai';
 
@@ -11,6 +9,7 @@ describe("Queue", function() {
         expect(list.enqueue(7)).to.eql(2);
         expect(list.enqueue(8)).to.eql(3);
         expect(list.enqueue(9)).to.eql(4);
+        expect(list.length).to.eql(4);
     });
 
     it("dequeue", function() {
@@ -25,6 +24,7 @@ describe("Queue", function() {
         expect(list.dequeue()).to.eql(7);
         expect(list.dequeue()).to.eql(8);
         expect(list.dequeue()).to.eql(9);
+        expect(list.length).to.eql(0);
     });
 
 });

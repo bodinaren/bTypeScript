@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import BinaryTree from "../../src/collections/binaryTree";
 import {expect} from 'chai';
 
@@ -9,13 +7,15 @@ describe("BinaryTree", function() {
     beforeEach(() => {
         defaultTree = new BinaryTree<number>();
 
-        defaultTree.insert(4);
-        defaultTree.insert(2);
-        defaultTree.insert(6);
-        defaultTree.insert(1);
-        defaultTree.insert(3);
-        defaultTree.insert(5);
-        defaultTree.insert(7);
+        // defaultTree.insert(4);
+        // defaultTree.insert(2);
+        // defaultTree.insert(6);
+        // defaultTree.insert(1);
+        // defaultTree.insert(3);
+        // defaultTree.insert(5);
+        // defaultTree.insert(7);
+
+        defaultTree.insertRange([4, 2, 6, 1, 3, 5, 7]);
         
         //      __4__
         //     /     \
@@ -25,6 +25,13 @@ describe("BinaryTree", function() {
     });
 
     it("length", function() {
+        expect(defaultTree.length).to.eql(7);
+    });
+
+    it("prevent duplicates", function () {
+        // no two same numbers can exist in a binary tree, so this 4 should not actually be inserted
+
+        defaultTree.insert(4);
         expect(defaultTree.length).to.eql(7);
     });
 
@@ -126,6 +133,16 @@ describe("BinaryTree", function() {
             expect(arr).to.eql([6, 2, 1, 3, 7, 5]);
         });
 
+        it("root is leaf", function() {
+            var tree = new BinaryTree<number>();
+            tree.insert(4);
+
+            var arr = [];
+            tree.remove(4);
+            tree.preorderTraversal(item => { arr.push(item) });
+            expect(arr).to.eql([]);
+        });
+
         //it("root in non-perfect tree", function() {
         //    var arr = [];
         //    defaultTree.remove(7); // make non-perfect tree.
@@ -159,6 +176,5 @@ describe("BinaryTree", function() {
         expect(defaultTree.depth()).to.eql(2);
         expect(emptyTree.depth()).to.eql(-1);
         expect(shallowTree.depth()).to.eql(0);
-        
     });
 });

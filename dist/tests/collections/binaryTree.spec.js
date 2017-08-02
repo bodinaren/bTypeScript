@@ -1,18 +1,19 @@
-/// <reference path="../../typings/main.d.ts" />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var binaryTree_1 = require("../../src/collections/binaryTree");
-var chai_1 = require('chai');
+var chai_1 = require("chai");
 describe("BinaryTree", function () {
     var defaultTree;
     beforeEach(function () {
         defaultTree = new binaryTree_1.default();
-        defaultTree.insert(4);
-        defaultTree.insert(2);
-        defaultTree.insert(6);
-        defaultTree.insert(1);
-        defaultTree.insert(3);
-        defaultTree.insert(5);
-        defaultTree.insert(7);
+        // defaultTree.insert(4);
+        // defaultTree.insert(2);
+        // defaultTree.insert(6);
+        // defaultTree.insert(1);
+        // defaultTree.insert(3);
+        // defaultTree.insert(5);
+        // defaultTree.insert(7);
+        defaultTree.insertRange([4, 2, 6, 1, 3, 5, 7]);
         //      __4__
         //     /     \
         //    2       6
@@ -20,6 +21,11 @@ describe("BinaryTree", function () {
         //  1   3   5   7
     });
     it("length", function () {
+        chai_1.expect(defaultTree.length).to.eql(7);
+    });
+    it("prevent duplicates", function () {
+        // no two same numbers can exist in a binary tree, so this 4 should not actually be inserted
+        defaultTree.insert(4);
         chai_1.expect(defaultTree.length).to.eql(7);
     });
     it("contains", function () {
@@ -108,6 +114,14 @@ describe("BinaryTree", function () {
             defaultTree.remove(4);
             defaultTree.preorderTraversal(function (item) { arr.push(item); });
             chai_1.expect(arr).to.eql([6, 2, 1, 3, 7, 5]);
+        });
+        it("root is leaf", function () {
+            var tree = new binaryTree_1.default();
+            tree.insert(4);
+            var arr = [];
+            tree.remove(4);
+            tree.preorderTraversal(function (item) { arr.push(item); });
+            chai_1.expect(arr).to.eql([]);
         });
         //it("root in non-perfect tree", function() {
         //    var arr = [];

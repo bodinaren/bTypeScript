@@ -1,8 +1,8 @@
-import Iterator from "./iterator";
+import BaseIterator, { IteratorResult } from "./iterator";
 import * as Util from "../util";
-export default class SkipWhileIterator extends Iterator {
-    private _predicate;
-    private _done;
-    constructor(source: any[] | Iterator, _predicate?: Util.IPredicate<any>);
-    next(): any;
+export default class SkipWhileIterator<TSource> extends BaseIterator<TSource> {
+    private predicate;
+    private done;
+    constructor(source: TSource[] | BaseIterator<TSource>, predicate?: Util.IPredicate<TSource>);
+    next(): IteratorResult<TSource>;
 }

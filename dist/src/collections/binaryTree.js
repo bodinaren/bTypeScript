@@ -1,10 +1,11 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../util");
 var queue_1 = require("./queue");
 var BinaryTree = (function () {
-    function BinaryTree(compareFunction) {
+    function BinaryTree(selectorFunction) {
         this.length = 0;
-        this._compare = compareFunction || Util.defaultComparer;
+        this._selector = selectorFunction || Util.defaultSelector;
     }
     /**
      * Insert an item into the tree.
@@ -32,7 +33,7 @@ var BinaryTree = (function () {
             this.length++;
             return true;
         }
-        var comp = this._compare(node.value, tree.value);
+        var comp = Util.defaultComparer(this._selector(node.value), this._selector(tree.value));
         if (comp < 0) {
             if (tree.left) {
                 this.insertAux(tree.left, node);
@@ -60,11 +61,16 @@ var BinaryTree = (function () {
     BinaryTree.prototype.remove = function (item) {
         var node = this._search(this._root, item);
         if (node && node.isEmpty()) {
+            if (node === this._root) {
+                delete this._root;
+                return true;
+            }
             if (node.value < node.parent.value)
                 delete node.parent.left;
             else
                 delete node.parent.right;
             delete node.parent;
+            return true;
         }
         else if (node) {
             var right = node;
@@ -276,7 +282,9 @@ var BinaryTree = (function () {
     BinaryTree.prototype._search = function (tree, item) {
         if (Util.isUndefined(tree))
             return undefined;
-        var comp = this._compare(item, tree.value);
+        if (tree.value === item)
+            return tree;
+        var comp = Util.defaultComparer(this._selector(item), this._selector(tree.value));
         if (comp < 0) {
             tree = this._search(tree.left, item);
         }
@@ -287,7 +295,6 @@ var BinaryTree = (function () {
     };
     return BinaryTree;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = BinaryTree;
 var TreeNode = (function () {
     function TreeNode(value) {
@@ -299,4 +306,5 @@ var TreeNode = (function () {
     TreeNode.prototype.isEmpty = function () { return !this.left && !this.right; };
     return TreeNode;
 }());
+exports.TreeNode = TreeNode;
 //# sourceMappingURL=binaryTree.js.map

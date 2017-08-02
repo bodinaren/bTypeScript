@@ -1,11 +1,11 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var util = require("../util");
 /**
  * Shorthand function to create a NumbersHelper object.
  * @param number The number on which to perform the various functions.
  */
 function Numbers(num) { return new NumbersHelper(num); }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Numbers;
 var NumbersHelper = (function () {
     /**

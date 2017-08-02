@@ -1,27 +1,30 @@
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 import * as Util from "../util";
 
-export default class OrderIterator extends Iterator {
-    private _orders: LinqOrder[];
-    private _descending: boolean;
+export default class OrderIterator<TSource, TKey> extends BaseIterator<TSource> {
+    private _orders: LinqOrder<TSource, TKey>[];
     private _isOrdered: boolean = false;
 
-    constructor(source: any[] | Iterator, keySelector: (x) => any, comparer: Util.IComparer<any> = Util.defaultComparer, descending: boolean = false) {
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        keySelector: Util.ISelector<TSource, TKey>,
+        comparer: Util.IComparer<TKey> = Util.defaultComparer,
+        private descending: boolean = false
+    ) {
         super(source);
         this._orders = [new LinqOrder(keySelector, comparer, descending)];
-        this._descending = descending;
         this._buffers = true;
     }
 
-    next(): any {
+    next(): IteratorResult<TSource> {
         if (!this._isOrdered) {
             let arr = [], item;
 
             // can't someone else do this? e.g. FilterIterator?
             do {
-                item = this._next();
-                if (!Util.isUndefined(item)) arr.push(item);
-            } while (!Util.isUndefined(item));
+                item = super.next();
+                if (!Util.isUndefined(item.value)) arr.push(item.value);
+            } while (!item.done);
 
             this._source = arr.sort((a, b) => {
                 let i = 0, rs;
@@ -30,22 +33,24 @@ export default class OrderIterator extends Iterator {
                 } while (rs === 0 && i < this._orders.length);
                 return rs;
             });
+
             this._isOrdered = true;
+            super.reset();
         }
-        return this._next();
+        return super.next();
     }
 
-    thenBy(keySelector: (x) => any, comparer: Util.IComparer<any> = Util.defaultComparer, descending: boolean = false) {
+    thenBy(keySelector: (x) => any, comparer: Util.IComparer<TKey> = Util.defaultComparer, descending: boolean = false) {
         this._orders.push(new LinqOrder(keySelector, comparer, descending));
     }
 }
 
-class LinqOrder {
-    private _keySelector: Util.ISelector<any, any>;
-    private _comparer: Util.IComparer<any>;
+class LinqOrder<TSource, TKey> {
+    private _keySelector: Util.ISelector<TSource, TKey>;
+    private _comparer: Util.IComparer<TKey>;
     private _descending: boolean;
 
-    constructor(keySelector: Util.ISelector<any, any>, comparer: Util.IComparer<any> = Util.defaultComparer, descending: boolean = false) {
+    constructor(keySelector: Util.ISelector<TSource, TKey>, comparer: Util.IComparer<TKey> = Util.defaultComparer, descending: boolean = false) {
         this._keySelector = keySelector;
         this._comparer = comparer;
         this._descending = descending;

@@ -1,18 +1,19 @@
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 
-export default class SkipIterator extends Iterator {
-    private _count: number;
-    private _counter: number = 0;
+export default class SkipIterator<TSource> extends BaseIterator<TSource> {
 
-    constructor(source: any[] | Iterator, count: number) {
+    private counter = 0;
+
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        private count: number
+    ) {
         super(source);
-        this._count = count;
     }
 
-    next(): any {
-        for (; this._counter < this._count; this._counter++) {
-            this._next();
-        }
-        return this._next();
+    next(): IteratorResult<TSource> {
+        for (; this.counter < this.count; this.counter++) super.next();
+
+        return super.next();
     }
 }

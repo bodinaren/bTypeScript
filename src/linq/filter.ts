@@ -1,23 +1,21 @@
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 import * as Util from "../util";
 
-export default class FilterIterator extends Iterator {
-    private _callback: Util.IPredicate<any>;
+export default class FilterIterator<TSource> extends BaseIterator<TSource> {
 
-    constructor(source: any[] | Iterator, callback: Util.IPredicate<any> = Util.defaultPredicate) {
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        private callback: Util.IPredicate<TSource> = Util.defaultPredicate
+    ) {
         super(source);
-        this._callback = callback;
     }
 
-    next(): any {
-        let item;
+    next(): IteratorResult<TSource> {
+        let item: IteratorResult<TSource>;
 
-        do {
-            item = this._next();
-            if (Util.isUndefined(item)) break;
-
-            if (this._callback(item, this._idx)) break;
-        } while (!Util.isUndefined(item));
+        while (!(item = super.next()).done) {
+            if (this.callback(item.value, this._idx)) break;
+        }
 
         return item;
     }

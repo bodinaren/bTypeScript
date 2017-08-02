@@ -1,18 +1,23 @@
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 
-export default class TakeIterator extends Iterator {
-    private _count: number;
-    private _counter: number = 0;
+export default class TakeIterator<TSource> extends BaseIterator<TSource> {
+private _counter: number = 0;
 
-    constructor(source: any[] | Iterator, count: number) {
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        private count: number
+    ) {
         super(source);
-        this._count = count;
     }
 
-    next(): any {
-        if (this._counter < this._count) {
+    next(): IteratorResult<TSource> {
+        if (this._counter < this.count) {
             this._counter++;
-            return this._next();
+            return super.next();
         }
+        return {
+            value: undefined,
+            done: true
+        };
     }
 }

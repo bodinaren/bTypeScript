@@ -10,9 +10,9 @@ var bundled = browserify({
 		extensions: [".js", ".json"],
 		debug: true
 	})
-	.require("./dist/src/linq.js", { expose: "Linq" })
-	.require("./dist/src/collections.js", { expose: "Collections" })
-	.require("./dist/src/helpers.js", { expose: "Helpers" })
+	.require("./dist/src/linq/index.js", { expose: "Linq" })
+	.require("./dist/src/collections/index.js", { expose: "Collections" })
+	.require("./dist/src/helpers/index.js", { expose: "Helpers" })
 	.bundle()
 	.pipe(new Umd());
 

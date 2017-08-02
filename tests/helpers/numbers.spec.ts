@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import Numbers, {NumbersHelper} from "../../src/helpers/numbers";
 import {expect} from 'chai';
 

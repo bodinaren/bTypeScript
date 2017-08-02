@@ -1,7 +1,7 @@
-/// <reference path="../typings/main.d.ts" />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../src/util");
-var chai_1 = require('chai');
+var chai_1 = require("chai");
 describe("Util", function () {
     var x;
     it("isUndefined", function () {

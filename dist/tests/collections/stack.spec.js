@@ -1,7 +1,7 @@
-/// <reference path="../../typings/main.d.ts" />
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var stack_1 = require("../../src/collections/stack");
-var chai_1 = require('chai');
+var chai_1 = require("chai");
 describe("Stack", function () {
     it("push", function () {
         var list = new stack_1.default();
@@ -31,6 +31,15 @@ describe("Stack", function () {
         list.push(9);
         chai_1.expect(list.peek()).to.eql(9);
         chai_1.expect(list.length).to.eql(4);
+    });
+    it("clear", function () {
+        var x = new stack_1.default();
+        x.push(6);
+        x.push(7);
+        x.push(8);
+        x.push(9);
+        x.clear();
+        chai_1.expect(x.length).to.eql(0);
     });
 });
 //# sourceMappingURL=stack.spec.js.map

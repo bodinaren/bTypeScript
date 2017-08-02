@@ -1,18 +1,28 @@
-import Iterator from "./iterator";
+import BaseIterator, {IteratorResult} from "./iterator";
 import * as Util from "../util";
 
-export default class TakeWhileIterator extends Iterator {
-    private _predicate: Util.IPredicate<any>;
+export default class TakeWhileIterator<TSource> extends BaseIterator<TSource> {
 
-    constructor(source: any[] | Iterator, predicate: Util.IPredicate<any> = Util.defaultPredicate) {
+    constructor(
+        source: TSource[] | BaseIterator<TSource>,
+        private predicate: Util.IPredicate<TSource> = Util.defaultPredicate
+    ) {
         super(source);
-        this._predicate = predicate;
     }
 
-    next(): any {
-        let n = this._next();
-        if (!!this._predicate(n, this._idx)) {
-            return n;
+    next(): IteratorResult<TSource> {
+        let n = super.next();
+
+        if (!n.done && !!this.predicate(n.value, this._idx)) {
+            return {
+                value: n.value,
+                done: false
+            };
         }
+
+        return {
+            value: undefined,
+            done: true
+        };
     }
 }

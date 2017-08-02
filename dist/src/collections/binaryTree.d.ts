@@ -1,9 +1,9 @@
 import * as Util from "../util";
 export default class BinaryTree<T> {
     private _root;
-    private _compare;
+    private _selector;
     length: number;
-    constructor(compareFunction?: Util.IComparer<T>);
+    constructor(selectorFunction?: Util.ISelector<T, number>);
     /**
      * Insert an item into the tree.
      * @param item
@@ -132,4 +132,15 @@ export default class BinaryTree<T> {
      * @param item
      */
     private _search(tree, item);
+}
+export declare class TreeNode {
+    left: TreeNode;
+    right: TreeNode;
+    parent: TreeNode;
+    value: any;
+    constructor(value: any);
+    /**
+     * If the node has neither a right or left child.
+     */
+    isEmpty(): boolean;
 }

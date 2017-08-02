@@ -48,12 +48,12 @@ export default class List<T> {
         return new List(source).addRange(collection).toArray();
     }
 
-    /**
-     * Returns a new read only instance of the list.
-     */
-    asReadOnly(): List<T> {
-        return new List(Object.freeze(this._source.slice()));
-    }
+    // /**
+    //  * Returns a new read only instance of the list.
+    //  */
+    // asReadOnly(): List<T> {
+    //     return new List(Object.freeze(this._source.slice()));
+    // }
 
     /**
      * Performs the specified action on each element of the list.
@@ -92,7 +92,7 @@ export default class List<T> {
         if (idx < index + 1 - count) return -1;
         return idx;
     }
-    static lastIndexOf<T>(source: T[], item: T, index: number = this.length - 1, count: number = this.length): number {
+    static lastIndexOf<T>(source: T[], item: T, index: number = source.length - 1, count: number = source.length): number {
         return new List(source).lastIndexOf(item, index, count);
     }
 

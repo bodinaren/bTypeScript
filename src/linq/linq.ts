@@ -229,22 +229,6 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
         }
         return total / source.length;
     }
-    /**
-     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
-     * @alias average
-     * @param selector
-     */
-    avg(selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return this.average(selector);
-    }
-    /**
-     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
-     * @alias average
-     * @param selector
-     */
-    static avg<TSource>(source: TSource[], selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return Linq.average<TSource>(source, selector);
-    }
 
     /**
      * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.

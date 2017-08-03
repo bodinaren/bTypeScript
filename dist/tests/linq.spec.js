@@ -134,60 +134,42 @@ describe("Linq", function () {
         it("strings", function () {
             chai_1.expect(new linq_1.Linq(TestItems.strings).filter(function () { return true; }).toArray()).to.eql(TestItems.strings, "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.strings, function () { return true; })).to.eql(TestItems.strings, "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.strings).where(function () { return true; }).toArray()).to.eql(TestItems.strings, "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.strings, function () { return true; })).to.eql(TestItems.strings, "static:");
         });
         it("objects", function () {
             chai_1.expect(new linq_1.Linq(TestItems.objects).filter(function () { return true; }).toArray()).to.eql(TestItems.objects, "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.objects, function () { return true; })).to.eql(TestItems.objects, "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.objects).where(function () { return true; }).toArray()).to.eql(TestItems.objects, "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.objects, function () { return true; })).to.eql(TestItems.objects, "static:");
         });
         it("numbers", function () {
             chai_1.expect(new linq_1.Linq(TestItems.numbers).filter(function () { return true; }).toArray()).to.eql(TestItems.numbers, "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.numbers, function () { return true; })).to.eql(TestItems.numbers, "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.numbers).where(function () { return true; }).toArray()).to.eql(TestItems.numbers, "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.numbers, function () { return true; })).to.eql(TestItems.numbers, "static:");
         });
     });
     describe("filter some", function () {
         it("strings", function () {
             chai_1.expect(new linq_1.Linq(TestItems.strings).filter(function (item) { return item[0] == "m"; }).toArray()).to.eql(["musse", "mimmi"], "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql(["musse", "mimmi"], "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.strings).where(function (item) { return item[0] == "m"; }).toArray()).to.eql(["musse", "mimmi"], "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.strings, function (item) { return item[0] == "m"; })).to.eql(["musse", "mimmi"], "static:");
         });
         it("objects", function () {
             chai_1.expect(new linq_1.Linq(TestItems.objects).filter(function (item) { return (item.first[0] == "m"); }).toArray()).to.eql([TestItems.musse, TestItems.mimmi], "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.objects, function (item) { return (item.first[0] == "m"); })).to.eql([TestItems.musse, TestItems.mimmi], "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.objects).where(function (item) { return (item.first[0] == "m"); }).toArray()).to.eql([TestItems.musse, TestItems.mimmi], "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.objects, function (item) { return (item.first[0] == "m"); })).to.eql([TestItems.musse, TestItems.mimmi], "static:");
         });
         it("numbers", function () {
             chai_1.expect(new linq_1.Linq(TestItems.numbers).filter(function (item) { return item % 2 == 0; }).toArray()).to.eql([0, 2, 4, 6, 8], "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.numbers, function (item) { return item % 2 == 0; })).to.eql([0, 2, 4, 6, 8], "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.numbers).where(function (item) { return item % 2 == 0; }).toArray()).to.eql([0, 2, 4, 6, 8], "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.numbers, function (item) { return item % 2 == 0; })).to.eql([0, 2, 4, 6, 8], "static:");
         });
     });
     describe("filter none", function () {
         it("strings", function () {
             chai_1.expect(new linq_1.Linq(TestItems.strings).filter(function () { return false; }).toArray()).to.eql([], "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.strings, function () { return false; })).to.eql([], "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.strings).where(function () { return false; }).toArray()).to.eql([], "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.strings, function () { return false; })).to.eql([], "static:");
         });
         it("objects", function () {
             chai_1.expect(new linq_1.Linq(TestItems.objects).filter(function () { return false; }).toArray()).to.eql([], "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.objects, function () { return false; })).to.eql([]);
-            chai_1.expect(new linq_1.Linq(TestItems.objects).where(function () { return false; }).toArray()).to.eql([], "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.objects, function () { return false; })).to.eql([], "static:");
         });
         it("numbers", function () {
             chai_1.expect(new linq_1.Linq(TestItems.numbers).filter(function (x) { return x === -1; }).toArray()).to.eql([], "intantiated:");
             chai_1.expect(linq_1.Linq.filter(TestItems.numbers, function (x) { return x === -1; })).to.eql([], "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.numbers).where(function (x) { return x === -1; }).toArray()).to.eql([], "intantiated:");
-            chai_1.expect(linq_1.Linq.where(TestItems.numbers, function (x) { return x === -1; })).to.eql([], "static:");
         });
     });
     describe("first", function () {
@@ -412,14 +394,10 @@ describe("Linq", function () {
         it("without selector", function () {
             chai_1.expect(new linq_1.Linq(TestItems.numbers).average()).to.eql(4.5, "intantiated:");
             chai_1.expect(linq_1.Linq.average(TestItems.numbers)).to.eql(4.5, "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.numbers).avg()).to.eql(4.5, "intantiated:");
-            chai_1.expect(linq_1.Linq.avg(TestItems.numbers)).to.eql(4.5, "static:");
         });
         it("with selector", function () {
             chai_1.expect(new linq_1.Linq(TestItems.numbers).average(function (x) { return x; })).to.eql(4.5, "intantiated:");
             chai_1.expect(linq_1.Linq.average(TestItems.numbers, function (x) { return x; })).to.eql(4.5, "static:");
-            chai_1.expect(new linq_1.Linq(TestItems.numbers).avg(function (x) { return x; })).to.eql(4.5, "intantiated:");
-            chai_1.expect(linq_1.Linq.avg(TestItems.numbers, function (x) { return x; })).to.eql(4.5, "static:");
         });
     });
     describe("min", function () {

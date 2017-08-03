@@ -49,21 +49,8 @@ var Linq = (function () {
         return source.filter(predicate);
     };
     /**
-     * Filters a sequence of values based on a predicate.
-     * @param predicate A function to test each element for a condition.
-     */
-    Linq.prototype.where = function (predicate) {
-        return this.filter(predicate);
-    };
-    /**
-     * Filters a sequence of values based on a predicate.
-     * @param predicate A function to test each element for a condition.
-     */
-    Linq.where = function (source, predicate) {
-        return Linq.filter(source, predicate);
-    };
-    /**
      * Inverts the order of the elements in a sequence.
+     * This simply iterates the items from the end, and as such has no additional performance cost.
      */
     Linq.prototype.reverse = function () {
         this._source.reverse();
@@ -131,6 +118,7 @@ var Linq = (function () {
      * @param callback Function that produces an element of the new sequence
      */
     Linq.zip = function (source, other, callback) {
+        // TODO: Write static zip function without instantiating a new Linq object
         return new Linq(source).zip(other, callback).toArray();
     };
     /**
@@ -145,6 +133,7 @@ var Linq = (function () {
      * @param predicate A function to test each element for a condition.
      */
     Linq.skipWhile = function (source, predicate) {
+        // TODO: Write static skipWhile function without instantiating a new Linq object
         return new Linq(source).skipWhile(predicate).toArray();
     };
     /**
@@ -164,6 +153,7 @@ var Linq = (function () {
      */
     Linq.orderBy = function (source, keySelector, comparer) {
         if (comparer === void 0) { comparer = Util.defaultComparer; }
+        // TODO: Write static orderBy function without instantiating a new Linq object
         return new Linq(source).orderBy(keySelector, comparer).toArray();
     };
     /**
@@ -183,6 +173,7 @@ var Linq = (function () {
      */
     Linq.orderByDesc = function (source, keySelector, comparer) {
         if (comparer === void 0) { comparer = Util.defaultComparer; }
+        // TODO: Write static orderByDesc function without instantiating a new Linq object
         return new Linq(source).orderByDesc(keySelector, comparer).toArray();
     };
     /**
@@ -191,11 +182,7 @@ var Linq = (function () {
      */
     Linq.prototype.sum = function (selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        var i, sum = 0, arr = this.toArray();
-        for (i = 0; i < arr.length; i++) {
-            sum += selector(arr[i]);
-        }
-        return sum;
+        return Linq.sum(this.toArray(), selector);
     };
     /**
      * Computes the sum of the sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -203,7 +190,11 @@ var Linq = (function () {
      */
     Linq.sum = function (source, selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        return new Linq(source).sum(selector);
+        var i, sum = 0;
+        for (i = 0; i < source.length; i++) {
+            sum += selector(source[i]);
+        }
+        return sum;
     };
     /**
      * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -211,11 +202,7 @@ var Linq = (function () {
      */
     Linq.prototype.average = function (selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        var i, total = 0, arr = this.toArray();
-        for (i = 0; i < arr.length; i++) {
-            total += selector(arr[i]);
-        }
-        return total / arr.length;
+        return Linq.average(this.toArray(), selector);
     };
     /**
      * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -223,25 +210,11 @@ var Linq = (function () {
      */
     Linq.average = function (source, selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        return new Linq(source).average(selector);
-    };
-    /**
-     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
-     * @alias average
-     * @param selector
-     */
-    Linq.prototype.avg = function (selector) {
-        if (selector === void 0) { selector = Util.defaultSelector; }
-        return this.average(selector);
-    };
-    /**
-     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
-     * @alias average
-     * @param selector
-     */
-    Linq.avg = function (source, selector) {
-        if (selector === void 0) { selector = Util.defaultSelector; }
-        return Linq.average(source, selector);
+        var i, total = 0;
+        for (i = 0; i < source.length; i++) {
+            total += selector(source[i]);
+        }
+        return total / source.length;
     };
     /**
      * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -249,7 +222,7 @@ var Linq = (function () {
      */
     Linq.prototype.min = function (selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        return Math.min.apply(undefined, this.toArray().map(selector));
+        return Linq.min(this.toArray(), selector);
     };
     /**
      * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -257,7 +230,7 @@ var Linq = (function () {
      */
     Linq.min = function (source, selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        return new Linq(source).min(selector);
+        return Math.min.apply(undefined, source.map(selector));
     };
     /**
      * Computes the maximum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -265,7 +238,7 @@ var Linq = (function () {
      */
     Linq.prototype.max = function (selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        return Math.max.apply(undefined, this.toArray().map(selector));
+        return Linq.max(this.toArray(), selector);
     };
     /**
      * Computes the maximum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -273,7 +246,7 @@ var Linq = (function () {
      */
     Linq.max = function (source, selector) {
         if (selector === void 0) { selector = Util.defaultSelector; }
-        return new Linq(source).max(selector);
+        return Math.max.apply(undefined, source.map(selector));
     };
     /**
      * Determines whether any element of a sequence satisfies a condition.
@@ -331,6 +304,7 @@ var Linq = (function () {
      * @throws Error
      */
     Linq.single = function (source, predicate) {
+        // TODO: Write static single function without instantiating a new Linq object
         return new Linq(source).single(predicate);
     };
     /**
@@ -350,6 +324,7 @@ var Linq = (function () {
      * @param predicate
      */
     Linq.first = function (source, predicate) {
+        // TODO: Write static first function without instantiating a new Linq object
         if (!source || source.length === 0)
             return undefined;
         if (!predicate)
@@ -369,11 +344,21 @@ var Linq = (function () {
      * @param predicate
      */
     Linq.last = function (source, predicate) {
+        // TODO: Write static last function without instantiating a new Linq object
         if (!source || source.length === 0)
             return undefined;
         if (!predicate)
             return source[source.length - 1];
         return new Linq(source).last(predicate);
+    };
+    /**
+     * Get a list of items that exists in all datasets.
+     * @param other The other dataset to be compared to.
+     * @param more If you have even more dataset to compare to.
+     */
+    Linq.prototype.intersect = function (other, comparer) {
+        if (comparer === void 0) { comparer = Util.defaultEqualityComparer; }
+        return new Linq(new _1.IntersectIterator(this._source, other, comparer));
     };
     /**
      * Get a list of items that exists in all datasets.
@@ -406,13 +391,12 @@ var Linq = (function () {
         // return result;
     };
     /**
-     * Get a list of items that exists in all datasets.
-     * @param other The other dataset to be compared to.
-     * @param more If you have even more dataset to compare to.
+     * Get a list of items that only exists in one of the datasets.
+     * @param other The other dataset.
      */
-    Linq.prototype.intersect = function (other, comparer) {
+    Linq.prototype.except = function (other, comparer) {
         if (comparer === void 0) { comparer = Util.defaultEqualityComparer; }
-        return new Linq(new _1.IntersectIterator(this._source, other, comparer));
+        return new Linq(new _1.ExceptIterator(this._source, other, comparer));
     };
     /**
      * Get a list of items that only exists in one of the datasets.
@@ -448,12 +432,11 @@ var Linq = (function () {
         // return result;
     };
     /**
-     * Get a list of items that only exists in one of the datasets.
-     * @param other The other dataset.
+     * Get a list of unique items that exists one or more times in the dataset.
      */
-    Linq.prototype.except = function (other, comparer) {
+    Linq.prototype.distinct = function (comparer) {
         if (comparer === void 0) { comparer = Util.defaultEqualityComparer; }
-        return new Linq(new _1.ExceptIterator(this._source, other, comparer));
+        return new Linq(new _1.DistinctIterator(this._source, comparer));
     };
     /**
      * Get a list of unique items that exists one or more times in any of the datasets.
@@ -480,13 +463,6 @@ var Linq = (function () {
         //     });
         // });
         // return result;
-    };
-    /**
-     * Get a list of unique items that exists one or more times in the dataset.
-     */
-    Linq.prototype.distinct = function (comparer) {
-        if (comparer === void 0) { comparer = Util.defaultEqualityComparer; }
-        return new Linq(new _1.DistinctIterator(this._source, comparer));
     };
     /**
      * Groups the elements of a sequence according to a specified key selector function.
@@ -536,6 +512,7 @@ var Linq = (function () {
      * @param resultSelector A function to create a result element from two matching elements.
      */
     Linq.join = function (outer, inner, outerKeySelector, innerKeySelector, resultSelector) {
+        // TODO: Write static join function without instantiating a new Linq object
         return new Linq(outer).join(inner, outerKeySelector, innerKeySelector, resultSelector).toArray();
     };
     /**
@@ -553,13 +530,6 @@ var Linq = (function () {
         }
         return arr;
     };
-    // /**
-    //  * Executes the pipeline and execute callback on each item in the resulting array.
-    //  * @param callback {Util.ILoopFunction<any>} Function to execute for each element
-    //  */
-    // forEach(callback: Util.ILoopFunction<any>, thisArg?: any): void {
-    //     Array.prototype.forEach.call(this.toArray(), callback.bind(thisArg));
-    // }
     // [Symbol.iterator]() {
     //     let idx = 0;
     //     return {

@@ -24,17 +24,8 @@ export default class Linq<TSource> {
      */
     static filter<TSource>(source: TSource[], predicate: Util.IPredicate<TSource>): TSource[];
     /**
-     * Filters a sequence of values based on a predicate.
-     * @param predicate A function to test each element for a condition.
-     */
-    where(predicate: Util.IPredicate<TSource>): Linq<TSource>;
-    /**
-     * Filters a sequence of values based on a predicate.
-     * @param predicate A function to test each element for a condition.
-     */
-    static where<TSource>(source: TSource[], predicate: Util.IPredicate<TSource>): TSource[];
-    /**
      * Inverts the order of the elements in a sequence.
+     * This simply iterates the items from the end, and as such has no additional performance cost.
      */
     reverse(): Linq<TSource>;
     /**
@@ -138,18 +129,6 @@ export default class Linq<TSource> {
      */
     static average<TSource>(source: TSource[], selector?: Util.ISelector<TSource, number>): number;
     /**
-     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
-     * @alias average
-     * @param selector
-     */
-    avg(selector?: Util.ISelector<TSource, number>): number;
-    /**
-     * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
-     * @alias average
-     * @param selector
-     */
-    static avg<TSource>(source: TSource[], selector?: Util.ISelector<TSource, number>): number;
-    /**
      * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
      * @param selector
      */
@@ -227,17 +206,22 @@ export default class Linq<TSource> {
     static last<TSource>(source: TSource[], predicate?: Util.IPredicate<TSource>): TSource;
     /**
      * Get a list of items that exists in all datasets.
+     * @param other The other dataset to be compared to.
+     * @param more If you have even more dataset to compare to.
+     */
+    intersect(other: TSource[], comparer?: Util.IEqualityComparer<TSource>): Linq<TSource>;
+    /**
+     * Get a list of items that exists in all datasets.
      * @param a The first dataset.
      * @param b The second dataset to be compared to.
      * @param more If you have even more dataset to compare to.
      */
     static intersect<TSource>(source: TSource[] | Linq<TSource>, other: TSource[] | Linq<TSource>, comparer?: Util.IEqualityComparer<TSource>): TSource[];
     /**
-     * Get a list of items that exists in all datasets.
-     * @param other The other dataset to be compared to.
-     * @param more If you have even more dataset to compare to.
+     * Get a list of items that only exists in one of the datasets.
+     * @param other The other dataset.
      */
-    intersect(other: TSource[], comparer?: Util.IEqualityComparer<TSource>): Linq<TSource>;
+    except(other: TSource[], comparer?: Util.IEqualityComparer<TSource>): Linq<TSource>;
     /**
      * Get a list of items that only exists in one of the datasets.
      * @param a The first dataset.
@@ -245,19 +229,14 @@ export default class Linq<TSource> {
      */
     static except<TSource>(source: TSource[] | Linq<TSource>, other: TSource[] | Linq<TSource>, comparer?: Util.IEqualityComparer<TSource>): TSource[];
     /**
-     * Get a list of items that only exists in one of the datasets.
-     * @param other The other dataset.
+     * Get a list of unique items that exists one or more times in the dataset.
      */
-    except(other: TSource[], comparer?: Util.IEqualityComparer<TSource>): Linq<TSource>;
+    distinct(comparer?: Util.IEqualityComparer<TSource>): Linq<TSource>;
     /**
      * Get a list of unique items that exists one or more times in any of the datasets.
      * @param source The datasets to be get distinct items from.
      */
     static distinct<TSource>(source: TSource[] | Linq<TSource>, comparer?: Util.IEqualityComparer<TSource>): TSource[];
-    /**
-     * Get a list of unique items that exists one or more times in the dataset.
-     */
-    distinct(comparer?: Util.IEqualityComparer<TSource>): Linq<TSource>;
     /**
      * Groups the elements of a sequence according to a specified key selector function.
      * @param keySelector A function to extract the key for each element.

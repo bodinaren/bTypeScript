@@ -59,23 +59,10 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
     static filter<TSource>(source: TSource[], predicate: Util.IPredicate<TSource>): TSource[] {
         return source.filter(predicate);
     }
-    /**
-     * Filters a sequence of values based on a predicate.
-     * @param predicate A function to test each element for a condition.
-     */
-    where(predicate: Util.IPredicate<TSource>): Linq<TSource> {
-        return this.filter(predicate);
-    }
-    /**
-     * Filters a sequence of values based on a predicate.
-     * @param predicate A function to test each element for a condition.
-     */
-    static where<TSource>(source: TSource[], predicate: Util.IPredicate<TSource>): TSource[] {
-        return Linq.filter<TSource>(source, predicate);
-    }
 
     /**
      * Inverts the order of the elements in a sequence.
+     * This simply iterates the items from the end, and as such has no additional performance cost.
      */
     reverse(): Linq<TSource> {
         this._source.reverse();
@@ -147,6 +134,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param callback Function that produces an element of the new sequence
      */
     static zip<TSource, TOther, TResult>(source: TSource[], other: TOther[], callback: (a: TSource, b: TOther, idx: number) => TResult): TResult[] {
+        // TODO: Write static zip function without instantiating a new Linq object
         return new Linq<TSource>(source).zip<TOther, TResult>(other, callback).toArray<TResult>();
     }
 
@@ -162,6 +150,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param predicate A function to test each element for a condition.
      */
     static skipWhile<TSource>(source: TSource[], predicate: Util.IPredicate<any>): TSource[] {
+        // TODO: Write static skipWhile function without instantiating a new Linq object
         return new Linq<TSource>(source).skipWhile(predicate).toArray<TSource>();
     }
 
@@ -180,6 +169,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param comparer An IComparer<any> to compare keys.
      */
     static orderBy<TSource, TKey>(source: TSource[], keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): TSource[] {
+        // TODO: Write static orderBy function without instantiating a new Linq object
         return new Linq<TSource>(source).orderBy<TKey>(keySelector, comparer).toArray<TSource>();
     }
 
@@ -198,6 +188,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param comparer An IComparer<any> to compare keys.
      */
     static orderByDesc<TSource, TKey>(source: TSource[], keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): TSource[] {
+        // TODO: Write static orderByDesc function without instantiating a new Linq object
         return new Linq<TSource>(source).orderByDesc<TKey>(keySelector, comparer).toArray<TSource>();
     }
 
@@ -206,18 +197,18 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param selector A transform function to apply to each element.
      */
     sum(selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        let i, sum = 0, arr = this.toArray<TSource>();
-        for (i = 0; i < arr.length; i++) {
-            sum += selector(arr[i]);
-        }
-        return sum;
+        return Linq.sum(this.toArray<TSource>(), selector);
     }
     /**
      * Computes the sum of the sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
      * @param selector A transform function to apply to each element.
      */
     static sum<TSource>(source: TSource[], selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return new Linq<TSource>(source).sum(selector);
+        let i, sum = 0;
+        for (i = 0; i < source.length; i++) {
+            sum += selector(source[i]);
+        }
+        return sum;
     }
 
     /**
@@ -225,18 +216,18 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param selector
      */
     average(selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        let i, total = 0, arr = this.toArray<TSource>();
-        for (i = 0; i < arr.length; i++) {
-            total += selector(arr[i]);
-        }
-        return total / arr.length;
+        return Linq.average(this.toArray<TSource>(), selector);
     }
     /**
      * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
      * @param selector
      */
     static average<TSource>(source: TSource[], selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return new Linq<TSource>(source).average(selector);
+        let i, total = 0;
+        for (i = 0; i < source.length; i++) {
+            total += selector(source[i]);
+        }
+        return total / source.length;
     }
     /**
      * Computes the average of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
@@ -260,14 +251,14 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param selector
      */
     min(selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return Math.min.apply(undefined, this.toArray().map(selector));
+        return Linq.min(this.toArray<TSource>(), selector);
     }
     /**
      * Computes the minimum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
      * @param selector
      */
     static min<TSource>(source: TSource[], selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return new Linq(source).min(selector);
+        return Math.min.apply(undefined, source.map(selector));
     }
 
     /**
@@ -275,14 +266,14 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param selector
      */
     max(selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return Math.max.apply(undefined, this.toArray().map(selector));
+        return Linq.max(this.toArray<TSource>(), selector);
     }
     /**
      * Computes the maximum of a sequence of numeric values that are obtained by invoking a transform function on each element of the input sequence.
      * @param selector
      */
     static max<TSource>(source: TSource[], selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-        return new Linq<TSource>(source).max(selector);
+        return Math.max.apply(undefined, source.map(selector));
     }
 
     /**
@@ -336,6 +327,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @throws Error
      */
     static single<TSource>(source: TSource[], predicate: (predicate) => boolean): TSource {
+        // TODO: Write static single function without instantiating a new Linq object
         return new Linq<TSource>(source).single(predicate);
     }
 
@@ -353,6 +345,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param predicate
      */
     static first<TSource>(source: TSource[], predicate?: Util.IPredicate<TSource>): TSource {
+        // TODO: Write static first function without instantiating a new Linq object
         if (!source || source.length === 0) return undefined;
         if (!predicate) return source[0];
         return new Linq(source).first(predicate);
@@ -370,11 +363,20 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param predicate
      */
     static last<TSource>(source: TSource[], predicate?: Util.IPredicate<TSource>): TSource {
+        // TODO: Write static last function without instantiating a new Linq object
         if (!source || source.length === 0) return undefined;
         if (!predicate) return source[source.length - 1];
         return new Linq<TSource>(source).last(predicate);
     }
 
+    /**
+     * Get a list of items that exists in all datasets.
+     * @param other The other dataset to be compared to.
+     * @param more If you have even more dataset to compare to.
+     */
+    intersect(other: TSource[], comparer: Util.IEqualityComparer<TSource> = Util.defaultEqualityComparer): Linq<TSource> {
+        return new Linq<TSource>(new IntersectIterator<TSource>(this._source, other, comparer));
+    }
     /**
      * Get a list of items that exists in all datasets.
      * @param a The first dataset.
@@ -412,15 +414,14 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
 
         // return result;
     }
-    /**
-     * Get a list of items that exists in all datasets.
-     * @param other The other dataset to be compared to.
-     * @param more If you have even more dataset to compare to.
-     */
-    intersect(other: TSource[], comparer: Util.IEqualityComparer<TSource> = Util.defaultEqualityComparer): Linq<TSource> {
-        return new Linq<TSource>(new IntersectIterator<TSource>(this._source, other, comparer));
-    }
 
+    /**
+     * Get a list of items that only exists in one of the datasets.
+     * @param other The other dataset.
+     */
+    except(other: TSource[], comparer: Util.IEqualityComparer<TSource> = Util.defaultEqualityComparer): Linq<TSource> {
+        return new Linq<TSource>(new ExceptIterator<TSource>(this._source, other, comparer));
+    }
     /**
      * Get a list of items that only exists in one of the datasets.
      * @param a The first dataset.
@@ -462,14 +463,13 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
 
         // return result;
     }
-    /**
-     * Get a list of items that only exists in one of the datasets.
-     * @param other The other dataset.
-     */
-    except(other: TSource[], comparer: Util.IEqualityComparer<TSource> = Util.defaultEqualityComparer): Linq<TSource> {
-        return new Linq<TSource>(new ExceptIterator<TSource>(this._source, other, comparer));
-    }
 
+    /**
+     * Get a list of unique items that exists one or more times in the dataset.
+     */
+    distinct(comparer: Util.IEqualityComparer<TSource> = Util.defaultEqualityComparer): Linq<TSource> {
+        return new Linq<TSource>(new DistinctIterator<TSource>(this._source, comparer));
+    }
     /**
      * Get a list of unique items that exists one or more times in any of the datasets.
      * @param source The datasets to be get distinct items from.
@@ -501,12 +501,6 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
         // });
 
         // return result;
-    }
-    /**
-     * Get a list of unique items that exists one or more times in the dataset.
-     */
-    distinct(comparer: Util.IEqualityComparer<TSource> = Util.defaultEqualityComparer): Linq<TSource> {
-        return new Linq<TSource>(new DistinctIterator<TSource>(this._source, comparer));
     }
 
     /**
@@ -579,6 +573,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
                    outerKeySelector: Util.ISelector<TOuter, TKey> | string,
                    innerKeySelector: Util.ISelector<TInner, TKey> | string,
                    resultSelector: (outer: TOuter, inner: TInner) => TResult): TResult[] {
+        // TODO: Write static join function without instantiating a new Linq object
         return new Linq(outer).join(inner, outerKeySelector, innerKeySelector, resultSelector).toArray<TResult>();
     }
 
@@ -600,15 +595,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
 
         return arr;
     }
-
-    // /**
-    //  * Executes the pipeline and execute callback on each item in the resulting array.
-    //  * @param callback {Util.ILoopFunction<any>} Function to execute for each element
-    //  */
-    // forEach(callback: Util.ILoopFunction<any>, thisArg?: any): void {
-    //     Array.prototype.forEach.call(this.toArray(), callback.bind(thisArg));
-    // }
-
+    
     // [Symbol.iterator]() {
     //     let idx = 0;
     //     return {

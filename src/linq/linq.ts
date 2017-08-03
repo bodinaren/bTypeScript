@@ -579,7 +579,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
 
         return arr;
     }
-    
+
     // [Symbol.iterator]() {
     //     let idx = 0;
     //     return {

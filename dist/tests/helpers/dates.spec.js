@@ -65,7 +65,16 @@ describe("Dates", function () {
         chai_1.expect(dates_1.DatesHelper.isToday(new Date())).to.eql(true);
     });
     it("toMidnight", function () {
-        // TODO: Write proper tests.
+        var d = dates_1.default(new Date(1500000000000)).toMidnight().date;
+        chai_1.expect(d.getHours()).to.eql(0);
+        chai_1.expect(d.getMinutes()).to.eql(0);
+        chai_1.expect(d.getSeconds()).to.eql(0);
+        chai_1.expect(d.getMilliseconds()).to.eql(0);
+        d = dates_1.DatesHelper.toMidnight(new Date(1500000000000));
+        chai_1.expect(d.getHours()).to.eql(0);
+        chai_1.expect(d.getMinutes()).to.eql(0);
+        chai_1.expect(d.getSeconds()).to.eql(0);
+        chai_1.expect(d.getMilliseconds()).to.eql(0);
     });
 });
 //# sourceMappingURL=dates.spec.js.map

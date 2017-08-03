@@ -39,5 +39,5 @@ export declare class DatesHelper {
     static addSeconds(date: Date, seconds: number): Date;
     static addMilliseconds(date: Date, milliseconds: number): Date;
     static isToday(date: Date): boolean;
-    static getMidnight(date: Date): Date;
+    static toMidnight(date: Date): Date;
 }

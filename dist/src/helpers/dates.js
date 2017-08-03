@@ -74,7 +74,7 @@ var DatesHelper = (function () {
     DatesHelper.addSeconds = function (date, seconds) { return new DatesHelper(date).addSeconds(seconds).date; };
     DatesHelper.addMilliseconds = function (date, milliseconds) { return new DatesHelper(date).addMilliseconds(milliseconds).date; };
     DatesHelper.isToday = function (date) { return new DatesHelper(date).isToday(); };
-    DatesHelper.getMidnight = function (date) { return new DatesHelper(date).toMidnight().date; };
+    DatesHelper.toMidnight = function (date) { return new DatesHelper(date).toMidnight().date; };
     return DatesHelper;
 }());
 exports.DatesHelper = DatesHelper;

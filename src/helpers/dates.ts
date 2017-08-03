@@ -76,5 +76,5 @@ export class DatesHelper {
     static addSeconds(date: Date, seconds: number): Date { return new DatesHelper(date).addSeconds(seconds).date; }
     static addMilliseconds(date: Date, milliseconds: number): Date { return new DatesHelper(date).addMilliseconds(milliseconds).date; }
     static isToday(date: Date): boolean { return new DatesHelper(date).isToday(); }
-    static getMidnight(date: Date): Date { return new DatesHelper(date).toMidnight().date; }
+    static toMidnight(date: Date): Date { return new DatesHelper(date).toMidnight().date; }
 }

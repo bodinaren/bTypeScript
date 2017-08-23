@@ -4,7 +4,7 @@ export default class OrderIterator<TSource, TKey> extends BaseIterator<TSource> 
     private descending;
     private _orders;
     private _isOrdered;
-    constructor(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean);
+    constructor(source: TSource[] | BaseIterator<TSource>, keySelector?: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean);
     next(): IteratorResult<TSource>;
-    thenBy(keySelector: (x) => any, comparer?: Util.IComparer<TKey>, descending?: boolean): void;
+    thenBy(keySelector?: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean): void;
 }

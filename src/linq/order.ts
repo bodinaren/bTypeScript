@@ -7,7 +7,7 @@ export default class OrderIterator<TSource, TKey> extends BaseIterator<TSource> 
 
     constructor(
         source: TSource[] | BaseIterator<TSource>,
-        keySelector: Util.ISelector<TSource, TKey>,
+        keySelector: Util.ISelector<TSource, TKey> = Util.defaultSelector,
         comparer: Util.IComparer<TKey> = Util.defaultComparer,
         private descending: boolean = false
     ) {
@@ -40,8 +40,12 @@ export default class OrderIterator<TSource, TKey> extends BaseIterator<TSource> 
         return super.next();
     }
 
-    thenBy(keySelector: (x) => any, comparer: Util.IComparer<TKey> = Util.defaultComparer, descending: boolean = false) {
-        this._orders.push(new LinqOrder(keySelector, comparer, descending));
+    thenBy(
+        keySelector: Util.ISelector<TSource, TKey> = Util.defaultSelector,
+        comparer: Util.IComparer<TKey> = Util.defaultComparer,
+        descending: boolean = false
+    ) {
+        this._orders.push(new LinqOrder<TSource, TKey>(keySelector, comparer, descending));
     }
 }
 
@@ -50,7 +54,11 @@ class LinqOrder<TSource, TKey> {
     private _comparer: Util.IComparer<TKey>;
     private _descending: boolean;
 
-    constructor(keySelector: Util.ISelector<TSource, TKey>, comparer: Util.IComparer<TKey> = Util.defaultComparer, descending: boolean = false) {
+    constructor(
+        keySelector: Util.ISelector<TSource, TKey> = Util.defaultSelector,
+        comparer: Util.IComparer<TKey> = Util.defaultComparer,
+        descending: boolean = false
+    ) {
         this._keySelector = keySelector;
         this._comparer = comparer;
         this._descending = descending;

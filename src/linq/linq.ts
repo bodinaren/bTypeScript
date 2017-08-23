@@ -160,7 +160,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param comparer An IComparer<any> to compare keys.
      */
     orderBy<TKey>(keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, TKey> {
-        let selectorFn = _makeValuePredicate(keySelector);
+        let selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         return new OrderedLinq<TSource, TKey>(new OrderIterator<TSource, TKey>(this._source, selectorFn, comparer, false));
     }
     /**
@@ -179,7 +179,7 @@ export default class Linq<TSource> /*implements Iterable<any>*/ {
      * @param comparer An IComparer<any> to compare keys.
      */
     orderByDesc<TKey>(keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, TKey> {
-        let selectorFn = _makeValuePredicate(keySelector);
+        let selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         return new OrderedLinq<TSource, TKey>(new OrderIterator<TSource, TKey>(this._source, selectorFn, comparer, true));
     }
     /**
@@ -638,7 +638,7 @@ export class OrderedLinq<TSource, TKey> extends Linq<TSource> {
      * @param comparer An IComparer<any> to compare keys.
      */
     thenBy(keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, TKey> {
-        let selectorFn = _makeValuePredicate(keySelector);
+        let selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         let orderIterator: OrderIterator<TSource, TKey> = this._source.getIteratorFromPipeline(OrderIterator);
         orderIterator.thenBy(selectorFn, comparer, false);
         return this;
@@ -650,7 +650,7 @@ export class OrderedLinq<TSource, TKey> extends Linq<TSource> {
      * @param comparer An IComparer<any> to compare keys.
      */
     thenByDesc(keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, TKey> {
-        let selectorFn = _makeValuePredicate(keySelector);
+        let selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         let orderIterator: OrderIterator<TSource, TKey> = this._source.getIteratorFromPipeline(OrderIterator);
         orderIterator.thenBy(selectorFn, comparer, true);
         return this;

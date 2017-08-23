@@ -15,6 +15,7 @@ var Util = require("../util");
 var OrderIterator = (function (_super) {
     __extends(OrderIterator, _super);
     function OrderIterator(source, keySelector, comparer, descending) {
+        if (keySelector === void 0) { keySelector = Util.defaultSelector; }
         if (comparer === void 0) { comparer = Util.defaultComparer; }
         if (descending === void 0) { descending = false; }
         var _this = _super.call(this, source) || this;
@@ -47,6 +48,7 @@ var OrderIterator = (function (_super) {
         return _super.prototype.next.call(this);
     };
     OrderIterator.prototype.thenBy = function (keySelector, comparer, descending) {
+        if (keySelector === void 0) { keySelector = Util.defaultSelector; }
         if (comparer === void 0) { comparer = Util.defaultComparer; }
         if (descending === void 0) { descending = false; }
         this._orders.push(new LinqOrder(keySelector, comparer, descending));
@@ -56,6 +58,7 @@ var OrderIterator = (function (_super) {
 exports.default = OrderIterator;
 var LinqOrder = (function () {
     function LinqOrder(keySelector, comparer, descending) {
+        if (keySelector === void 0) { keySelector = Util.defaultSelector; }
         if (comparer === void 0) { comparer = Util.defaultComparer; }
         if (descending === void 0) { descending = false; }
         this._keySelector = keySelector;

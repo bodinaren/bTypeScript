@@ -143,7 +143,7 @@ var Linq = (function () {
      */
     Linq.prototype.orderBy = function (keySelector, comparer) {
         if (comparer === void 0) { comparer = Util.defaultComparer; }
-        var selectorFn = _makeValuePredicate(keySelector);
+        var selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         return new OrderedLinq(new _1.OrderIterator(this._source, selectorFn, comparer, false));
     };
     /**
@@ -163,7 +163,7 @@ var Linq = (function () {
      */
     Linq.prototype.orderByDesc = function (keySelector, comparer) {
         if (comparer === void 0) { comparer = Util.defaultComparer; }
-        var selectorFn = _makeValuePredicate(keySelector);
+        var selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         return new OrderedLinq(new _1.OrderIterator(this._source, selectorFn, comparer, true));
     };
     /**
@@ -587,7 +587,7 @@ var OrderedLinq = (function (_super) {
      */
     OrderedLinq.prototype.thenBy = function (keySelector, comparer) {
         if (comparer === void 0) { comparer = Util.defaultComparer; }
-        var selectorFn = _makeValuePredicate(keySelector);
+        var selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         var orderIterator = this._source.getIteratorFromPipeline(_1.OrderIterator);
         orderIterator.thenBy(selectorFn, comparer, false);
         return this;
@@ -599,7 +599,7 @@ var OrderedLinq = (function (_super) {
      */
     OrderedLinq.prototype.thenByDesc = function (keySelector, comparer) {
         if (comparer === void 0) { comparer = Util.defaultComparer; }
-        var selectorFn = _makeValuePredicate(keySelector);
+        var selectorFn = (keySelector) ? _makeValuePredicate(keySelector) : Util.defaultSelector;
         var orderIterator = this._source.getIteratorFromPipeline(_1.OrderIterator);
         orderIterator.thenBy(selectorFn, comparer, true);
         return this;

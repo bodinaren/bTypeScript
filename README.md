@@ -85,7 +85,7 @@ Linq.intersect(arr1, arr2, arr3); // [5];
 ```
 
 #### Modules ####
-For smaller build build files you each Linq is build in modules. So instead of including everything by using `Linq` from `btypescript` or `btypescript/src/linq` you can import each module individually.
+Each Linq function is built in individual modules. So if you want smaller build sizes you can instead of including everything by using `Linq` from `btypescript` or `btypescript/src/linq` you can import each module individually like this:
 ```
 import {Linq} from 'btypescript/src/linq/linq';
 import 'btypescript/src/linq/add/filter';
@@ -93,6 +93,8 @@ import 'btypescript/src/linq/add/map';
 import 'btypescript/src/linq/add/average';
 ```
 This will build only the minimum code required for using `.filter`, `.map` and `.average`.
+
+*Note: Only Linq supports this at the moment. Collections and Helpers will still be fully built.*
 
 ### Helpers ###
 ```

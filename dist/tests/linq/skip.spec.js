@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var skip_1 = require("../../src/linq/iterator/skip");
 var TestItems = require("./testitems");
 describe("SkipIterator", function () {
     it("skip 2,", function () {
-        var iterator = new linq_1.SkipIterator(TestItems.numbers, 7);
+        var iterator = new skip_1.SkipIterator(TestItems.numbers, 7);
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");

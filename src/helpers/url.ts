@@ -1,3 +1,6 @@
+import {Linq} from "../linq/linq";
+// import "../linq/add/zip";
+
 /**
  * Shorthand function to create a UrlHelper object.
  * @param url The URL on which to perform the various functions.

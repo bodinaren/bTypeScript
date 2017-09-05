@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {FilterIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {FilterIterator} from "../../src/linq/iterator/filter";
 import * as TestItems from "./testitems";
 
 describe("FilterIterator", function() {

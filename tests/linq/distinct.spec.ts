@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {DistinctIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {DistinctIterator} from "../../src/linq/iterator/distinct";
 import * as TestItems from "./testitems";
 
 describe("ExceptIterator", function() {

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var zip_1 = require("../../src/linq/iterator/zip");
 var TestItems = require("./testitems");
 describe("ZipIterator", function () {
     it("Full array when arrays are equal length", function () {
-        var iterator = new linq_1.ZipIterator(TestItems.strings, TestItems.objects, function (str, obj) {
+        var iterator = new zip_1.ZipIterator(TestItems.strings, TestItems.objects, function (str, obj) {
             return { first: str, last: obj.last };
         });
         var n;
@@ -32,7 +32,7 @@ describe("ZipIterator", function () {
         chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
     });
     it("Stops when 'source' runs out of items", function () {
-        var iterator = new linq_1.ZipIterator(TestItems.strings.slice(0, 2), TestItems.objects, function (str, obj) {
+        var iterator = new zip_1.ZipIterator(TestItems.strings.slice(0, 2), TestItems.objects, function (str, obj) {
             return { first: str, last: obj.last };
         });
         var n;
@@ -50,7 +50,7 @@ describe("ZipIterator", function () {
         chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
     });
     it("Stops when 'other' runs out of items", function () {
-        var iterator = new linq_1.ZipIterator(TestItems.strings, TestItems.objects.slice(0, 2), function (str, obj) {
+        var iterator = new zip_1.ZipIterator(TestItems.strings, TestItems.objects.slice(0, 2), function (str, obj) {
             return { first: str, last: obj.last };
         });
         var n;

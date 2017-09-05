@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var orderBy_1 = require("../../src/linq/iterator/orderBy");
 var Util = require("../../src/util");
 var TestItems = require("./testitems");
-describe("OrderIterator", function () {
+describe("OrderByIterator", function () {
     describe("OrderBy", function () {
         describe("default comparer", function () {
             it("ascending firstname,", function () {
-                var iterator = new linq_1.OrderIterator(TestItems.objects, function (x) { return x.first; });
+                var iterator = new orderBy_1.OrderByIterator(TestItems.objects, function (x) { return x.first; });
                 var n;
                 n = iterator.next();
                 chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -33,7 +33,7 @@ describe("OrderIterator", function () {
                 chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
             });
             it("descending firstname,", function () {
-                var iterator = new linq_1.OrderIterator(TestItems.objects, function (x) { return x.first; }, Util.defaultComparer, true);
+                var iterator = new orderBy_1.OrderByIterator(TestItems.objects, function (x) { return x.first; }, Util.defaultComparer, true);
                 var n;
                 n = iterator.next();
                 chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -60,7 +60,7 @@ describe("OrderIterator", function () {
         });
         describe("default keySelector", function () {
             it("ascending firstname,", function () {
-                var iterator = new linq_1.OrderIterator(TestItems.objects, undefined, function (a, b) { return Util.defaultComparer(a.first, b.first); });
+                var iterator = new orderBy_1.OrderByIterator(TestItems.objects, undefined, function (a, b) { return Util.defaultComparer(a.first, b.first); });
                 var n;
                 n = iterator.next();
                 chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -85,7 +85,7 @@ describe("OrderIterator", function () {
                 chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
             });
             it("descending firstname,", function () {
-                var iterator = new linq_1.OrderIterator(TestItems.objects, undefined, function (a, b) { return Util.defaultComparer(a.first, b.first); }, true);
+                var iterator = new orderBy_1.OrderByIterator(TestItems.objects, undefined, function (a, b) { return Util.defaultComparer(a.first, b.first); }, true);
                 var n;
                 n = iterator.next();
                 chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -113,7 +113,7 @@ describe("OrderIterator", function () {
     });
     describe("ThenBy", function () {
         it("ascending lastname - descending firstname,", function () {
-            var iterator = new linq_1.OrderIterator(TestItems.objects, function (x) { return x.last; });
+            var iterator = new orderBy_1.OrderByIterator(TestItems.objects, function (x) { return x.last; });
             iterator.thenBy(function (x) { return x.first; }, Util.defaultComparer, true);
             var n;
             n = iterator.next();
@@ -139,7 +139,7 @@ describe("OrderIterator", function () {
             chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
         });
         it("descending lastname - ascending firstname,", function () {
-            var iterator = new linq_1.OrderIterator(TestItems.objects, function (x) { return x.last[0]; }, Util.defaultComparer, true);
+            var iterator = new orderBy_1.OrderByIterator(TestItems.objects, function (x) { return x.last[0]; }, Util.defaultComparer, true);
             iterator.thenBy(function (x) { return x.first; });
             var n;
             n = iterator.next();

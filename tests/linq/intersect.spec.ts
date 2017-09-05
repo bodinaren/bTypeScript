@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {BaseIterator, IntersectIterator, IteratorResult} from "../../src/linq";
+import {BaseIterator, IteratorResult} from "../../src/linq/iterator/iterator";
+import {IntersectIterator} from "../../src/linq/iterator/intersect";
 import * as TestItems from "./testitems";
 
 describe("IntersectIterator", function() {

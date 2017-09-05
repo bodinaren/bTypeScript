@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var iterator_1 = require("../../src/linq/iterator/iterator");
+var except_1 = require("../../src/linq/iterator/except");
 var TestItems = require("./testitems");
 describe("ExceptIterator", function () {
     it("default comparer", function () {
         var x = [0, 1, 2, 3], y = [2, 3, 4, 5];
-        var iterator = new linq_1.ExceptIterator(x, y);
+        var iterator = new except_1.ExceptIterator(x, y);
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -24,7 +25,7 @@ describe("ExceptIterator", function () {
     it("with comparer", function () {
         var fn = function (x, y) { return x.last === y.last; };
         var x = TestItems.objects.slice(0, 3), y = TestItems.objects.slice(2);
-        var iterator = new linq_1.ExceptIterator(x, y, fn);
+        var iterator = new except_1.ExceptIterator(x, y, fn);
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -38,7 +39,7 @@ describe("ExceptIterator", function () {
     });
     it("default another iterator", function () {
         var x = [0, 1, 2, 3], y = [2, 3, 4, 5];
-        var iterator = new linq_1.ExceptIterator(x, new linq_1.BaseIterator(y));
+        var iterator = new except_1.ExceptIterator(x, new iterator_1.BaseIterator(y));
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");

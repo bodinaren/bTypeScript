@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var map_1 = require("../../src/linq/iterator/map");
 var TestItems = require("./testitems");
 describe("MapIterator", function () {
     it("First letter of names", function () {
-        var iterator = new linq_1.MapIterator(TestItems.strings, function (x) { return x[0]; });
+        var iterator = new map_1.MapIterator(TestItems.strings, function (x) { return x[0]; });
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");

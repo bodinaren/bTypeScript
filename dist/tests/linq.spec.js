@@ -3,6 +3,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var linq_1 = require("../src/linq");
 var TestItems = require("./linq/testitems");
 var chai_1 = require("chai");
+// // Iterators
+// import "../src/linq/add/distinct";
+// import "../src/linq/add/except";
+// import "../src/linq/add/filter";
+// import "../src/linq/add/groupBy";
+// import "../src/linq/add/intersect";
+// import "../src/linq/add/join";
+// import "../src/linq/add/map";
+// import "../src/linq/add/orderBy";
+// import "../src/linq/add/skip";
+// import "../src/linq/add/skipWhile";
+// import "../src/linq/add/take";
+// import "../src/linq/add/takeWhile";
+// import "../src/linq/add/zip";
+// // Operators
+// import "../src/linq/add/all";
+// import "../src/linq/add/any";
+// import "../src/linq/add/average";
+// import "../src/linq/add/first";
+// import "../src/linq/add/last";
+// import "../src/linq/add/max";
+// import "../src/linq/add/min";
+// import "../src/linq/add/single";
+// import "../src/linq/add/sum";
 describe("Linq", function () {
     describe("LQ", function () {
         chai_1.expect(linq_1.LQ(TestItems.strings).toArray()).to.eql(TestItems.strings);

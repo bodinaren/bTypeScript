@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {SkipWhileIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {SkipWhileIterator} from "../../src/linq/iterator/skipWhile";
 import * as TestItems from "./testitems";
 
 describe("SkipWhileIterator", function () {

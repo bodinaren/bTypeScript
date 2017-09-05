@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {GroupByIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {GroupByIterator} from "../../src/linq/iterator/groupBy";
 
 describe("GroupByIterator", function() {
     it("groups items", function () {

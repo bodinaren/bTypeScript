@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var takeWhile_1 = require("../../src/linq/iterator/takeWhile");
 var TestItems = require("./testitems");
 describe("TakeWhileIterator", function () {
     it("with predicate,", function () {
-        var iterator = new linq_1.TakeWhileIterator(TestItems.numbers, function (x) { return x < 6; });
+        var iterator = new takeWhile_1.TakeWhileIterator(TestItems.numbers, function (x) { return x < 6; });
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -24,7 +24,7 @@ describe("TakeWhileIterator", function () {
         chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
     });
     it("without predicate", function () {
-        var iterator = new linq_1.TakeWhileIterator(TestItems.numbers);
+        var iterator = new takeWhile_1.TakeWhileIterator(TestItems.numbers);
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -66,7 +66,7 @@ describe("TakeWhileIterator", function () {
     it("don't break on undefined,", function () {
         var numbers = TestItems.numbers.slice();
         numbers.splice(2, 0, undefined);
-        var iterator = new linq_1.TakeWhileIterator(numbers, function (x) { return x < 8 || typeof x === "undefined"; });
+        var iterator = new takeWhile_1.TakeWhileIterator(numbers, function (x) { return x < 8 || typeof x === "undefined"; });
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");

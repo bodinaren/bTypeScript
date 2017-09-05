@@ -1,13 +1,14 @@
 import {expect} from 'chai';
-import {OrderIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {OrderByIterator} from "../../src/linq/iterator/orderBy";
 import * as Util from "../../src/util";
 import * as TestItems from "./testitems";
 
-describe("OrderIterator", function() {
+describe("OrderByIterator", function() {
     describe("OrderBy", function () {
         describe("default comparer", function() {
             it("ascending firstname,", function() {
-                var iterator = new OrderIterator(TestItems.objects, x => x.first);
+                var iterator = new OrderByIterator(TestItems.objects, x => x.first);
                 var n: IteratorResult<any>;
 
                 n = iterator.next();
@@ -40,7 +41,7 @@ describe("OrderIterator", function() {
             });
             
             it("descending firstname,", function() {
-                var iterator = new OrderIterator(TestItems.objects, x => x.first, Util.defaultComparer, true);
+                var iterator = new OrderByIterator(TestItems.objects, x => x.first, Util.defaultComparer, true);
                 var n: IteratorResult<any>;
 
                 n = iterator.next();
@@ -75,7 +76,7 @@ describe("OrderIterator", function() {
 
         describe("default keySelector", function() {
             it("ascending firstname,", function() {
-                var iterator = new OrderIterator(TestItems.objects, undefined, (a: any, b: any) => Util.defaultComparer(a.first, b.first));
+                var iterator = new OrderByIterator(TestItems.objects, undefined, (a: any, b: any) => Util.defaultComparer(a.first, b.first));
                 var n: IteratorResult<any>;
 
                 n = iterator.next();
@@ -108,7 +109,7 @@ describe("OrderIterator", function() {
             });
             
             it("descending firstname,", function() {
-                var iterator = new OrderIterator(TestItems.objects, undefined, (a: any, b: any) => Util.defaultComparer(a.first, b.first), true);
+                var iterator = new OrderByIterator(TestItems.objects, undefined, (a: any, b: any) => Util.defaultComparer(a.first, b.first), true);
                 var n: IteratorResult<any>;
 
                 n = iterator.next();
@@ -144,7 +145,7 @@ describe("OrderIterator", function() {
 
     describe("ThenBy", function () {
         it("ascending lastname - descending firstname,", function() {
-            var iterator = new OrderIterator(TestItems.objects, x => x.last);
+            var iterator = new OrderByIterator(TestItems.objects, x => x.last);
             iterator.thenBy(x => x.first, Util.defaultComparer, true);
             var n: IteratorResult<any>;
 
@@ -178,7 +179,7 @@ describe("OrderIterator", function() {
         });
         
         it("descending lastname - ascending firstname,", function() {
-            var iterator = new OrderIterator(TestItems.objects, x => x.last[0], Util.defaultComparer, true);
+            var iterator = new OrderByIterator(TestItems.objects, x => x.last[0], Util.defaultComparer, true);
             iterator.thenBy(x => x.first);
             var n: IteratorResult<any>;
 

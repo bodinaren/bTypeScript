@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {JoinIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {JoinIterator} from "../../src/linq/iterator/join";
 
 describe("JoinIterator", function() {
     it("Basic gives 1-to-1", function () {

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var join_1 = require("../../src/linq/iterator/join");
 describe("JoinIterator", function () {
     it("Basic gives 1-to-1", function () {
         var parents = [
@@ -14,7 +14,7 @@ describe("JoinIterator", function () {
             { parent: 1, age: 4 },
             { parent: 2, age: 2 },
         ];
-        var iterator = new linq_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
+        var iterator = new join_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
             return { parent: p.name, childAge: c.age };
         });
         var n;
@@ -46,7 +46,7 @@ describe("JoinIterator", function () {
             { parent: 1, age: 3 },
             { parent: 2, age: 2 },
         ];
-        var iterator = new linq_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
+        var iterator = new join_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
             return { parent: p.name, childAge: c.age };
         });
         var n;
@@ -79,7 +79,7 @@ describe("JoinIterator", function () {
             { parent: 0, age: 5 },
             { parent: 2, age: 2 },
         ];
-        var iterator = new linq_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
+        var iterator = new join_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
             return { parent: p.name, childAge: c.age };
         });
         var n;
@@ -106,7 +106,7 @@ describe("JoinIterator", function () {
             { parent: 1, age: 4 },
             { parent: 2, age: 2 },
         ];
-        var iterator = new linq_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
+        var iterator = new join_1.JoinIterator(parents, children, function (p) { return p.id; }, function (c) { return c.parent; }, function (p, c) {
             return { parent: p.name, childAge: c.age };
         });
         var n;

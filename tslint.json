@@ -9,8 +9,7 @@
       "spaces"
     ],
     "interface-name": [
-      true,
-      "always-prefix"
+      false
     ],
     "jsdoc-format": true,
     "label-position": true,
@@ -53,8 +52,7 @@
     "variable-name": [
       true,
       "check-format",
-      "allow-leading-underscore",
-      "ban-keywords"
+      "allow-leading-underscore"
     ],
     "whitespace": [
       true,

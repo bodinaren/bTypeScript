@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var skipWhile_1 = require("../../src/linq/iterator/skipWhile");
 var TestItems = require("./testitems");
 describe("SkipWhileIterator", function () {
     it("with predicate", function () {
-        var iterator = new linq_1.SkipWhileIterator(TestItems.numbers, function (x) { return x != 7; });
+        var iterator = new skipWhile_1.SkipWhileIterator(TestItems.numbers, function (x) { return x != 7; });
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -27,7 +27,7 @@ describe("SkipWhileIterator", function () {
         chai_1.expect(n.value).to.equal(undefined, "consecutive should be undefined");
     });
     it("without predicate", function () {
-        var iterator = new linq_1.SkipWhileIterator(TestItems.numbers);
+        var iterator = new skipWhile_1.SkipWhileIterator(TestItems.numbers);
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(true, "1st should be done");

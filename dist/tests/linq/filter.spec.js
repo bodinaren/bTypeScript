@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai_1 = require("chai");
-var linq_1 = require("../../src/linq");
+var filter_1 = require("../../src/linq/iterator/filter");
 var TestItems = require("./testitems");
 describe("FilterIterator", function () {
     it("Last name anka,", function () {
-        var iterator = new linq_1.FilterIterator(TestItems.objects, function (x) { return x.last == "anka"; });
+        var iterator = new filter_1.FilterIterator(TestItems.objects, function (x) { return x.last == "anka"; });
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");
@@ -24,7 +24,7 @@ describe("FilterIterator", function () {
         chai_1.expect(n.value).to.equal(undefined, "1st should be undefined");
     });
     it("default comparer,", function () {
-        var iterator = new linq_1.FilterIterator(TestItems.objects);
+        var iterator = new filter_1.FilterIterator(TestItems.objects);
         var n;
         n = iterator.next();
         chai_1.expect(n.done).to.equal(false, "1st should NOT be done");

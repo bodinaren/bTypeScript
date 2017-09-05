@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {ZipIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {ZipIterator} from "../../src/linq/iterator/zip";
 import * as TestItems from "./testitems";
 
 describe("ZipIterator", function() {

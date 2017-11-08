@@ -4,7 +4,7 @@ import {Linq} from "../linq";
 import {makeValuePredicate} from "../makeValuePredicate";
 
 export class OrderByIterator<TSource, TKey> extends BaseIterator<TSource> {
-    private _orders: LinqOrder<TSource, TKey>[];
+    private _orders: LinqOrder<TSource, any>[];
     private _isOrdered: boolean = false;
 
     constructor(
@@ -42,7 +42,7 @@ export class OrderByIterator<TSource, TKey> extends BaseIterator<TSource> {
         return super.next();
     }
 
-    thenBy(
+    thenBy<TKey>(
         keySelector: Util.ISelector<TSource, TKey> = Util.defaultSelector,
         comparer: Util.IComparer<TKey> = Util.defaultComparer,
         descending: boolean = false
@@ -52,24 +52,24 @@ export class OrderByIterator<TSource, TKey> extends BaseIterator<TSource> {
 }
 
 
-function orderBy<TSource, TKey>(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderByIterator<TSource, TKey> {
+function orderBy<TSource, TKey>(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderByIterator<TSource, any> {
     let selectorFn = (keySelector) ? makeValuePredicate(keySelector) : Util.defaultSelector;
     return new OrderByIterator<TSource, TKey>(source, selectorFn, comparer, false);
 }
 
-function orderByDesc<TSource, TKey>(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderByIterator<TSource, TKey> {
+function orderByDesc<TSource, TKey>(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderByIterator<TSource, any> {
     let selectorFn = (keySelector) ? makeValuePredicate(keySelector) : Util.defaultSelector;
     return new OrderByIterator<TSource, TKey>(source, selectorFn, comparer, true);
 }
 
 
-export function orderByProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, TKey>;
+export function orderByProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, any>;
 /**
  * Sorts the elements of a sequence in ascending order by using a specified comparer.
  * @param keySelector A function to extract a key from an element.
  * @param comparer An IComparer<any> to compare keys.
  */
-export function orderByProto<TSource, TKey>(this: Linq<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, TKey> {
+export function orderByProto<TSource, TKey>(this: Linq<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, any> {
     // TODO: Haven't gotten the intellisense to show Linq<TSource> as the result of this function, it shows Linq<any>.
 
     return new OrderedLinq<TSource, TKey>(orderBy(this._source, keySelector, comparer));
@@ -86,13 +86,13 @@ export function orderByStatic<TSource, TKey>(source: TSource[], keySelector: Uti
 
 
 
-export function orderByDescProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, TKey>;
+export function orderByDescProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, any>;
 /**
  * Sorts the elements of a sequence in descending order by using a specified comparer.
  * @param keySelector A function to extract a key from an element.
  * @param comparer An IComparer<any> to compare keys.
  */
-export function orderByDescProto<TSource, TKey>(this: Linq<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, TKey> {
+export function orderByDescProto<TSource, TKey>(this: Linq<TSource>, keySelector: Util.ISelector<TSource, TKey> | string, comparer: Util.IComparer<TKey> = Util.defaultComparer): OrderedLinq<TSource, any> {
     // TODO: Haven't gotten the intellisense to show Linq<TSource> as the result of this function, it shows Linq<any>.
 
     return new OrderedLinq<TSource, TKey>(orderByDesc(this._source, keySelector, comparer));

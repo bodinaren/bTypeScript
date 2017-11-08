@@ -7,16 +7,16 @@ export declare class OrderByIterator<TSource, TKey> extends BaseIterator<TSource
     private _isOrdered;
     constructor(source: TSource[] | BaseIterator<TSource>, keySelector?: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean);
     next(): IteratorResult<TSource>;
-    thenBy(keySelector?: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean): void;
+    thenBy<TKey>(keySelector?: Util.ISelector<TSource, TKey>, comparer?: Util.IComparer<TKey>, descending?: boolean): void;
 }
-export declare function orderByProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, TKey>;
+export declare function orderByProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, any>;
 /**
  * Sorts the elements of a sequence in ascending order by using a specified comparer.
  * @param keySelector A function to extract a key from an element.
  * @param comparer An IComparer<any> to compare keys.
  */
 export declare function orderByStatic<TSource, TKey>(source: TSource[], keySelector: Util.ISelector<TSource, TKey> | string, comparer?: Util.IComparer<TKey>): TSource[];
-export declare function orderByDescProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, TKey>;
+export declare function orderByDescProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string, comparer?: Util.IComparer<TKey>): OrderedLinq<any, any>;
 /**
  * Sorts the elements of a sequence in descending order by using a specified comparer.
  * @param keySelector A function to extract a key from an element.

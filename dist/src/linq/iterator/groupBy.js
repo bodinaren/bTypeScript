@@ -14,6 +14,7 @@ var iterator_1 = require("./iterator");
 var filter_1 = require("./filter");
 var Util = require("../../util");
 var linq_1 = require("../linq");
+require("../add/first");
 var makeValuePredicate_1 = require("../makeValuePredicate");
 var GroupByIterator = (function (_super) {
     __extends(GroupByIterator, _super);

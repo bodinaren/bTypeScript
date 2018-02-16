@@ -2,6 +2,7 @@ import {BaseIterator, IteratorResult} from "./iterator";
 import {FilterIterator} from "./filter";
 import * as Util from "../../util";
 import {Linq} from "../linq";
+import "../add/first";
 import {makeValuePredicate} from "../makeValuePredicate";
 
 export class GroupByIterator<TSource, TKey> extends BaseIterator<TSource> {

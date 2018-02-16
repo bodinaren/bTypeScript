@@ -1,6 +1,7 @@
 import { BaseIterator, IteratorResult } from "./iterator";
 import * as Util from "../../util";
 import { Linq } from "../linq";
+import "../add/first";
 export declare class GroupByIterator<TSource, TKey> extends BaseIterator<TSource> {
     private keySelector;
     private _previousKeys;

@@ -14,9 +14,5 @@ export function sumProto<TSource>(this: Linq<TSource>, selector: Util.ISelector<
  * @param selector A transform function to apply to each element.
  */
 export function sumStatic<TSource>(source: TSource[], selector: Util.ISelector<TSource, number> = Util.defaultSelector): number {
-    let i, sum = 0;
-    for (i = 0; i < source.length; i++) {
-        sum += selector(source[i]);
-    }
-    return sum;
+    return source.reduce((sum, item) => sum + selector(item), 0);
 }

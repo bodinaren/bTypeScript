@@ -16,11 +16,7 @@ exports.sumProto = sumProto;
  */
 function sumStatic(source, selector) {
     if (selector === void 0) { selector = Util.defaultSelector; }
-    var i, sum = 0;
-    for (i = 0; i < source.length; i++) {
-        sum += selector(source[i]);
-    }
-    return sum;
+    return source.reduce(function (sum, item) { return sum + selector(item); }, 0);
 }
 exports.sumStatic = sumStatic;
 //# sourceMappingURL=sum.js.map

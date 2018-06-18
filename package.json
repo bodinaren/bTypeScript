@@ -2,9 +2,6 @@
   "name": "btypescript",
   "version": "2.0.0",
   "description": "TypeScript collections, Linq and various helpers.",
-  "files": [
-    "./dist/"
-  ],
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
   "typescript": {

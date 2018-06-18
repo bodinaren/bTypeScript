@@ -1,5 +1,5 @@
-import {Linq} from "../linq";
-import {groupByProto, groupByStatic} from "../iterator/groupBy";
+import { Linq } from "../linq";
+import { groupByProto, groupByStatic } from "../iterator/groupBy";
 
 Linq.prototype.groupBy = groupByProto;
 Linq.groupBy = groupByStatic;

@@ -1,7 +1,8 @@
-import {BaseIterator, IteratorResult} from "./iterator/iterator";
-import {OrderedLinq} from "./iterator/orderBy";
+import { BaseIterator, IteratorResult } from "./iterator/iterator";
+import { OrderedLinq } from "./iterator/orderBy";
+import { IGrouping } from "./iterator/groupBy";
 
-import {Linq, LQ} from "./linq";
+import { Linq, LQ } from "./linq";
 
 // Iterators
 import "./add/distinct";
@@ -29,4 +30,4 @@ import "./add/min";
 import "./add/single";
 import "./add/sum";
 
-export {Linq, LQ, OrderedLinq};
+export { Linq, LQ, OrderedLinq, IGrouping };

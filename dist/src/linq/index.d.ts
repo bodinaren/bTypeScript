@@ -1,4 +1,5 @@
 import { OrderedLinq } from "./iterator/orderBy";
+import { IGrouping } from "./iterator/groupBy";
 import { Linq, LQ } from "./linq";
 import "./add/distinct";
 import "./add/except";
@@ -22,4 +23,4 @@ import "./add/max";
 import "./add/min";
 import "./add/single";
 import "./add/sum";
-export { Linq, LQ, OrderedLinq };
+export { Linq, LQ, OrderedLinq, IGrouping };

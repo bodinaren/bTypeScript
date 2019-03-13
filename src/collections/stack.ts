@@ -8,7 +8,7 @@ export default class Stack<T> {
     private _list: LinkedList<T>;
 
     /** Get the number of items in the stack */
-    get length(): number { return this._list.length; };
+    get length(): number { return this._list.length; }
 
     /**
      * @param items T[] Items to start filling the stack with.
@@ -41,7 +41,7 @@ export default class Stack<T> {
         return this._list.get(0);
     }
 
-    /** 
+    /**
      * Clear the stack
      */
     clear() {

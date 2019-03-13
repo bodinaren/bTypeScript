@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {GroupJoinIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {GroupJoinIterator} from "../../src/linq/iterator/groupJoin";
 import * as TestItems from "./testitems";
 
 describe("GroupJoinIterator", function() {

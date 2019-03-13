@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {MapIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {MapIterator} from "../../src/linq/iterator/map";
 import * as TestItems from "./testitems";
 
 describe("MapIterator", function() {

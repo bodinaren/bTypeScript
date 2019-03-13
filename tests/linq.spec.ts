@@ -1,7 +1,33 @@
 ﻿import * as Util from "../src/util";
-import {LQ, Linq, TakeIterator, TakeWhileIterator, SkipIterator, SkipWhileIterator, MapIterator, FilterIterator, JoinIterator, GroupJoinIterator, OrderIterator, OrderedLinq} from "../src/linq";
+import {LQ, Linq} from "../src/linq";
 import * as TestItems from "./linq/testitems";
 import {expect} from 'chai';
+
+// // Iterators
+// import "../src/linq/add/distinct";
+// import "../src/linq/add/except";
+// import "../src/linq/add/filter";
+// import "../src/linq/add/groupBy";
+// import "../src/linq/add/intersect";
+// import "../src/linq/add/join";
+// import "../src/linq/add/map";
+// import "../src/linq/add/orderBy";
+// import "../src/linq/add/skip";
+// import "../src/linq/add/skipWhile";
+// import "../src/linq/add/take";
+// import "../src/linq/add/takeWhile";
+// import "../src/linq/add/zip";
+
+// // Operators
+// import "../src/linq/add/all";
+// import "../src/linq/add/any";
+// import "../src/linq/add/average";
+// import "../src/linq/add/first";
+// import "../src/linq/add/last";
+// import "../src/linq/add/max";
+// import "../src/linq/add/min";
+// import "../src/linq/add/single";
+// import "../src/linq/add/sum";
 
 describe("Linq", function() {
 
@@ -168,25 +194,16 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).filter(() => true).toArray()).to.eql(TestItems.strings, "intantiated:");
             expect(Linq.filter(TestItems.strings, () => true)).to.eql(TestItems.strings, "static:");
-            
-            expect(new Linq(TestItems.strings).where(() => true).toArray()).to.eql(TestItems.strings, "intantiated:");
-            expect(Linq.where(TestItems.strings, () => true)).to.eql(TestItems.strings, "static:");
         });
 
         it("objects", function() {
             expect(new Linq(TestItems.objects).filter(() => true).toArray()).to.eql(TestItems.objects, "intantiated:");
             expect(Linq.filter(TestItems.objects, () => true)).to.eql(TestItems.objects, "static:");
-            
-            expect(new Linq(TestItems.objects).where(() => true).toArray()).to.eql(TestItems.objects, "intantiated:");
-            expect(Linq.where(TestItems.objects, () => true)).to.eql(TestItems.objects, "static:");
         });
 
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).filter(() => true).toArray()).to.eql(TestItems.numbers, "intantiated:");
             expect(Linq.filter(TestItems.numbers, () => true)).to.eql(TestItems.numbers, "static:");
-            
-            expect(new Linq(TestItems.numbers).where(() => true).toArray()).to.eql(TestItems.numbers, "intantiated:");
-            expect(Linq.where(TestItems.numbers, () => true)).to.eql(TestItems.numbers, "static:");
         });
     });
 
@@ -194,25 +211,16 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).filter(item => item[0] == "m").toArray()).to.eql(["musse", "mimmi"], "intantiated:");
             expect(Linq.filter(TestItems.strings, item => item[0] == "m")).to.eql(["musse", "mimmi"], "static:");
-            
-            expect(new Linq(TestItems.strings).where(item => item[0] == "m").toArray()).to.eql(["musse", "mimmi"], "intantiated:");
-            expect(Linq.where(TestItems.strings, item => item[0] == "m")).to.eql(["musse", "mimmi"], "static:");
         });
 
         it("objects", function() {
             expect(new Linq(TestItems.objects).filter(item => (item.first[0] == "m")).toArray()).to.eql([TestItems.musse, TestItems.mimmi], "intantiated:");
             expect(Linq.filter(TestItems.objects, item => (item.first[0] == "m"))).to.eql([TestItems.musse, TestItems.mimmi], "static:");
-            
-            expect(new Linq(TestItems.objects).where(item => (item.first[0] == "m")).toArray()).to.eql([TestItems.musse, TestItems.mimmi], "intantiated:");
-            expect(Linq.where(TestItems.objects, item => (item.first[0] == "m"))).to.eql([TestItems.musse, TestItems.mimmi], "static:");
         });
 
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).filter(item => item % 2 == 0).toArray()).to.eql([0, 2, 4, 6, 8], "intantiated:");
             expect(Linq.filter(TestItems.numbers, item => item % 2 == 0)).to.eql([0, 2, 4, 6, 8], "static:");
-            
-            expect(new Linq(TestItems.numbers).where(item => item % 2 == 0).toArray()).to.eql([0, 2, 4, 6, 8], "intantiated:");
-            expect(Linq.where(TestItems.numbers, item => item % 2 == 0)).to.eql([0, 2, 4, 6, 8], "static:");
         });
     });
 
@@ -220,25 +228,16 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).filter(() => false).toArray()).to.eql([], "intantiated:");
             expect(Linq.filter(TestItems.strings, () => false)).to.eql([], "static:");
-            
-            expect(new Linq(TestItems.strings).where(() => false).toArray()).to.eql([], "intantiated:");
-            expect(Linq.where(TestItems.strings, () => false)).to.eql([], "static:");
         });
 
         it("objects", function() {
             expect(new Linq(TestItems.objects).filter(() => false).toArray()).to.eql([], "intantiated:");
             expect(Linq.filter(TestItems.objects, () => false)).to.eql([]);
-            
-            expect(new Linq(TestItems.objects).where(() => false).toArray()).to.eql([], "intantiated:");
-            expect(Linq.where(TestItems.objects, () => false)).to.eql([], "static:");
         });
 
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).filter((x) => x === -1).toArray()).to.eql([], "intantiated:");
             expect(Linq.filter(TestItems.numbers, (x) => x === -1)).to.eql([], "static:");
-            
-            expect(new Linq(TestItems.numbers).where((x) => x === -1).toArray()).to.eql([], "intantiated:");
-            expect(Linq.where(TestItems.numbers, (x) => x === -1)).to.eql([], "static:");
         });
     });
 
@@ -517,17 +516,11 @@ describe("Linq", function() {
         it("without selector", function() {
             expect(new Linq(TestItems.numbers).average()).to.eql(4.5, "intantiated:");
             expect(Linq.average(TestItems.numbers)).to.eql(4.5, "static:");
-            
-            expect(new Linq(TestItems.numbers).avg()).to.eql(4.5, "intantiated:");
-            expect(Linq.avg(TestItems.numbers)).to.eql(4.5, "static:");
         });
 
         it("with selector", function() {
             expect(new Linq(TestItems.numbers).average(x => x)).to.eql(4.5, "intantiated:");
             expect(Linq.average(TestItems.numbers, x => x)).to.eql(4.5, "static:");
-            
-            expect(new Linq(TestItems.numbers).avg(x => x)).to.eql(4.5, "intantiated:");
-            expect(Linq.avg(TestItems.numbers, x => x)).to.eql(4.5, "static:");
         });
     });
 

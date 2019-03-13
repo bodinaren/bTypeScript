@@ -1,0 +1,9 @@
+import "./all";
+import "./any";
+import "./average";
+import "./first";
+import "./last";
+import "./max";
+import "./min";
+import "./single";
+import "./sum";

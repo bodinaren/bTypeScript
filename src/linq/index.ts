@@ -1,40 +1,33 @@
-import BaseIterator, {IteratorResult} from "./iterator";
-import FilterIterator from "./filter";
-import MapIterator from "./map";
-import OrderIterator from "./order";
-import SkipIterator from "./skip";
-import SkipWhileIterator from "./skipWhile";
-import TakeIterator from "./take";
-import TakeWhileIterator from "./takeWhile";
-import JoinIterator from "./join";
-import GroupJoinIterator from "./groupJoin";
-import GroupByIterator, {IGrouping} from "./groupBy";
-import ZipIterator from "./zip";
-import ExceptIterator from "./except";
-import IntersectIterator from "./intersect";
-import DistinctIterator from "./distinct";
+import { BaseIterator, IteratorResult } from "./iterator/iterator";
+import { OrderedLinq } from "./iterator/orderBy";
+import { IGrouping } from "./iterator/groupBy";
 
-import Linq, {LQ, OrderedLinq} from "./linq";
+import { Linq, LQ } from "./linq";
 
-export {
-    Linq,
-    LQ,
-    OrderedLinq,
-    BaseIterator,
-    IteratorResult,
-    FilterIterator,
-    MapIterator,
-    OrderIterator,
-    SkipIterator,
-    SkipWhileIterator,
-    TakeIterator,
-    TakeWhileIterator,
-    JoinIterator,
-    GroupJoinIterator,
-    GroupByIterator,
-    IGrouping,
-    ZipIterator,
-    ExceptIterator,
-    IntersectIterator,
-    DistinctIterator
-};
+// Iterators
+import "./add/distinct";
+import "./add/except";
+import "./add/filter";
+import "./add/groupBy";
+import "./add/intersect";
+import "./add/join";
+import "./add/map";
+import "./add/orderBy";
+import "./add/skip";
+import "./add/skipWhile";
+import "./add/take";
+import "./add/takeWhile";
+import "./add/zip";
+
+// Operators
+import "./add/all";
+import "./add/any";
+import "./add/average";
+import "./add/first";
+import "./add/last";
+import "./add/max";
+import "./add/min";
+import "./add/single";
+import "./add/sum";
+
+export { Linq, LQ, OrderedLinq, IGrouping };

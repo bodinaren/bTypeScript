@@ -81,6 +81,18 @@ describe("Dates", function() {
     });
 
     it("toMidnight", function () {
-        // TODO: Write proper tests.
+        var d = Dates(new Date(1500000000000)).toMidnight().date;
+
+        expect(d.getHours()).to.eql(0);
+        expect(d.getMinutes()).to.eql(0);
+        expect(d.getSeconds()).to.eql(0);
+        expect(d.getMilliseconds()).to.eql(0);
+        
+        d = DatesHelper.toMidnight(new Date(1500000000000));
+
+        expect(d.getHours()).to.eql(0);
+        expect(d.getMinutes()).to.eql(0);
+        expect(d.getSeconds()).to.eql(0);
+        expect(d.getMilliseconds()).to.eql(0);
     });
 });

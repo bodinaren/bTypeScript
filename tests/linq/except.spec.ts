@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {BaseIterator, ExceptIterator, IteratorResult} from "../../src/linq";
+import {BaseIterator, IteratorResult} from "../../src/linq/iterator/iterator";
+import {ExceptIterator} from "../../src/linq/iterator/except";
 import * as TestItems from "./testitems";
 
 describe("ExceptIterator", function() {

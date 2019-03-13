@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {TakeWhileIterator, IteratorResult} from "../../src/linq";
+import {IteratorResult} from "../../src/linq/iterator/iterator";
+import {TakeWhileIterator} from "../../src/linq/iterator/takeWhile";
 import * as TestItems from "./testitems";
 
 describe("TakeWhileIterator", function () {

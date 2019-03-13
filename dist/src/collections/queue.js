@@ -4,7 +4,7 @@ var linkedList_1 = require("./linkedList");
 /**
  * A Stack works by first in, first out.
  */
-var Queue = (function () {
+var Queue = /** @class */ (function () {
     /**
      * @param items T[] Items to start filling the stack with.
      */
@@ -17,7 +17,6 @@ var Queue = (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     /**
      * Adds an item to the end of the queue.
      */

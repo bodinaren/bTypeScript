@@ -1,14 +1,13 @@
 {
-  "name": "btypescript",
+  "name": "@hattrickltd/btypescript",
   "version": "2.0.0",
   "description": "TypeScript collections, Linq and various helpers.",
-  "main": "./dist/src/index.js",
-  "typings": "./dist/src/index.d.ts",
-  "typescript": {
-    "main": "./src/index.ts"
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/src/"
+  ],
   "scripts": {
-    "devtools": "npm install",
     "tsc": "tsc",
     "lint": "tslint -c tslint.json ./src/**/*.ts",
     "mocha": "mocha --reporter dot ./dist/**/*.spec.js",
@@ -30,18 +29,17 @@
   "homepage": "https://github.com/bodinaren/bTypeScript",
   "dependencies": {},
   "devDependencies": {
-    "@types/es6-shim": "^0.31.32",
-    "@types/jasmine": "^2.5.40",
-    "browserify": "^13.0.1",
-    "browserify-umdify": "^1.0.3",
-    "chai": "^3.5.0",
-    "gulp-clean": "^0.3.2",
-    "intern": "^3.4.1",
-    "mocha": "^2.4.5",
-    "remap-istanbul": "^0.7.0",
-    "tslint": "^3.12.1",
-    "typescript": "^2.2.1",
-    "uglify-js": "^2.6.2",
-    "uglifyify": "^3.0.1"
+    "@types/jasmine": "^3.3.9",
+    "browserify": "^16.2.3",
+    "browserify-umdify": "^1.0.4",
+    "chai": "^4.2.0",
+    "gulp-clean": "^0.4.0",
+    "intern": "^4.4.2",
+    "mocha": "^6.0.2",
+    "remap-istanbul": "^0.13.0",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333",
+    "uglify-js": "^3.4.9",
+    "uglifyify": "^5.0.1"
   }
 }

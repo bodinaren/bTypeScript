@@ -13,4 +13,4 @@ export declare function singleProto<TSource>(this: Linq<TSource>, predicate: Uti
  * @param predicate
  * @throws Error
  */
-export declare function singleStatic<TSource>(source: TSource[], predicate: (predicate) => boolean): TSource;
+export declare function singleStatic<TSource>(source: TSource[], predicate: (predicate: any) => boolean): TSource;

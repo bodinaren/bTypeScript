@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -14,7 +17,7 @@ var iterator_1 = require("./iterator");
 var Util = require("../../util");
 var linq_1 = require("../linq");
 var makeValuePredicate_1 = require("../makeValuePredicate");
-var OrderByIterator = (function (_super) {
+var OrderByIterator = /** @class */ (function (_super) {
     __extends(OrderByIterator, _super);
     function OrderByIterator(source, keySelector, comparer, descending) {
         if (keySelector === void 0) { keySelector = Util.defaultSelector; }
@@ -110,7 +113,7 @@ function orderByDescStatic(source, keySelector, comparer) {
     return new linq_1.Linq(source).orderByDesc(keySelector, comparer).toArray();
 }
 exports.orderByDescStatic = orderByDescStatic;
-var LinqOrder = (function () {
+var LinqOrder = /** @class */ (function () {
     function LinqOrder(keySelector, comparer, descending) {
         if (keySelector === void 0) { keySelector = Util.defaultSelector; }
         if (comparer === void 0) { comparer = Util.defaultComparer; }
@@ -124,7 +127,7 @@ var LinqOrder = (function () {
     };
     return LinqOrder;
 }());
-var OrderedLinq = (function (_super) {
+var OrderedLinq = /** @class */ (function (_super) {
     __extends(OrderedLinq, _super);
     function OrderedLinq(source) {
         return _super.call(this, source) || this;

@@ -21,7 +21,7 @@ export default class BinaryTree<T> {
      * @param tree Which TreeNode we're traversing.
      * @param node The node we wish to insert
      */
-    private insertAux(tree, node);
+    private insertAux;
     remove(item: T): boolean;
     /**
      * Check if the tree contains a given item.
@@ -51,7 +51,7 @@ export default class BinaryTree<T> {
      * @param callback What should we do when we get there.
      * @param signal Object (so it's a reference) that we use to know when the callback returned false.
      */
-    private preorderTraversalAux(tree, callback, signal);
+    private preorderTraversalAux;
     /**
      * Traverse the tree and execute callback when passing (pass under the item) an item
      * @param callback What should we do when we get there.
@@ -64,7 +64,7 @@ export default class BinaryTree<T> {
      * @param callback What should we do when we get there.
      * @param signal Object (so it's a reference) that we use to know when the callback returned false.
      */
-    private inorderTraversalAux(tree, callback, signal);
+    private inorderTraversalAux;
     /**
      * Traverse the tree and execute callback when leaving (passing on the right side of) an item
      * @param callback What should we do when we get there.
@@ -77,7 +77,7 @@ export default class BinaryTree<T> {
      * @param callback What should we do when we get there.
      * @param signal Object (so it's a reference) that we use to know when the callback returned false.
      */
-    private postorderTraversalAux(tree, callback, signal);
+    private postorderTraversalAux;
     /**
      * Traverse the tree one level at a time and execute callback on each an item
      * @param callback What should we do when we get there.
@@ -90,7 +90,7 @@ export default class BinaryTree<T> {
      * @param callback What should we do when we get there.
      * @param signal Object (so it's a reference) that we use to know when the callback returned false.
      */
-    private levelTraversalAux(tree, callback, signal);
+    private levelTraversalAux;
     /**
      * Get the minimum value in the tree.
      */
@@ -100,7 +100,7 @@ export default class BinaryTree<T> {
      * @private
      * @param tree Which TreeNode we're traversing.
      */
-    private minAux(tree);
+    private minAux;
     /**
      * Get the maximum value in the tree.
      */
@@ -110,7 +110,7 @@ export default class BinaryTree<T> {
      * @private
      * @param tree Which TreeNode we're traversing.
      */
-    private maxAux(tree);
+    private maxAux;
     /**
      * Get the depth of a tree.
      * -1 = Empty
@@ -124,14 +124,14 @@ export default class BinaryTree<T> {
      * @private
      * @param tree Which TreeNode we're traversing.
      */
-    private depthAux(tree);
+    private depthAux;
     /**
      * Search the tree for a specific item.
      * @private
      * @param tree Which TreeNode we're traversing.
      * @param item
      */
-    private _search(tree, item);
+    private _search;
 }
 export declare class TreeNode {
     left: TreeNode;

@@ -5,7 +5,7 @@ var fs = require("fs");
 var Umd = require("browserify-umdify");
 var UglifyJS = require("uglify-js");
 
-var browserifyFs = fs.createWriteStream("./dist/btypescript.umd.js", { encoding: "utf-8", flags: "w"});
+var browserifyFs = fs.createWriteStream("./btypescript.umd.js", { encoding: "utf-8", flags: "w"});
 var bundled = browserify({
 		extensions: [".js", ".json"],
 		debug: true

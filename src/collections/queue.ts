@@ -7,7 +7,7 @@ export default class Queue<T> {
     private _list: LinkedList<T>;
 
     /** Get the number of items in the queue */
-    get length(): number { return this._list.length; };
+    get length(): number { return this._list.length; }
 
     /**
      * @param items T[] Items to start filling the stack with.

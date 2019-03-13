@@ -9,7 +9,7 @@ export default class LinkedList<T> {
      * @param items T[] Items to start filling the stack with.
      */
     constructor(items?: T[]);
-    private _getNode(at);
+    private _getNode;
     /**
      * Get an item at a certain position.
      */

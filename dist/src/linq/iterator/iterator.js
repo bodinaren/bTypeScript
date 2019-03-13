@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BaseIterator = (function () {
+var BaseIterator = /** @class */ (function () {
     function BaseIterator(source) {
         this._idx = -1;
         this._buffers = false;

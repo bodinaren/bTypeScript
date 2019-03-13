@@ -55,7 +55,7 @@ export function distinctStatic<TSource>(source: TSource[] | Linq<TSource>, compa
 
     a.forEach(x => {
         if (!result.some(y => comparer(x, y))) result.push(x);
-        // if (result.indexOf(x) === -1) 
+        // if (result.indexOf(x) === -1)
     });
 
     return result;

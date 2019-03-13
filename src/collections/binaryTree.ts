@@ -276,7 +276,7 @@ export default class BinaryTree<T> {
      * Search the tree for a specific item.
      * @private
      * @param tree Which TreeNode we're traversing.
-     * @param item 
+     * @param item
      */
     private _search(tree: TreeNode, item: T): TreeNode {
         if (Util.isUndefined(tree)) return undefined;

@@ -7,7 +7,7 @@ var util = require("../util");
  */
 function Numbers(num) { return new NumbersHelper(num); }
 exports.default = Numbers;
-var NumbersHelper = (function () {
+var NumbersHelper = /** @class */ (function () {
     /**
      * Creates a NumbersHelper object.
      * @param number The number on which to perform the various functions.

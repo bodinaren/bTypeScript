@@ -10,7 +10,7 @@ function Url(url) {
     return new UrlHelper(url);
 }
 exports.default = Url;
-var UrlHelper = (function () {
+var UrlHelper = /** @class */ (function () {
     /**
      * Creates a UrlHelper object.
      * @param url The URL on which to perform the various functions.

@@ -8,7 +8,7 @@ export declare class GroupByIterator<TSource, TKey> extends BaseIterator<TSource
     private _isPipelineExecuted;
     constructor(source: TSource[] | BaseIterator<TSource>, keySelector: Util.ISelector<TSource, TKey>);
     next(): IteratorResult<IGrouping<TKey, TSource>>;
-    private toArray();
+    private toArray;
 }
 export declare function groupByProto<TKey>(this: Linq<any>, keySelector: Util.ISelector<any, TKey> | string): Linq<IGrouping<TKey, any>>;
 /**

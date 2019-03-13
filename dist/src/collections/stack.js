@@ -4,7 +4,7 @@ var linkedList_1 = require("./linkedList");
 /**
  * A Stack works by last in, first out.
  */
-var Stack = (function () {
+var Stack = /** @class */ (function () {
     /**
      * @param items T[] Items to start filling the stack with.
      */
@@ -17,7 +17,6 @@ var Stack = (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     /**
      * Adds an item to the top of the stack.
      */

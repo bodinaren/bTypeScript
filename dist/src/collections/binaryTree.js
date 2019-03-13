@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../util");
 var queue_1 = require("./queue");
-var BinaryTree = (function () {
+var BinaryTree = /** @class */ (function () {
     function BinaryTree(selectorFunction) {
         this.length = 0;
         this._selector = selectorFunction || Util.defaultSelector;
@@ -296,7 +296,7 @@ var BinaryTree = (function () {
     return BinaryTree;
 }());
 exports.default = BinaryTree;
-var TreeNode = (function () {
+var TreeNode = /** @class */ (function () {
     function TreeNode(value) {
         this.value = value;
     }

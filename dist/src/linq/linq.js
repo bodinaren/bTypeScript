@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var iterator_1 = require("./iterator/iterator");
 var map_1 = require("./iterator/map");
 var Util = require("../util");
-var Linq = (function () {
+var Linq = /** @class */ (function () {
     function Linq(source) {
         this._source = (source instanceof iterator_1.BaseIterator)
             ? source

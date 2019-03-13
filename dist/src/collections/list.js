@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../util");
-var List = (function () {
+var List = /** @class */ (function () {
     /**
      * Creates a new list object.
      * Utilizes a normal array behind the scenes and native functions whenever possible,

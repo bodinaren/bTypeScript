@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -13,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../../util");
 var iterator_1 = require("./iterator");
 var linq_1 = require("../linq");
-var DistinctIterator = (function (_super) {
+var DistinctIterator = /** @class */ (function (_super) {
     __extends(DistinctIterator, _super);
     function DistinctIterator(source, comparer) {
         if (comparer === void 0) { comparer = Util.defaultEqualityComparer; }
@@ -62,7 +65,7 @@ function distinctStatic(source, comparer) {
     a.forEach(function (x) {
         if (!result.some(function (y) { return comparer(x, y); }))
             result.push(x);
-        // if (result.indexOf(x) === -1) 
+        // if (result.indexOf(x) === -1)
     });
     return result;
     // let lists: Array<Linq> = [], result = [];

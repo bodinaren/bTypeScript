@@ -1,1 +1,1 @@
-export declare function makeValuePredicate(predicate: any): (predicate) => any;
+export declare function makeValuePredicate(predicate: any): (predicate: any) => any;

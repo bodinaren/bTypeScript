@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function Strings(str) { return new StringsHelper(str); }
 exports.default = Strings;
-var StringsHelper = (function () {
+var StringsHelper = /** @class */ (function () {
     /**
      * Creates a StringsHelper object.
      * @param str The string on which to perform the various functions.

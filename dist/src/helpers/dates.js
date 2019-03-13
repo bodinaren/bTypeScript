@@ -7,7 +7,7 @@ var Util = require("../util");
  */
 function Dates(date) { return new DatesHelper(date); }
 exports.default = Dates;
-var DatesHelper = (function () {
+var DatesHelper = /** @class */ (function () {
     function DatesHelper(date) {
         this.date = date;
     }

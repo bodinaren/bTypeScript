@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -15,7 +18,7 @@ var filter_1 = require("./filter");
 var Util = require("../../util");
 var linq_1 = require("../linq");
 var makeValuePredicate_1 = require("../makeValuePredicate");
-var JoinIterator = (function (_super) {
+var JoinIterator = /** @class */ (function (_super) {
     __extends(JoinIterator, _super);
     function JoinIterator(outer, inner, outerKeySelector, innerKeySelector, resultSelector) {
         var _this = _super.call(this, outer) || this;

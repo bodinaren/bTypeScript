@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Represent a doubly-linked list in which you can add and remove items.
  */
-var LinkedList = (function () {
+var LinkedList = /** @class */ (function () {
     /**
      * @param items T[] Items to start filling the stack with.
      */
@@ -114,7 +114,7 @@ var LinkedList = (function () {
     return LinkedList;
 }());
 exports.default = LinkedList;
-var LinkedListNode = (function () {
+var LinkedListNode = /** @class */ (function () {
     function LinkedListNode(val) {
         this.val = val;
     }

@@ -1,9 +1,7 @@
-import * as Util from "../util";
-
 /**
  * Represent a doubly-linked list in which you can add and remove items.
  */
-export default class LinkedList<T> {
+export class LinkedList<T> {
 
     private _first: LinkedListNode<T>;
     private _last: LinkedListNode<T>;

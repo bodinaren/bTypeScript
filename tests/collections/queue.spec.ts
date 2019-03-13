@@ -1,4 +1,4 @@
-import Queue from "../../src/collections/queue";
+import {Queue} from "../../src/collections/queue";
 import {expect} from 'chai';
 
 describe("Queue", function() {

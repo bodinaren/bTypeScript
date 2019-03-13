@@ -1,6 +1,6 @@
 import * as Util from "../util";
 
-export default class List<T> {
+export class List<T> {
 
     _source: T[];
 

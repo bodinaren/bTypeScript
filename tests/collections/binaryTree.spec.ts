@@ -1,4 +1,4 @@
-import BinaryTree from "../../src/collections/binaryTree";
+import {BinaryTree} from "../../src/collections/binaryTree";
 import {expect} from 'chai';
 
 describe("BinaryTree", function() {

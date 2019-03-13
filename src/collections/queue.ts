@@ -1,9 +1,9 @@
-import LinkedList from "./linkedList";
+import {LinkedList} from "./linkedList";
 
 /**
  * A Stack works by first in, first out.
  */
-export default class Queue<T> {
+export class Queue<T> {
     private _list: LinkedList<T>;
 
     /** Get the number of items in the queue */

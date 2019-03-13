@@ -1,9 +1,10 @@
 {
-  "name": "@hattrickltd/btypescript",
-  "version": "2.0.0",
-  "description": "TypeScript collections, Linq and various helpers.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "name": "btypescript",
+  "version": "1.0.0",
+  "description": "Linq, collections and various helpers.",
+  "main": "dist/src/index.js",
+  "module": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist/src/"
   ],
@@ -11,15 +12,15 @@
     "tsc": "tsc",
     "lint": "tslint -c tslint.json ./src/**/*.ts",
     "mocha": "mocha --reporter dot ./dist/**/*.spec.js",
-    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha dist/tests -- -R dot --recursive",
+    "cover": "nyc mocha",
     "umd": "node umd.browserify.js && node umd.uglify.js",
-    "test": "npm run tsc && npm run istanbul",
+    "test": "npm run tsc && npm run cover",
     "build": "npm run lint && npm run tsc && npm run umd",
-    "all": "npm run lint && npm run tsc && npm run istanbul && npm run umd"
+    "all": "npm run lint && npm run tsc && npm run cover && npm run umd"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bodinaren/bTypeScript.git"
+    "url": "git+https://github.com/bodinaren/bTypeScript.git"
   },
   "author": "Marcus Bodin <bodinaren@gmail.com>",
   "license": "MIT",
@@ -29,14 +30,19 @@
   "homepage": "https://github.com/bodinaren/bTypeScript",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.3.4",
     "@types/jasmine": "^3.3.9",
+    "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "browserify-umdify": "^1.0.4",
     "chai": "^4.2.0",
     "gulp-clean": "^0.4.0",
     "intern": "^4.4.2",
     "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
     "remap-istanbul": "^0.13.0",
+    "source-map-support": "^0.5.11",
+    "tsify": "^4.0.1",
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333",
     "uglify-js": "^3.4.9",

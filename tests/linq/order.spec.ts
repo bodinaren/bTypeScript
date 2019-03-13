@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {IteratorResult} from "../../src/linq/iterator/iterator";
 import {OrderByIterator} from "../../src/linq/iterator/orderBy";
-import * as Util from "../../src/util";
+import * as Util from "../../src/util/index";
 import * as TestItems from "./testitems";
 
 describe("OrderByIterator", function() {

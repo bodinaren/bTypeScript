@@ -1,4 +1,4 @@
-import Stack from "../../src/collections/stack";
+import {Stack} from "../../src/collections/stack";
 import {expect} from 'chai';
 
 describe("Stack", function() {

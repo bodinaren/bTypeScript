@@ -1,4 +1,4 @@
-import Numbers, {NumbersHelper} from "../../src/helpers/numbers";
+import {Numbers, NumbersHelper} from "../../src/helpers/numbers";
 import {expect} from 'chai';
 
 describe("Numbers", function() {

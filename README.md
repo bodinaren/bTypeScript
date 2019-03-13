@@ -2,7 +2,7 @@
 TypeScript collections, Linq and various helpers.
 
 ## Install
-I'm still working on the packaging, install directly from Git for now: `npm install https://github.com/bodinaren/bTypeScript`
+I'm still working on the packaging, install directly from Git for now: `npm install @hattrickltd/bTypeScript`
 
 ## Examples
 See tests for a complete set of examples.
@@ -85,12 +85,12 @@ Linq.intersect(arr1, arr2, arr3); // [5];
 ```
 
 #### Modules ####
-Each Linq function is built in individual modules. So if you want smaller build sizes you can instead of including everything by using `Linq` from `btypescript` or `btypescript/src/linq` you can import each module individually like this:
+Each Linq function is built in individual modules. So if you want smaller build sizes you can instead of including everything by using `Linq` from `btypescript` or `btypescript/linq` you can import each module individually like this:
 ```
-import {Linq} from 'btypescript/src/linq/linq';
-import 'btypescript/src/linq/add/filter';
-import 'btypescript/src/linq/add/map';
-import 'btypescript/src/linq/add/average';
+import {Linq} from 'btypescript/linq/linq';
+import 'btypescript/linq/add/filter';
+import 'btypescript/linq/add/map';
+import 'btypescript/linq/add/average';
 ```
 This will build only the minimum code required for using `.filter`, `.map` and `.average`.
 

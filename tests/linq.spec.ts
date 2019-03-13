@@ -1,5 +1,4 @@
-﻿import * as Util from "../src/util";
-import {LQ, Linq} from "../src/linq";
+﻿import {LQ, Linq} from "../src/linq";
 import * as TestItems from "./linq/testitems";
 import {expect} from 'chai';
 
@@ -38,7 +37,7 @@ describe("Linq", function() {
     describe("chaining", function() {
         describe("strings", function() {
             it("maps before next function", function() {
-                var arr = new Linq(TestItems.strings)
+                let arr = new Linq(TestItems.strings)
                     .map(item => item.substr(0, 2))
                     .map(item => item.substr(1))
                     .toArray();
@@ -99,7 +98,7 @@ describe("Linq", function() {
         it("objects", function() {
             expect(new Linq(TestItems.objects).map(item => item.first.substr(0, 2)).toArray())
                 .to.eql(["ka", "mu", "lå", "mi", "jo"], "intantiated:");
-                
+
             expect(Linq.map(TestItems.objects, item => item.first.substr(0, 2)))
                 .to.eql(["ka", "mu", "lå", "mi", "jo"], "static:");
         });
@@ -107,7 +106,7 @@ describe("Linq", function() {
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).map(item => item * 2).toArray())
                 .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2], "intantiated:");
-                
+
             expect(Linq.map(TestItems.numbers, item => item * 2))
                 .to.eql([0, 4, 8, 12, 16, 18, 14, 10, 6, 2], "static:");
         });
@@ -118,12 +117,12 @@ describe("Linq", function() {
             expect(new Linq(TestItems.strings).take(2).toArray()).to.eql(["kalle", "musse"], "intantiated:");
             expect(Linq.take(TestItems.strings, 2)).to.eql(["kalle", "musse"], "static:");
         });
-        
+
         it("objects", function() {
             expect(new Linq(TestItems.objects).take(2).toArray()).to.eql([TestItems.kalle, TestItems.musse], "intantiated:");
             expect(Linq.take(TestItems.objects, 2)).to.eql([TestItems.kalle, TestItems.musse], "static:");
         });
-        
+
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).take(2).toArray()).to.eql([0, 2], "intantiated:");
             expect(Linq.take(TestItems.numbers, 2)).to.eql([0, 2], "static:");
@@ -135,12 +134,12 @@ describe("Linq", function() {
             expect(new Linq(TestItems.strings).skip(3).toArray()).to.eql(["mimmi", "joakim"], "intantiated:");
             expect(Linq.skip(TestItems.strings, 3)).to.eql(["mimmi", "joakim"], "static:");
         });
-        
+
         it("objects", function() {
             expect(new Linq(TestItems.objects).skip(3).toArray()).to.eql([TestItems.mimmi, TestItems.joakim], "intantiated:");
             expect(Linq.skip(TestItems.objects, 3)).to.eql([TestItems.mimmi, TestItems.joakim], "static:");
         });
-        
+
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).skip(3).toArray()).to.eql([6, 8, 9, 7, 5, 3, 1], "intantiated:");
             expect(Linq.skip(TestItems.numbers, 3)).to.eql([6, 8, 9, 7, 5, 3, 1], "static:");
@@ -168,7 +167,7 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).skipWhile(x => x.length == 5).toArray()).to.eql([TestItems.långben.first, TestItems.mimmi.first, TestItems.joakim.first], "intantiated:");
             expect(Linq.skipWhile(TestItems.strings, x => x.length == 5)).to.eql([TestItems.långben.first, TestItems.mimmi.first, TestItems.joakim.first], "static:");
-            
+
             // expect(new Linq(TestItems.strings).skipWhile().toArray()).to.eql(TestItems.strings);
             // expect(Linq.skipWhile(TestItems.strings)).to.eql(TestItems.strings);
         });
@@ -403,7 +402,7 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).orderBy(x => x).first()).to.eql("joakim", "intantiated:");
             expect(new Linq(TestItems.strings).orderBy(x => x).last()).to.eql("musse", "intantiated:");
-            
+
             expect(Linq.orderBy(TestItems.strings, x => x)[0]).to.eql("joakim", "static:");
             expect(Linq.orderBy(TestItems.strings, x => x)[TestItems.strings.length - 1]).to.eql("musse", "static:");
         });
@@ -411,7 +410,7 @@ describe("Linq", function() {
             it("with function", function() {
                 expect(new Linq(TestItems.objects).orderBy(x => x.first).first()).to.eql(TestItems.joakim, "intantiated:");
                 expect(new Linq(TestItems.objects).orderBy(x => x.first).last()).to.eql(TestItems.musse, "intantiated:");
-            
+
                 expect(Linq.orderBy(TestItems.objects, x => x.first)[0]).to.eql(TestItems.joakim, "static:");
                 expect(Linq.orderBy(TestItems.objects, x => x.first)[TestItems.objects.length - 1]).to.eql(TestItems.musse, "static:");
             });
@@ -419,7 +418,7 @@ describe("Linq", function() {
             it("with string", function() {
                 expect(new Linq(TestItems.objects).orderBy("first").first()).to.eql(TestItems.joakim, "intantiated:");
                 expect(new Linq(TestItems.objects).orderBy("first").last()).to.eql(TestItems.musse, "intantiated:");
-            
+
                 expect(Linq.orderBy(TestItems.objects, "first")[0]).to.eql(TestItems.joakim, "static:");
                 expect(Linq.orderBy(TestItems.objects, "first")[TestItems.objects.length - 1]).to.eql(TestItems.musse, "static:");
             });
@@ -427,7 +426,7 @@ describe("Linq", function() {
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).orderBy(x => x).first()).to.eql(0, "intantiated:");
             expect(new Linq(TestItems.numbers).orderBy(x => x).last()).to.eql(9, "intantiated:");
-            
+
             expect(Linq.orderBy(TestItems.numbers, x => x)[0]).to.eql(0, "static:");
             expect(Linq.orderBy(TestItems.numbers, x => x)[TestItems.numbers.length - 1]).to.eql(9, "static:");
         });
@@ -439,17 +438,17 @@ describe("Linq", function() {
             expect(Linq.orderByDesc(TestItems.strings, x => x)[0]).to.eql("musse"), "static:";
         });
         describe("objects", function() {
-            it("with function", function() { 
+            it("with function", function() {
                 expect(new Linq(TestItems.objects).orderByDesc(x => x.first).last()).to.eql(TestItems.joakim, "intantiated:");
                 expect(Linq.orderByDesc(TestItems.objects, x => x.first)[TestItems.objects.length - 1]).to.eql(TestItems.joakim, "static:");
             });
 
-            it("with string",() => { 
+            it("with string",() => {
                 expect(new Linq(TestItems.objects).orderByDesc("first").last()).to.eql(TestItems.joakim, "intantiated:");
                 expect(Linq.orderByDesc(TestItems.objects, "first")[TestItems.objects.length - 1]).to.eql(TestItems.joakim, "static:");
             });
         });
-        it("numbers",() => { 
+        it("numbers",() => {
             expect(new Linq(TestItems.numbers).orderByDesc(x => x).first()).to.eql(9, "intantiated:");
             expect(Linq.orderByDesc(TestItems.numbers, x => x)[0]).to.eql(9, "static:");
         });
@@ -457,7 +456,7 @@ describe("Linq", function() {
 
     describe("thenBy", function() {
         // thenBy is not possible with static functions.
-        
+
         describe("objects", function() {
             it("with function", function() {
                 expect(new Linq(TestItems.objects).orderBy(x => x.last).thenBy(x => x.first).first()).to.eql(TestItems.joakim, "intantiated:");
@@ -470,7 +469,7 @@ describe("Linq", function() {
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenBy(x => x).first()).to.eql(0, "intantiated:");
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenBy(x => x).last()).to.eql(9, "intantiated:");
-    
+
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenBy(x => x % 4).thenBy(x => x).first()).to.eql(0, "intantiated:");
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenBy(x => x % 4).thenBy(x => x).last()).to.eql(7, "intantiated:");
         });
@@ -478,7 +477,7 @@ describe("Linq", function() {
 
     describe("thenByDesc", function() {
         // thenBy is not possible with static functions.
-        
+
         describe("objects", function() {
             it("with function", function() {
                 expect(new Linq(TestItems.objects).orderBy(x => x.last).thenByDesc(x => x.first).first()).to.eql(TestItems.mimmi, "intantiated:");
@@ -494,7 +493,7 @@ describe("Linq", function() {
 
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenBy(x => x).first()).to.eql(2, "intantiated:");
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenBy(x => x).last()).to.eql(9, "intantiated:");
-            
+
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenByDesc(x => x).first()).to.eql(6, "intantiated:");
             expect(new Linq(TestItems.numbers).orderBy(x => x % 2).thenByDesc(x => x % 4).thenByDesc(x => x).last()).to.eql(1, "intantiated:");
         });
@@ -552,7 +551,7 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).any(item => item[0] == "m")).to.eql(true, "intantiated:");
             expect(new Linq(TestItems.strings).any(item => item[0] == "å")).to.eql(false, "intantiated:");
-            
+
             expect(Linq.any(TestItems.strings, item => item[0] == "m")).to.eql(true, "static:");
             expect(Linq.any(TestItems.strings, item => item[0] == "å")).to.eql(false, "static:");
         });
@@ -560,7 +559,7 @@ describe("Linq", function() {
         it("objects", function() {
             expect(new Linq(TestItems.objects).any(item => item.first[0] == "m")).to.eql(true, "intantiated:");
             expect(new Linq(TestItems.objects).any(item => item.first[0] == "å")).to.eql(false, "intantiated:");
-            
+
             expect(Linq.any(TestItems.objects, item => item.first[0] == "m")).to.eql(true, "static:");
             expect(Linq.any(TestItems.objects, item => item.first[0] == "å")).to.eql(false, "static:");
         });
@@ -568,7 +567,7 @@ describe("Linq", function() {
         it("objects", function() {
             expect(new Linq(TestItems.numbers).any(item => item == 1)).to.eql(true, "intantiated:");
             expect(new Linq(TestItems.numbers).any(item => item == 10)).to.eql(false, "intantiated:");
-            
+
             expect(Linq.any(TestItems.numbers, item => item == 1)).to.eql(true, "static:");
             expect(Linq.any(TestItems.numbers, item => item == 10)).to.eql(false, "static:");
         });
@@ -584,7 +583,7 @@ describe("Linq", function() {
         it("strings", function() {
             expect(new Linq(TestItems.strings).all(item => item[0] == "m")).to.eql(false, "intantiated:");
             expect(new Linq(TestItems.strings).all(item => item.length > 1)).to.eql(true, "intantiated:");
-            
+
             expect(Linq.all(TestItems.strings, item => item[0] == "m")).to.eql(false, "static:");
             expect(Linq.all(TestItems.strings, item => item.length > 1)).to.eql(true, "static:");
         });
@@ -592,7 +591,7 @@ describe("Linq", function() {
         it("objects", function() {
             expect(new Linq(TestItems.objects).all(item => item.first[0] == "m")).to.eql(false, "intantiated:");
             expect(new Linq(TestItems.objects).all(item => item.first.length > 1)).to.eql(true, "intantiated:");
-            
+
             expect(Linq.all(TestItems.objects, item => item.first[0] == "m")).to.eql(false, "static:");
             expect(Linq.all(TestItems.objects, item => item.first.length > 1)).to.eql(true, "static:");
         });
@@ -600,7 +599,7 @@ describe("Linq", function() {
         it("numbers", function() {
             expect(new Linq(TestItems.numbers).all(item => item < 5)).to.eql(false, "intantiated:");
             expect(new Linq(TestItems.numbers).all(item => item < 10)).to.eql(true, "intantiated:");
-            
+
             expect(Linq.all(TestItems.numbers, item => item < 5)).to.eql(false, "static:");
             expect(Linq.all(TestItems.numbers, item => item < 10)).to.eql(true, "static:");
         });
@@ -611,19 +610,19 @@ describe("Linq", function() {
             it("3", function () { expect(new Linq([false, true, true]).all(x => x)).to.eql(false); });
         });
     });
-    
+
     it("intersect", function() {
         it("default comparer", function () {
-            var x = [0, 1, 2, 3],
+            let x = [0, 1, 2, 3],
                 y = [2, 3, 4, 5];
-            
+
             expect(new Linq(x).intersect(y).toArray()).to.eql([2, 3], "intantiated:");
             expect(Linq.intersect(x, y)).to.eql([2, 3], "static:");
         });
         it("with comparer", function () {
-            var x = TestItems.objects.slice(0, 3),
+            let x = TestItems.objects.slice(0, 3),
                 y = TestItems.objects.slice(2),
-                fn = function (x, y) { return x.last === y.last };
+                fn = function (x, y) { return x.last === y.last; };
 
             expect(new Linq(x).intersect(y, fn).toArray()).to.eql([TestItems.kalle, TestItems.långben, "intantiated:"]);
             expect(Linq.intersect(x, y, fn)).to.eql([TestItems.kalle, TestItems.långben, "static:"]);
@@ -632,43 +631,43 @@ describe("Linq", function() {
 
     describe("except", function() {
         it("default comparer", function () {
-            var x = [0, 1, 2, 3],
+            let x = [0, 1, 2, 3],
                 y = [2, 3, 4, 5];
-            
+
             expect(new Linq(x).except(y).toArray()).to.eql([0, 1], "intantiated:");
             expect(Linq.except(x, y)).to.eql([0, 1], "static:");
         });
         it("with comparer", function () {
-            var x = TestItems.objects.slice(0, 3),
+            let x = TestItems.objects.slice(0, 3),
                 y = TestItems.objects.slice(2),
-                fn = function (x, y) { return x.last === y.last };
+                fn = function (x, y) { return x.last === y.last; };
 
             expect(new Linq(x).except(y, fn).toArray()).to.eql([TestItems.musse], "intantiated:");
             expect(Linq.except(x, y, fn)).to.eql([TestItems.musse], "static:");
-        });            
+        });
     });
 
     describe("distinct", function () {
         it("default comparer", function() {
-            var x = [1, 2, 3, 4, 5, 4, 3, 2, 1];
-            
+            let x = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+
             expect(new Linq(x).distinct().toArray()).to.eql([1, 2, 3, 4, 5], "intantiated:");
             expect(Linq.distinct(x)).to.eql([1, 2, 3, 4, 5], "static:");
         });
 
         it("with comparer", function() {
             // we compare only lastnames, therefore "mimmi anka" and "joakim anka" will be excluded, because we already have "kalle anka"
-            var fn = function (x, y) { return x.last === y.last };
-            
+            let fn = function (x, y) { return x.last === y.last; };
+
             expect(new Linq(TestItems.objects).distinct(fn).toArray()).to.eql([TestItems.kalle, TestItems.musse, TestItems.långben], "intantiated:");
             expect(Linq.distinct(TestItems.objects, fn)).to.eql([TestItems.kalle, TestItems.musse, TestItems.långben], "static:");
         });
-    })
-    
+    });
+
 
     describe("groupBy", function() {
         describe("objects", function() {
-            var groupByArr = [
+            let groupByArr = [
                 { key: 1, value: 1 },
                 { key: 2, value: 3 },
                 { key: 1, value: 2 },
@@ -689,8 +688,8 @@ describe("Linq", function() {
     });
 
     it("zip", function() {
-        function cb(str, obj) { return { first: str, last: obj.last } }
-        
+        function cb(str, obj) { return { first: str, last: obj.last }; }
+
         expect(new Linq(TestItems.strings).zip(TestItems.objects, cb).toArray()).to.eql(TestItems.objects, "intantiated:");
         expect(Linq.zip(TestItems.strings, TestItems.objects, cb)).to.eql(TestItems.objects, "static:");
     });

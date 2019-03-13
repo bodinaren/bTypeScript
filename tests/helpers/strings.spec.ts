@@ -1,4 +1,4 @@
-import Strings, {StringsHelper} from "../../src/helpers/strings";
+import {Strings, StringsHelper} from "../../src/helpers/strings";
 import {expect} from 'chai';
 
 describe("Strings", function() {

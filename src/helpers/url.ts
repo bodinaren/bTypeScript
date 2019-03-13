@@ -1,11 +1,8 @@
-import {Linq} from "../linq/linq";
-// import "../linq/add/zip";
-
 /**
  * Shorthand function to create a UrlHelper object.
  * @param url The URL on which to perform the various functions.
  */
-export default function Url(url: string = location.href): UrlHelper { return new UrlHelper(url); }
+export function Url(url: string = location.href): UrlHelper { return new UrlHelper(url); }
 export class UrlHelper {
     url: string;
 

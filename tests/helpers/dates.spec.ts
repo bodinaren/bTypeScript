@@ -1,4 +1,4 @@
-import Dates, {DatesHelper} from "../../src/helpers/dates";
+import {Dates, DatesHelper} from "../../src/helpers/dates";
 import {expect} from 'chai';
 
 describe("Dates", function() {

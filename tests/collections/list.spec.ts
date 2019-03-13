@@ -1,4 +1,4 @@
-import List from "../../src/collections/list";
+import {List} from "../../src/collections/list";
 import {expect} from 'chai';
 
 describe("List", function() {

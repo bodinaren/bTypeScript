@@ -1,7 +1,7 @@
 import * as Util from "../util";
-import Queue from "./queue";
+import {Queue} from "./queue";
 
-export default class BinaryTree<T> {
+export class BinaryTree<T> {
     private _root: TreeNode;
     private _selector: Util.ISelector<T, number>;
 

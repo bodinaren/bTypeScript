@@ -1,8 +1,8 @@
-﻿import * as Util from "../src/util";
-import {expect} from 'chai';
+﻿import * as Util from "../src/util/index";
+import {expect} from "chai";
 
 describe("Util", function() {
-    var x;
+    let x;
 
     it("isUndefined", function() {
         expect(Util.isUndefined(x)).to.eql(true);
@@ -41,7 +41,7 @@ describe("Util", function() {
         expect(Util.isNumber("")).to.eql(false);
         expect(Util.isNumber(0)).to.eql(true);
         expect(Util.isNumber(new Date("2016-01-01T00:00:00+01:00"))).to.eql(false);
-        
+
         expect(Util.isNumber(new Number(0))).to.eql(true);
     });
 

@@ -1,7 +1,5 @@
-import List from "./list";
-import LinkedList from "./linkedList";
-import Stack from "./stack";
-import Queue from "./queue";
-import BinaryTree from "./binaryTree";
-
-export {List, LinkedList, Stack, Queue, BinaryTree};
+export {List} from "./list";
+export {LinkedList} from "./linkedList";
+export {Stack} from "./stack";
+export {Queue} from "./queue";
+export {BinaryTree} from "./binaryTree";

@@ -4,7 +4,7 @@ import * as Util from "../util";
  * Shorthand function to create a DatesHelper object.
  * @param number The date on which to perform the various functions.
  */
-export default function Dates(date: Date): DatesHelper { return new DatesHelper(date); }
+export function Dates(date: Date): DatesHelper { return new DatesHelper(date); }
 export class DatesHelper {
     date: Date;
 

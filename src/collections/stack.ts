@@ -1,9 +1,9 @@
-import LinkedList from "./linkedList";
+import {LinkedList} from "./linkedList";
 
 /**
  * A Stack works by last in, first out.
  */
-export default class Stack<T> {
+export class Stack<T> {
 
     private _list: LinkedList<T>;
 

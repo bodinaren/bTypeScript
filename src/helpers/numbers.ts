@@ -4,7 +4,7 @@ import * as util from "../util";
  * Shorthand function to create a NumbersHelper object.
  * @param number The number on which to perform the various functions.
  */
-export default function Numbers(num: number): NumbersHelper { return new NumbersHelper(num); }
+export function Numbers(num: number): NumbersHelper { return new NumbersHelper(num); }
 export class NumbersHelper {
     num: number;
 

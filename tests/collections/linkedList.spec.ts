@@ -1,4 +1,4 @@
-import LinkedList from "../../src/collections/linkedList";
+import {LinkedList} from "../../src/collections/linkedList";
 import {expect} from 'chai';
 
 describe("LinkedList", function() {
